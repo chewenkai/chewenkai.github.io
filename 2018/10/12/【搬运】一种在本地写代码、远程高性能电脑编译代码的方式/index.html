@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://chewenkai.github.io">
   <title>“【搬运】一种在本地写代码、远程高性能电脑编译代码的方式” | 小蚊子叮叮的小屋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目录&amp;lt;%- toc(page.content, {        class: ‘post-toc’,        list_number: true    }) %&amp;gt; 一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试">
+  <meta name="description" content="一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上2">
 <meta name="keywords" content="日常总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="“【搬运】一种在本地写代码、远程高性能电脑编译代码的方式”">
 <meta property="og:url" content="https://chewenkai.github.io/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/index.html">
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
-<meta property="og:description" content="目录&amp;lt;%- toc(page.content, {        class: ‘post-toc’,        list_number: true    }) %&amp;gt; 一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试">
+<meta property="og:description" content="一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上2">
 <meta property="og:image" content="https://chewenkai.github.io/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/as配置示意图1.png">
-<meta property="og:updated_time" content="2018-10-16T06:22:21.848Z">
+<meta property="og:updated_time" content="2018-10-16T06:39:08.386Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="“【搬运】一种在本地写代码、远程高性能电脑编译代码的方式”">
-<meta name="twitter:description" content="目录&amp;lt;%- toc(page.content, {        class: ‘post-toc’,        list_number: true    }) %&amp;gt; 一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试">
+<meta name="twitter:description" content="一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上2">
 <meta name="twitter:image" content="https://chewenkai.github.io/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/as配置示意图1.png">
   
   
@@ -162,8 +162,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>目录</strong><br>&lt;%- toc(page.content, {<br>        class: ‘post-toc’,<br>        list_number: true<br>    }) %&gt;</p>
-<h3 id="一、故事背景（可略过）"><a href="#一、故事背景（可略过）" class="headerlink" title="一、故事背景（可略过）"></a>一、故事背景（可略过）</h3><p>鲁迅说：</p>
+        <h3 id="一、故事背景（可略过）"><a href="#一、故事背景（可略过）" class="headerlink" title="一、故事背景（可略过）"></a>一、故事背景（可略过）</h3><p>鲁迅说：</p>
 <blockquote>
 <p>世界上只有三种电脑：轻薄好看的笔记本、厚重臭爆的笔记本和不动产台式机</p>
 </blockquote>
@@ -522,6 +521,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
@@ -538,31 +545,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -574,11 +561,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">MacOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
