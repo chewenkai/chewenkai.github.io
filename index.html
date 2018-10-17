@@ -148,7 +148,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">“【搬运】一种在本地写代码、远程高性能电脑编译代码的方式”</a>
+      <a class="article-title" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">一种基于MainFramer进行远程编译的应用（以Android开发为例）</a>
     </h1>
   
 
@@ -171,91 +171,9 @@
 <p>简单的说，你需要一台本地机器（Local Machine：例如我的性能不咋地的MacBook）和一台远程机器（Remote Machine：性能强悍的台式机或者云主机），通过mainframer，可以实现在本地机器上写代码，在远程机器上编译代码。以Android举例（因为我也不会别的），你可以上班只带一个笔记本，打开IDE开始写代码，到了需要调试的时候，mainframer会快速同步代码到远程机器并进行编译，并将编译的结果返回到你的笔记本，这一切仿佛都是在你的笔记本上进行的，你可以正常的build和调试程序了。</p>
 <p>下面是我配置成功后，录制的在MacBookPro上写代码，在Linux发行版Manjaro上进行Build的视频：</p>
 <video src="http://chewenkai.cf/owncloud/index.php/s/Mo209sjNvN2iOLU/download" controls="controls" style="max-width: 100%; display: block; margin-left: auto; margin-right: auto;"> your browser does not support the video tag </video>
-
-<p>目前该工具支持所有使用以下技术构建的代码：</p>
-<ul>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/gradle" target="_blank" rel="noopener">Gradle</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/gradle-android" target="_blank" rel="noopener">Gradle Android</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/rust" target="_blank" rel="noopener">Rust</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/clang" target="_blank" rel="noopener">Clang</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/gcc" target="_blank" rel="noopener">GCC</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/mvn" target="_blank" rel="noopener">Maven</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/buck" target="_blank" rel="noopener">Buck</a></li>
-<li><a href="https://github.com/gojuno/mainframer/blob/development/samples/go" target="_blank" rel="noopener">Go</a></li>
-</ul>
-<h3 id="二、开始安装和配置"><a href="#二、开始安装和配置" class="headerlink" title="二、开始安装和配置"></a>二、开始安装和配置</h3><p><strong>mainframer</strong>的安装非常简单，以Android为例，你只需要：</p>
-<ol>
-<li>下载mainframer到你工程的根目录下；</li>
-<li>配置本地电脑和远程电脑的SSH；</li>
-<li>根据不通类型的代码配置一下开发环境；</li>
-</ol>
-<p>可以根据github上的readmen一步步的操作，有英文不好的小伙伴可以参考我实践的路子：</p>
-<h5 id="1-下载mainframer"><a href="#1-下载mainframer" class="headerlink" title="1.下载mainframer"></a>1.下载mainframer</h5><p>在<a href="https://github.com/gojuno/mainframer/releases/latest" target="_blank" rel="noopener">这里</a>下载mainframer的sh文件，放到Android工程的根目录下就可以了</p>
-<h5 id="2-配置本地电脑和远程电脑的SSH"><a href="#2-配置本地电脑和远程电脑的SSH" class="headerlink" title="2. 配置本地电脑和远程电脑的SSH"></a>2. 配置本地电脑和远程电脑的SSH</h5><p><strong>2.1</strong>     配置SSH的目的是为了能让本地电脑直接运行ssh+远程电脑名字就可以进行ssh连接，避免中间复杂的输密码等过程，在配置前，你需要先了解远程电脑的三个参数：</p>
-<ul>
-<li><code>REMOTE_MACHINE_ALIAS</code> — 远程电脑的名字，通常在Linux中是hostname，可以通过<code>cat /etc/hostname</code>查看，在mac上可以通过<code>scutil --get ComputerName</code>查看.</li>
-<li><code>REMOTE_MACHINE_IP_OR_HOSTNAME</code> — 远程电脑的IP或者域名，如果是局域网内的电脑，则可能是192.168.XX.XX的形式，如果是云服务器可以直接填服务器地址如 <code>42.42.42.42</code> or <code>remote.domain.com</code>.</li>
-<li><code>REMOTE_MACHINE_USERNAME</code> — 远程电脑的用户名，这里官方建议在远程电脑新建一个用户（下面有脚本）来操作，这里可以现在就起一个名字，例如calvin。</li>
-</ul>
-<p>后续教程中出现上面三个参数时，请替换为其正确的值。</p>
-<p><strong>2.2</strong>     知道了这三个参数，就可以开始配置了，首先配置本地电脑：</p>
-<ul>
-<li>在本地生成ssh密钥：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -b 4096 -C &quot;&#123;REMOTE_MACHINE_USERNAME&#125;&quot;  //&#123;REMOTE_MACHINE_USERNAME&#125;替换为刚才起的用户名calvin</div></pre></td></tr></table></figure>
-<p>一路按回车就可以在<code>~/.ssh/</code>目录下生成公钥文件<code>id_rsa.pub</code>和私钥文件<code>id_rsa</code>.</p>
-<ul>
-<li>配置本地SSH</li>
-</ul>
-<p>开启SSH的ControlMaster并持久化socket连接，可以避免每次连接远程机器时重新建立连接，并可以省掉输入密码的过程，加速SSH命令的执行速度。具体操作为，打开<code>~/.ssh/config</code>(如果没有则创建一个新的)，并在里面输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Host &#123;REMOTE_MACHINE_ALIAS&#125;</div><div class="line">  User &#123;REMOTE_MACHINE_USERNAME&#125;</div><div class="line">  HostName &#123;REMOTE_MACHINE_IP_OR_HOSTNAME&#125;</div><div class="line">  Port 22</div><div class="line">  IdentityFile ~/.ssh/&#123;SSH_KEY_NAME&#125;</div><div class="line">  PreferredAuthentications publickey</div><div class="line">  ControlMaster auto</div><div class="line">  ControlPath /tmp/%r@%h:%p</div><div class="line">  ControlPersist 1h</div><div class="line">  </div><div class="line"># 例如</div><div class="line">Host calvin</div><div class="line">  User calvinche</div><div class="line">  HostName 192.168.31.129</div><div class="line">  Port 22</div><div class="line">  IdentityFile ~/.ssh/id_rsa</div><div class="line">  PreferredAuthentications publickey</div><div class="line">  ControlMaster auto</div><div class="line">  ControlPath /tmp/%r@%h:%p</div><div class="line">  ControlPersist 1h</div></pre></td></tr></table></figure>
-<p> 其中，{REMOTE_MACHINE_ALIAS}替换为远程机器的名字，{REMOTE_MACHINE_USERNAME}替换为远程机器的用户名，{REMOTE_MACHINE_IP_OR_HOSTNAME}替换为远程机器的IP或域名，{SSH_KEY_NAME}替换为上一节说的在本地生成ssh私钥文件的名字，其位置位于~/.ssh/下，名字一般为id_rsa。</p>
-<p><strong>2.3</strong>     下面登陆远程机器，进行配置：</p>
-<p>在远程电脑上创建新用户{REMOTE_MACHINE_USERNAME}，并将配置公钥，这里可以直接通过<a href="https://github.com/buildfoundation/mainframer/blob/3.x/recipes/SETUP_REMOTE_MACHINE.md" target="_blank" rel="noopener">官方脚本</a>进行操作，将脚本<code>remote_machine_setup.sh</code>下载到远程服务器并这样运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">remote_machine_setup.sh &#123;REMOTE_MACHINE_USERNAME&#125; &quot;引号内将刚才生成的公钥文件中的内容复制过来&quot;</div></pre></td></tr></table></figure>
-<p>这里的REMOTE_MACHINE_USERNAME就是在远程机器上新建的用户，这样如果几个人共用一台远程服务器来写一个工程就不会讲代码混淆在一起了。</p>
-<p>执行后若显示<code>New user $NEW_USER was set up correctly</code>就说明创建成功了。</p>
-<p>通过输入 <code>ssh 远程机器的用户名 如ssh calvin</code>来验证是否能够顺利登陆到远程机器，如果不需要输密码就能登陆成功，那么就可以了，如果出现:<code>Permission denied (publickey,password)</code>这样的话就说明远程机器的公钥与本地不符，或者本地ssh的config文件中私钥的名字不正确，需要认真检查。</p>
-<p>到这里，基本上就完成了mainframer的配置工作，可以通过运行下面代码测试能否工作：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash ./mainframer.sh echo &quot;I am Calvin&quot; &gt; success.txt</div></pre></td></tr></table></figure>
-<p>如果本地的success文件中的内容如下图所示，那么整个流程就跑通了。</p>
-<p>如果您是Android开发的话，可以通过命令 <code>./mainframer ./gradlew build</code> 进行远程编译了。</p>
-<p>如果你还想再进一步，把该工具添加到开发环境中，实现无缝隙的远程编译，可以根据背景一节中列出的不同的开发的链接查看教程，下面以Android为例，介绍怎么将其接入到Android Studio中，实现，点击调试按钮，自动远程编译。</p>
-<h5 id="3-根据不通类型的代码配置开发环境（以Android为例）"><a href="#3-根据不通类型的代码配置开发环境（以Android为例）" class="headerlink" title="3. 根据不通类型的代码配置开发环境（以Android为例）"></a>3. 根据不通类型的代码配置开发环境（以Android为例）</h5><p>打开Android Studio， 按照下面步骤进行配置：</p>
-<ul>
-<li>点击<strong>Run</strong> → <strong>Edit Configuration</strong> → <strong>+</strong>.</li>
-<li>选择 <strong>Android App</strong>.</li>
-<li>起一个好一点的名字, 例如<strong>remote-build</strong>.</li>
-<li>在Module中选择要编译的模块名字，如app.</li>
-<li>在Before Launch只点击减号删除原来的 <strong>Gradle-aware Make</strong></li>
-<li>在Before Launch只点击+号创建一个 <strong>Run External Tool.</strong></li>
-<li>填个好一点的名字，如<strong>remote assembleDebug.</strong></li>
-<li>Program里填<strong>bash</strong>.</li>
-<li>Parameters里填<code>mainframer.sh ./gradlew :app:assembleDebug -Pandroid.enableBuildCache=true</code></li>
-<li>Working directory里填<code>$ProjectFileDir$</code>.</li>
-</ul>
-<p>示意图：</p>
-<img src="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/as配置示意图1.png" title="This is an example image">
-<p>整个操作就完成了，可以愉快的玩耍了。很开心，是不是？</p>
-<h3 id="三、填坑"><a href="#三、填坑" class="headerlink" title="三、填坑"></a>三、填坑</h3><p>第二节中的安装方法是根据mainframer的github仓库Readme进行的尝试，事实上安装和配置完成后也不是那么一帆风顺，点击编译后的遇到一个找不到SDK位置问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">* What went wrong:</div><div class="line">A problem occurred configuring project &apos;:app&apos;.</div><div class="line">&gt; SDK location not found. Define location with sdk.dir in the local.properties file or with an ANDROID_HOME environment variable.</div></pre></td></tr></table></figure>
-<p>但是我在远程机器中添加了ANDROID_HOME变量后还是抱着个错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $ANDROID_HOME</div><div class="line">/opt/android-sdk</div></pre></td></tr></table></figure>
-<p>经过一轮搜索发现，原来mainframe使用的ssh登陆的shell是non-interactive的，在这种模式下，无法读取你定义在<code>~/.bashrc</code> <code>/etc/bashrc</code> <code>/etc/profile</code>等文件中的变量，你需要通过下面方式，配置SDK的位置和JAVA的位置：</p>
-<ol>
-<li>首先，打开远程机器的SSHD配置文件，运行：<code>sudo vim /etc/ssh/sshd_config</code>.在打开的文件中查找这一行<code># PermitUserEnvironment no</code>，并将其改成<code>PermitUserEnvironment=yes</code></li>
-<li>然后在~/.ssh目录下创建environment文件：<code>vim ~/.ssh/environment</code>，并将变量以key=value的形式写入，例如我的配置文件为：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ANDROID_HOME=/home/calvinche/Android/Sdk</div><div class="line">JAVA_HOME=/home/calvinche/Android/jdk1.8.0_181/</div></pre></td></tr></table></figure>
-<p>这样，本地机器通过ssh登陆后就能正确找到sdk和java的位置了。</p>
-<h3 id="四、讨论"><a href="#四、讨论" class="headerlink" title="四、讨论"></a>四、讨论</h3><p>Mainframer很好的中和了我手中Mac笔记本的低配置和Windows台式机的不便携，将Mac的轻薄、便携和Windows的高配较好的结合起来。使我愉快的在使用小尺寸mac的同时，能得到最高的工作效率。但是仔细想想，这只是Mainframer的一个小领域应用，其实Mainframer可以用在更多地方，比如：</p>
-<ul>
-<li>集群。我上学时，学校里有个大型计算机集群，但是这个集群根本就不让我们用，只是学校用来宣传和邀功的摆设。如果你的学校或者公司有这样的集群，可以尝试利用Mainframer将工作从学生电脑搬到集群中做。</li>
-<li>远程工作等等。</li>
-<li>More…</li>
-</ul>
-<p>欢迎大家一起交流想法。</p>
-
+        
+          <a class="article-more-a" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/#more">more >></a>
+        
       
 
       
@@ -1287,6 +1205,30 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">报告</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
@@ -1299,31 +1241,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">报告</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">英语</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">单词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1344,14 +1270,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
