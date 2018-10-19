@@ -147,6 +147,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-祝小美生日快乐" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/20/祝小美生日快乐/">祝小美生日快乐</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/20/祝小美生日快乐/" class="archive-article-date">
+  	<time datetime="2018-10-19T17:45:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        The article has been encrypted, please enter your password to view.<br>
+        
+          <a class="article-more-a" href="/2018/10/20/祝小美生日快乐/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/20/祝小美生日快乐/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【搬运】一种在本地写代码、远程高性能电脑编译代码的方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1006,110 +1071,6 @@
 
 
   
-    <article id="post-新抽样单协议" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/17/新抽样单协议/">新抽样单协议</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/17/新抽样单协议/" class="archive-article-date">
-  	<time datetime="2017-04-17T14:39:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-抽样单协议"><a href="#1-抽样单协议" class="headerlink" title="1. 抽样单协议"></a>1. 抽样单协议</h2><p>为了实现抽样系统中电子抽样单的灵活性，修改原抽样系统中的问题，修改抽样单协议如下。（协议括号中的英文为服务器与手机端传输时定义的Key，未经允许，不可修改。）</p>
-<h3 id="1-1-抽样单结构"><a href="#1-1-抽样单结构" class="headerlink" title="1.1 抽样单结构"></a>1.1 抽样单结构</h3><p>0抽样单仿照纸质抽样单，但比纸质抽样单功能更加丰富，抽样单的结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">--单元格(cell)</div><div class="line">--单元格(cell)</div><div class="line">...</div><div class="line">--单元格(cell)</div></pre></td></tr></table></figure>
-<p>以上是一张抽样单，由多个单元格组成，<strong>没有其他任何杂项。</strong> 如果需要添加功能，需要在单元格类型属性中添加类型。 用户通过在线设计不同功能的单元格实现不同功能的抽样单。</p>
-<h3 id="1-2-单元格属性"><a href="#1-2-单元格属性" class="headerlink" title="1.2 单元格属性"></a>1.2 单元格属性</h3><p>为了实现单元格的多样性，单元格具有多个<strong>属性</strong>，这些属性在使用<strong>在线设计抽样单</strong>功能时可以进行修改，下发到手机后，单元格的属性不可修改，手机根据不同的<strong>单元格类型(单元格属性之一)</strong> 属性，解析成不同的单元格。</p>
-<p>下面介绍单元格的属性：</p>
-<ul>
-<li><strong>单元格名称(cell_name):</strong> 在制表时由用户填写，例如，“样品名称”，“亩产量”等</li>
-<li><strong>单元格类型(cell_type):</strong> 在制表时由用户选择，例如，文本类，填写类，照相类等。</li>
-<li><strong>单元格值(cell_value):</strong> 在制表时由用户填写，此属性仅对部分类型单元格有效，如填写类和选择类，其他单元格不受此属性影响。</li>
-<li><strong>单元格是否可编辑(cell_editable):</strong> 以下全为二值型属性(T,F,分别代表True，False)，在制表时选择。此属性仅对部分类型单元格有效，如填写类，其他单元格不受此属性影响。</li>
-<li><strong>单元格是否为必填(cell_fill_required):</strong> 同上，手机端的必填项单元格如果不填写不能保存</li>
-<li><strong>单元格是否可打印(cell_printable):</strong> 同上，代表单元格是否具有打印功能</li>
-<li><strong>单元格是否默认勾选打印(cell_default_print):</strong> 同上，代表单元格打印的默认勾选状态</li>
-<li><strong>单元格可否被加样(cell_copyable):</strong> 同上。关于加样功能，解释如下：假设以下场景，在同一个村采100个样品，抽样单中的<strong>“抽样所在村”单元格</strong>每次都要填写相同的村名，而其他的单元格<strong>“样品编号等”</strong> 则每次填写不同的内容，所以为了方便采样人员在填写抽样单模板时不必每次填写重复内容，本系统设计了<strong>加样</strong>功能，即填写抽样单时，在不退出当前模板的界面，点击“加样”按钮后，可被加样的单元格（需要改变内容的单元格）被复制，而不可被加样的单元格（不需要改变内容的单元格）不被复制，最后采样人员在一个模板界面可一键保存成多个抽样单。单元格的可否被加样属性需要抽样单设计者在制作抽样单时设计好。</li>
-</ul>
-<p>除了以上的属性，开发者可以通过添加单元格类型来增加抽样单功能。但是，开发者在开发网页端和手机端时一定要<strong>谨慎:要将不同属性的单元格封装好，日后如果需要添加单元格属性，只需要对新的单元格类型进行封装即可进行二次开发。</strong></p>
-<p>可以看出，抽样单是由多个<strong>单元格</strong>组成，每个单元格具有多个<strong>属性</strong>，其中单元格的功能体现在<strong>单元格类型</strong>上，这好比一个公司（抽样单）又许多员工（单元格）组成，每个员工具有多个不同的属性（性别，姓名，工种等），而员工的功能体现在工种（单元格类型）上。</p>
-        
-          <a class="article-more-a" href="/2017/04/17/新抽样单协议/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">抽样监督管理系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常汇报//" class="article-tag-list-link color5">日常汇报</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/17/新抽样单协议/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1223,7 +1184,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">报告</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1235,7 +1204,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1251,19 +1220,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">报告</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1271,11 +1232,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
             
             <div class="clearfix"></div>
