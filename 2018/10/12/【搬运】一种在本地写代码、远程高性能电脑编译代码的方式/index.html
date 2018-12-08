@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
 <meta property="og:description" content="一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：卡爆的轻薄本、丑爆的游戏本和搬不动的台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上20次就">
 <meta property="og:image" content="https://chewenkai.github.io/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/as配置示意图1.png">
-<meta property="og:updated_time" content="2018-11-27T06:19:15.269Z">
+<meta property="og:updated_time" content="2018-10-17T16:58:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种基于MainFramer进行远程编译的应用（以Android开发为例）">
 <meta name="twitter:description" content="一、故事背景（可略过）鲁迅说：  世界上只有三种电脑：卡爆的轻薄本、丑爆的游戏本和搬不动的台式机  我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上20次就">
@@ -245,7 +245,7 @@
 <p>示意图：</p>
 <img src="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/as配置示意图1.png" title="This is an example image">
 <p>整个操作就完成了，可以愉快的玩耍了。很开心，是不是？</p>
-<h3 id="三、填坑"><a href="#三、填坑" class="headerlink" title="三、填坑"></a>三、填坑</h3><h5 id="1-远程机器无法读取环境变量"><a href="#1-远程机器无法读取环境变量" class="headerlink" title="1. 远程机器无法读取环境变量"></a>1. 远程机器无法读取环境变量</h5><p>第二节中的安装方法是根据mainframer的github仓库Readme进行的尝试，事实上安装和配置完成后也不是那么一帆风顺，点击编译后的遇到一个找不到SDK位置问题：</p>
+<h3 id="三、填坑"><a href="#三、填坑" class="headerlink" title="三、填坑"></a>三、填坑</h3><p>第二节中的安装方法是根据mainframer的github仓库Readme进行的尝试，事实上安装和配置完成后也不是那么一帆风顺，点击编译后的遇到一个找不到SDK位置问题：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">* What went wrong:</div><div class="line">A problem occurred configuring project &apos;:app&apos;.</div><div class="line">&gt; SDK location not found. Define location with sdk.dir in the local.properties file or with an ANDROID_HOME environment variable.</div></pre></td></tr></table></figure>
 <p>但是我在远程机器中添加了ANDROID_HOME变量后还是抱着个错误</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $ANDROID_HOME</div><div class="line">/opt/android-sdk</div></pre></td></tr></table></figure>
@@ -256,13 +256,6 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ANDROID_HOME=/home/calvinche/Android/Sdk</div><div class="line">JAVA_HOME=/home/calvinche/Android/jdk1.8.0_181/</div></pre></td></tr></table></figure>
 <p>这样，本地机器通过ssh登陆后就能正确找到sdk和java的位置了。</p>
-<h5 id="2-每次重启Android-Studio，都会自动添加”Gradle-aware-Make”"><a href="#2-每次重启Android-Studio，都会自动添加”Gradle-aware-Make”" class="headerlink" title="2. 每次重启Android Studio，都会自动添加”Gradle-aware Make”"></a>2. 每次重启Android Studio，都会自动添加”Gradle-aware Make”</h5><p>解决方法：</p>
-<ul>
-<li>在Android Studio中打开Help-&gt; Edit Custom VM Options</li>
-<li>在打开的文件中加入：<code>-Dgradle.ide.gradle.run.configuration.fix.enabled=false</code></li>
-<li>重启Android Studio</li>
-</ul>
-<p>参考：<a href="https://github.com/buildfoundation/mainframer/issues/222" target="_blank" rel="noopener">https://github.com/buildfoundation/mainframer/issues/222</a></p>
 <h3 id="四、讨论"><a href="#四、讨论" class="headerlink" title="四、讨论"></a>四、讨论</h3><p>Mainframer很好的中和了我手中Mac笔记本的低配置和Windows台式机的不便携，将Mac的轻薄、便携和Windows的高配较好的结合起来。使我愉快的在使用小尺寸mac的同时，能得到最高的工作效率。但是这只是Mainframer的一个小领域应用，其实Mainframer可以用在更多实用的地方，比如使用集群作为远程机器，让大家可以连接进行远程编译等等。大家有什么想法，欢迎留言交流。</p>
 
       
@@ -566,10 +559,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
@@ -586,15 +575,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -606,11 +587,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
             
             <div class="clearfix"></div>
