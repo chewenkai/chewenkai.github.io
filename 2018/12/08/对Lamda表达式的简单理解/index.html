@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
 <meta property="og:description" content="第一次见Lamda表达式第一次看到这行代码的时候，我是百思不得姐： 1Toolkit.let(mUserTabFragment, f -&amp;gt; f.setUserVisibleHint(true)); 点击进入let函数看到其定义如下： 123456public static &amp;lt;T&amp;gt; void let(@Nullable T input, Consumer&amp;lt;T&amp;gt; cons">
 <meta property="og:image" content="http://www.runoob.com/wp-content/uploads/2018/11/16092307421970.png">
-<meta property="og:updated_time" content="2018-12-08T12:31:47.383Z">
+<meta property="og:updated_time" content="2018-12-10T02:19:17.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对Lamda表达式的简单理解">
 <meta name="twitter:description" content="第一次见Lamda表达式第一次看到这行代码的时候，我是百思不得姐： 1Toolkit.let(mUserTabFragment, f -&amp;gt; f.setUserVisibleHint(true)); 点击进入let函数看到其定义如下： 123456public static &amp;lt;T&amp;gt; void let(@Nullable T input, Consumer&amp;lt;T&amp;gt; cons">
@@ -187,7 +187,8 @@
 <p>例如我们平时经常用到的Callable, Runnable都是函数式接口，在这里的Consumer也不例外，Consumer也是java1.8版本新增的函数式接口，与Runnable和Callable一样。假如你想定义一个回调，这个时候你又不像去专门定义一个回调接口On，就可以用Runnable或Callable等这样的接口实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">   B b = new B();</div><div class="line">   void doHere()&#123;  </div><div class="line">//     b.runnable = new Runnable() &#123;</div><div class="line">//          @Override</div><div class="line">//          public void run() &#123;</div><div class="line">//              System.out.println(&quot;Do something here.&quot;);</div><div class="line">//          &#125;</div><div class="line">//     &#125;;   这段注释代码是不用lamda表达式的形式</div><div class="line">       b.runnable = ()-&gt; System.out.println(&quot;Do something here.&quot;);</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class B&#123;</div><div class="line">   Runnable runnable;</div><div class="line">   private void callHere() &#123;</div><div class="line">       runnable.run();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看出Lamda表达式就是对函数式接口的一种省略的写法，上面的例子中，你可以用Lamda表达式写成一行，减小代码量，也可以不用Lamda表达式，写成6行，它们的运行结果都是一样的。</p>
-<p>讲到这可能有的同学又有点蒙了，我Lamda表达式还没搞明白，又给我讲一堆函数式接口干嘛？别急，Lamda表达式的写法也有一定的规则，怎么写Lamda表达式跟这些函数式接口有紧密的关系，那么我们先说明下Consumer、Runnable、Callable这些接口是干什么用的呢？他们的区别是什么？区别就是参数的个数和有无返回值而已，你可以根据需要，选择使用哪个接口。</p>
+<p>讲到这可能有的同学又有点蒙了，我Lamda表达式还没搞明白，又给我讲一堆函数式接口干嘛？别急，Lamda表达式的写法也有一定的规则，怎么写Lamda表达式跟这些函数式接口有紧密的关系，那么我们先说明下Consumer、Runnable、Callable这些接口是干什么用的呢？他们的区别是什么？</p>
+<p>不同函数式接口的区别就是参数的个数和有无返回值而已，你可以根据需要，选择使用哪个接口。</p>
 <ul>
 <li>例如上述例子，我只是需要类B在某个时刻通知A执行一个操作，不需要返回值，也不带参数，那就用Runnable就行，意味着这段代码注重的是运行；</li>
 <li>如果不要参数，但是需要返回值，就用Callable，其名字也意味这点；</li>
@@ -195,10 +196,8 @@
 <li>同样的接口还有很多：BiFunction, Function0, Function1,…,Function22。Funtion22就是有22个参数和一个返回值（Function的意思就是即有参数又有返回值）</li>
 </ul>
 <p>列几个函数式接口给大家感受下：</p>
-<blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt; <span class="meta">@FunctionalInterface</span></div><div class="line">&gt; <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">&gt; </div><div class="line">&gt;     <span class="comment">/**</span></div><div class="line">&gt;      * Performs this operation on the given argument.</div><div class="line">&gt;      *</div><div class="line">&gt;      * <span class="doctag">@param</span> t the input argument</div><div class="line">&gt;      */</div><div class="line">&gt;     <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t)</span></span>;</div><div class="line">&gt; &#125;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Applies this function to the given argument.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> t the function argument</div><div class="line">     * <span class="doctag">@return</span> the function result</div><div class="line">     */</div><div class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Consumer</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">    * Performs this operation on the given argument.</div><div class="line">    *</div><div class="line">    * <span class="doctag">@param</span> t the input argument</div><div class="line">    */</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">accept</span><span class="params">(T t)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Applies this function to the given argument.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> t the function argument</div><div class="line">     * <span class="doctag">@return</span> the function result</div><div class="line">     */</div><div class="line">    <span class="function">R <span class="title">apply</span><span class="params">(T t)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="Lamda表达式的语法规则"><a href="#Lamda表达式的语法规则" class="headerlink" title="Lamda表达式的语法规则"></a>Lamda表达式的语法规则</h3><p>说完函数式接口，我们再回来说Lamda表达式的语法格式，Lamda表达式语法主要分为参数和表达式两部分：</p>
 <blockquote>
 <p>(parameters) -&gt;{ expression; }</p>
@@ -216,15 +215,15 @@
 <p><strong>函数式接口里允许定义默认方法</strong></p>
 <p>函数式接口里是可以包含默认方法，因为默认方法不是抽象方法，其有一个默认实现，所以是符合函数式接口的定义的；</p>
 <p>如下代码不会报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@FunctionalInterface</div><div class="line">interface GreetingService</div><div class="line">&#123;</div><div class="line">    void sayMessage(String message);</div><div class="line"></div><div class="line">    default void doSomeMoreWork1()</div><div class="line">    &#123;</div><div class="line">        // Method body</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    default void doSomeMoreWork2()</div><div class="line">    &#123;</div><div class="line">        // Method body</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GreetingService</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sayMessage</span><span class="params">(String message)</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">doSomeMoreWork1</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// Method body</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">doSomeMoreWork2</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// Method body</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>函数式接口里允许定义静态方法</strong></p>
 <p>函数式接口里是可以包含静态方法，因为静态方法不能是抽象方法，是一个已经实现了的方法，所以是符合函数式接口的定义的；</p>
 <p>如下代码不会报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@FunctionalInterface</div><div class="line">interface GreetingService </div><div class="line">&#123;</div><div class="line">    void sayMessage(String message);</div><div class="line">    static void printHello()&#123;</div><div class="line">        System.out.println(&quot;Hello&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GreetingService</span> </span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sayMessage</span><span class="params">(String message)</span></span>;</div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printHello</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Hello"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>函数式接口里允许定义 java.lang.Object 里的 public 方法</strong></p>
 <p>函数式接口里是可以包含Object里的public方法，这些方法对于函数式接口来说，不被当成是抽象方法（虽然它们是抽象方法）；因为任何一个函数式接口的实现，默认都继承了 Object 类，包含了来自 java.lang.Object 里对这些抽象方法的实现；</p>
 <p>如下代码不会报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@FunctionalInterface</div><div class="line">interface GreetingService  </div><div class="line">&#123;</div><div class="line">    void sayMessage(String message);</div><div class="line">    </div><div class="line">    @Override</div><div class="line">    boolean equals(Object obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@FunctionalInterface</span></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GreetingService</span>  </span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">sayMessage</span><span class="params">(String message)</span></span>;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
 
@@ -327,6 +326,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          坑--TextView同时使用maxLines=1和ellipsize时偶发崩溃
+        
+      </div>
+    </a>
   
   
     <a href="/2018/12/02/Android中动画的使用/" id="article-nav-older" class="article-nav-link-wrap">
@@ -492,7 +500,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,15 +524,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -521,10 +533,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">

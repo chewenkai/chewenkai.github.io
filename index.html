@@ -147,6 +147,146 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/">坑--TextView同时使用maxLines=1和ellipsize时偶发崩溃</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/" class="archive-article-date">
+  	<time datetime="2018-12-26T12:49:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天发现项目的报错记录中排名第一的是<code>ArrayIndexOutOfBoundsException</code>错误，影响用户84，发生次数129。</p>
+<p>报错堆栈如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span> android.text.StaticLayout.getLineTop(StaticLayout.java:<span class="number">878</span>)</div><div class="line"><span class="number">2</span> android.widget.TextView.getExtendedPaddingTop(TextView.java:<span class="number">1966</span>)</div><div class="line"><span class="number">3</span> android.widget.TextView.bringTextIntoView(TextView.java:<span class="number">7291</span>)</div><div class="line"><span class="number">4</span> android.widget.TextView.onPreDraw(TextView.java:<span class="number">5107</span>)</div><div class="line"><span class="number">5</span> android.view.ViewTreeObserver.dispatchOnPreDraw(ViewTreeObserver.java:<span class="number">944</span>)</div><div class="line"><span class="number">6</span> android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:<span class="number">2348</span>)</div><div class="line"><span class="number">7</span> android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:<span class="number">1292</span>)</div><div class="line"><span class="number">8</span> android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:<span class="number">6598</span>)</div><div class="line"><span class="number">9</span> android.view.Choreographer$CallbackRecord.run(Choreographer.java:<span class="number">800</span>)</div><div class="line"><span class="number">10</span> android.view.Choreographer.doCallbacks(Choreographer.java:<span class="number">603</span>)</div><div class="line"><span class="number">11</span> android.view.Choreographer.doFrame(Choreographer.java:<span class="number">572</span>)</div><div class="line"><span class="number">12</span> android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:<span class="number">786</span>)</div><div class="line"><span class="number">13</span> android.os.Handler.handleCallback(Handler.java:<span class="number">815</span>)</div><div class="line"><span class="number">14</span> android.os.Handler.dispatchMessage(Handler.java:<span class="number">104</span>)</div><div class="line"><span class="number">15</span> android.os.Looper.loop(Looper.java:<span class="number">194</span>)</div><div class="line"><span class="number">16</span> android.app.ActivityThread.main(ActivityThread.java:<span class="number">5682</span>)</div><div class="line"><span class="number">17</span> java.lang.reflect.Method.invoke(Native Method)</div><div class="line"><span class="number">18</span> java.lang.reflect.Method.invoke(Method.java:<span class="number">372</span>)</div></pre></td></tr></table></figure>
+<p>从错误堆栈里并没有找到特别有用的信息。</p>
+<p>于是去看了下报错的设备信息：</p>
+<table>
+<thead>
+<tr>
+<th>机型设备 Top 5</th>
+<th>系统版本 Top 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>华为 TIT-TL00  11.26%</td>
+<td>Android 5.1,level 22   31.40%</td>
+</tr>
+<tr>
+<td>三星 GT-I908   26.48%</td>
+<td>Android 4.1.2,level 16   20.48%</td>
+</tr>
+<tr>
+<td>荣耀 CUN AL00   6.14%</td>
+<td>Android 4.0.4,level 15   10.92%</td>
+</tr>
+<tr>
+<td>华为 TAG-TL00   5.46%</td>
+<td>Android 7.0   8.19%</td>
+</tr>
+<tr>
+<td>HTC T327T   4.44%</td>
+<td>Android 4.0.3,level 15   7.85%</td>
+</tr>
+</tbody>
+</table>
+<p>可谓是五花八门，看来也不是特定机型或者特定系统的问题。</p>
+<p>从日志和设备信息都分析不出问题，只能靠google了，通过不断的搜索，渐渐发现类似的崩溃跟TextView的两个属性有关系，分别是:</p>
+<ul>
+<li>Android:maxLines</li>
+<li>Android:ellipsize</li>
+</ul>
+<p>根据查询的信息，得出了下面的结论：</p>
+<p>如果同时设置了ellipsize和maxLine=1,就会在某些机型上产生崩溃（不是必先），报ArrayIndexOutOfBoundsException的异常。解决办法就是将maxLine=1换成已经废弃的singleLine=true。这是Android系统的一个bug，目前还没有解决。</p>
+<p>下面查询到的相关记录：</p>
+<p>If you try to use <code>maxLines=1</code> with <code>ellipsize</code>, you shall get the following lint error (refer to <a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">this discussion</a>)</p>
+<blockquote>
+<p>Combining ellipsize and maxLines=1 can lead to crashes on some devices. Earlier versions of lint recommended replacing singleLine=true with maxLines=1 but that should not be done when using ellipsize</p>
+</blockquote>
+<p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
+<hr>
+<p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
+<p>ri…@gmail.com <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#114;&#x69;&#x2e;&#46;&#46;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#114;&#x69;&#x2e;&#46;&#46;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
+<p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
+<hr>
+<p>I faced what I suspect is the same problem in my own app. For me, it was happening because I was using <code>android:ellipsize=&quot;start&quot;</code> <strong>without</strong> also using <code>android:singleLine=&quot;true&quot;</code>.</p>
+<p>We had switched all of our <code>android:singleLine=&quot;true&quot;</code> attributes to the recommended <code>android:maxLines=&quot;1&quot;</code>, but it turns out that there’s a bug in how the system calculates the ellipsis that is triggered if <code>singleLine</code> isn’t present.</p>
+<p>So I believe you can solve this issue by simply adding <code>android:singleLine=&quot;true&quot;</code> to your <code>TextView</code>s that are using <code>ellipsize</code> attrs.</p>
+<p>来源：<a href="https://stackoverflow.com/questions/45487427/crashlytics-reporting-multiples-issues-for-textview-makesinglelayout" target="_blank" rel="noopener">https://stackoverflow.com/questions/45487427/crashlytics-reporting-multiples-issues-for-textview-makesinglelayout</a></p>
+<hr>
+<p>km上也有相关的结论：</p>
+<p>android:ellipsize=”middle” android:maxLines=”1” android:singleLine=”true” 巨坑无比   设置了中间出点点点之后只能设置singleLine不能设置maxLines=”1”   不然会报数组越界的错误。</p>
+<p>来源：<a href="http://km.oa.com/group/21779/articles/show/168826?kmref=search&amp;from_page=1&amp;no=3" target="_blank" rel="noopener">http://km.oa.com/group/21779/articles/show/168826?kmref=search&amp;from_page=1&amp;no=3</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-对Lamda表达式的简单理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1083,100 +1223,6 @@
 
 
   
-    <article id="post-摆动排序-归并排序-归并排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/08/摆动排序-归并排序-归并排序/">摆动排序-归并排序-归并排序</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/08/摆动排序-归并排序-归并排序/" class="archive-article-date">
-  	<time datetime="2017-08-08T13:00:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="摆动排序"><a href="#摆动排序" class="headerlink" title="- 摆动排序"></a>- 摆动排序</h3><p>给你一个没有排序的数组，请将原数组就地重新排列满足如下性质:</p>
-<pre><code>nums[0] &lt;= nums[1] &gt;= nums[2] &lt;= nums[3]....
-</code></pre><p>答案：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line">     * <span class="doctag">@param</span> nums a list of integer</div><div class="line">     * <span class="doctag">@return</span> void</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wiggleSort</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++)&#123;</div><div class="line">            <span class="keyword">if</span> ((i%<span class="number">2</span>==<span class="number">1</span> &amp;&amp; nums[i-<span class="number">1</span>]&gt;nums[i])||</div><div class="line">            (i%<span class="number">2</span>==<span class="number">0</span> &amp;&amp; nums[i-<span class="number">1</span>]&lt;nums[i]))</div><div class="line">                swap(nums, i-<span class="number">1</span>, i);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Swap two values</div><div class="line">     * */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = nums[i];</div><div class="line">        nums[i] = nums[j];</div><div class="line">        nums[j] = temp;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/08/08/摆动排序-归并排序-归并排序/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/08/摆动排序-归并排序-归并排序/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1294,7 +1340,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1306,15 +1364,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1323,10 +1373,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
