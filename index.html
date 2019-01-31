@@ -147,6 +147,130 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-正则表达式上手" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/29/正则表达式上手/">正则表达式上手</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/29/正则表达式上手/" class="archive-article-date">
+  	<time datetime="2018-12-29T12:02:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。<a href="https://github.com/qdlaoyao/js-regex-mini-book" target="_blank" rel="noopener">任意门</a></p>
+<p>下面讲我认为书中较为重要的点记在下面：</p>
+<p>首先，正则是什么？正则是匹配模式，要么匹配字符，要么匹配位置。（匹配可以理解为搜索的意思）</p>
+<h4 id="匹配字符："><a href="#匹配字符：" class="headerlink" title="匹配字符："></a>匹配字符：</h4><p>一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种可能。</p>
+<p>其实现的方式是使用字符组。譬如[abc]，表示该字符是可以字符“a”、“b”、“c”中的任何一个，中括号里可以写任意字符，包括空格，问号等。</p>
+<h4 id="匹配位置："><a href="#匹配位置：" class="headerlink" title="匹配位置："></a>匹配位置：</h4><p>一个正则可匹配的字符串的长度不是固定的，可以是多种情况的。</p>
+<p>其实现的方式是使用量词。表示譬如{m,n}，表示连续出现最少m次，最多n次</p>
+<p>其实只要明白了匹配位置的方法{m,n}和匹配字符的方法[这里可以写任意多的字符]，就可以实现99.999%的正则表达式问题。</p>
+<p>至于其他的你看到关于正则表达式的知识都是建立在这两个基础能力之上的，要么是为了方便，创建了几个简单的写法，例如[0-5]=[012345]，又例如\d=[0-9]，这样就不用在方括号里写太多的字符，同时也增强了可读性。</p>
+<p>下面就介绍一些为了方便实现上面两种匹配而产生的各种简写：</p>
+<p><strong>1.表示字符</strong></p>
+<p>如果字符组里的字符特别多的话，怎么办？假如我想匹配所有的字符，总不能把所有的字符都输入到中括号内吧？</p>
+<p>所以，为了解决这个问题，正则表达式也可以写成这样的缩写：</p>
+<ul>
+<li><p>比如[123456abcdefGHIJKLM]，可以写成<strong>[1-6a-fG-M]</strong>。用连字符”-“来省略和简写。<em>（那么要匹配“a”、“-”、“z”这三者中任意一个字符，该怎么做呢？可以写成如下的方式：[-az]或[az-]或[a-z]。即要么放在开头，要么放在结尾，要么转义。）</em></p>
+</li>
+<li><p><strong>[^abc]</strong>，表示是一个除”a”、”b”、”c”之外的任意一个字符。字符组的第一位放”^”（脱字符），表示求反的概念</p>
+</li>
+<li><p><strong>\d</strong> 就是<code>[0-9]</code>。表示是一位数字。记忆方式：其英文是digit（数字）。</p>
+</li>
+<li><p><strong>\D</strong> 就是<code>[^0-9]</code>。表示除数字外的任意字符。</p>
+</li>
+<li><p><strong>\w</strong> 就是<code>[0-9a-zA-Z_]</code>。表示数字、大小写字母和下划线。记忆方式：w是word的简写，也称单词字符。</p>
+</li>
+<li><p><strong>\W</strong> 就是<code>[^0-9a-zA-Z_]</code>。非单词字符。</p>
+</li>
+<li><p><strong>\s</strong> 就是<code>[ \t\v\n\r\f]</code>。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。</p>
+</li>
+<li><p><strong>\S</strong> 就是<code>[^ \t\v\n\r\f]</code>。 非空白符。</p>
+</li>
+<li><p><strong>.</strong> 就是<code>[^\n\r\u2028\u2029]</code>。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符除外。记忆方式：想想省略号…中的每个点，都可以理解成占位符，表示任何类似的东西。</p>
+<p>如果要匹配任意字符怎么办？可以使用[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个。</p>
+</li>
+</ul>
+<p><strong>2.表示位置</strong>（数量）</p>
+<ul>
+<li><p><strong>{m,}</strong> 表示至少出现m次。</p>
+</li>
+<li><p><strong>{m}</strong> 等价于<code>{m,m}</code>，表示出现m次。</p>
+</li>
+<li><p><strong>?</strong>  等价于<code>{0,1}</code>，表示出现或者不出现。记忆方式：问号的意思表示，有吗？</p>
+</li>
+</ul>
+<ul>
+<li><strong>+</strong>  等价于<code>{1,}</code>，表示出现至少一次。记忆方式：加号是追加的意思，得先有一个，然后才考虑追加。</li>
+</ul>
+<ul>
+<li><strong>* </strong> 等价于<code>{0,}</code>，表示出现任意次，有可能不出现。记忆方式：看看天上的星星，可能一颗没有，可能零散有几颗，可能数也数不过来。</li>
+</ul>
+<h4 id="举例说明🌰"><a href="#举例说明🌰" class="headerlink" title="举例说明🌰"></a>举例说明🌰</h4><p>明白了基本用法，就需要几个例子来实验一下了。如果要在目录中搜索文件夹名字中有Util的文件，而且只显示DreamReader文件夹中的结果，那我可以这样搜:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ./* | grep -e &quot;.*Dream.*StringUtil&quot;</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/29/正则表达式上手/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -218,7 +342,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#114;&#x69;&#x2e;&#46;&#46;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#114;&#x69;&#x2e;&#46;&#46;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#114;&#x69;&#46;&#46;&#46;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#114;&#x69;&#46;&#46;&#46;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -226,10 +350,6 @@
 <p>We had switched all of our <code>android:singleLine=&quot;true&quot;</code> attributes to the recommended <code>android:maxLines=&quot;1&quot;</code>, but it turns out that there’s a bug in how the system calculates the ellipsis that is triggered if <code>singleLine</code> isn’t present.</p>
 <p>So I believe you can solve this issue by simply adding <code>android:singleLine=&quot;true&quot;</code> to your <code>TextView</code>s that are using <code>ellipsize</code> attrs.</p>
 <p>来源：<a href="https://stackoverflow.com/questions/45487427/crashlytics-reporting-multiples-issues-for-textview-makesinglelayout" target="_blank" rel="noopener">https://stackoverflow.com/questions/45487427/crashlytics-reporting-multiples-issues-for-textview-makesinglelayout</a></p>
-<hr>
-<p>km上也有相关的结论：</p>
-<p>android:ellipsize=”middle” android:maxLines=”1” android:singleLine=”true” 巨坑无比   设置了中间出点点点之后只能设置singleLine不能设置maxLines=”1”   不然会报数组越界的错误。</p>
-<p>来源：<a href="http://km.oa.com/group/21779/articles/show/168826?kmref=search&amp;from_page=1&amp;no=3" target="_blank" rel="noopener">http://km.oa.com/group/21779/articles/show/168826?kmref=search&amp;from_page=1&amp;no=3</a></p>
 
       
 
@@ -243,11 +363,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		
 		</ul>
@@ -1131,98 +1251,6 @@
 
 
   
-    <article id="post-编程题之数串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/01/编程题之数串/">编程题之数串</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/01/编程题之数串/" class="archive-article-date">
-  	<time datetime="2017-09-01T13:00:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>题目描述</strong><br>设有n个正整数，将他们连接成一排，组成一个最大的多位整数。<br>如:n=3时，3个整数13,312,343,连成的最大整数为34331213。<br>如:n=4时,4个整数7,13,4,246连接成的最大整数为7424613。<br><strong>输入描述:</strong><br>有多组测试样例，每组测试样例包含两行，第一行为一个整数N（N&lt;=100），第二行包含N个数(每个数不超过1000，空格分开)。<br><strong>输出描述:</strong><br>每组数据输出一个表示最大的整数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">示例1</div><div class="line">输入</div><div class="line"></div><div class="line">2</div><div class="line">12 123</div><div class="line">4</div><div class="line">7 13 4 246</div><div class="line">输出</div><div class="line"></div><div class="line">12312</div><div class="line">7424613</div></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/09/01/编程题之数串/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">牛客</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/01/编程题之数串/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1237,7 +1265,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 小蚊子叮叮
+    		&copy; 2019 小蚊子叮叮
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1316,43 +1344,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">苹果损伤时间分类论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">报告</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,7 +1356,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1380,15 +1396,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+                <a href="javascript:void(0)" class="js-tag color3">测试</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">苹果损伤时间分类论文</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">报告</a>
               </li>
             
             <div class="clearfix"></div>

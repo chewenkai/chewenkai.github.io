@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chewenkai.github.io">
-  <title>数据结构之二叉树相关 | 小蚊子叮叮的小屋</title>
+  <title>正则表达式上手 | 小蚊子叮叮的小屋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="二叉树的相关术语:树的结点:包含一个数据元素及若干指向子树的分支；孩子结点:结点的子树的根称为该结点的孩子；双亲结点:B 结点是A 结点的孩子，则A结点是B 结点的双亲；兄弟结点:同一双亲的孩子结点； 堂兄结点:同一层上结点；祖先结点: 从根到该结点的所经分支上的所有结点子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙结点层:根结点的层定义为1；根的孩子为第二层结点，依此类推；树的深度:">
+  <meta name="description" content="正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹">
 <meta name="keywords" content="日常总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构之二叉树相关">
-<meta property="og:url" content="https://chewenkai.github.io/2017/07/08/数据结构之二叉树相关/index.html">
+<meta property="og:title" content="正则表达式上手">
+<meta property="og:url" content="https://chewenkai.github.io/2018/12/29/正则表达式上手/index.html">
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
-<meta property="og:description" content="二叉树的相关术语:树的结点:包含一个数据元素及若干指向子树的分支；孩子结点:结点的子树的根称为该结点的孩子；双亲结点:B 结点是A 结点的孩子，则A结点是B 结点的双亲；兄弟结点:同一双亲的孩子结点； 堂兄结点:同一层上结点；祖先结点: 从根到该结点的所经分支上的所有结点子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙结点层:根结点的层定义为1；根的孩子为第二层结点，依此类推；树的深度:">
-<meta property="og:updated_time" content="2018-03-29T07:15:45.000Z">
+<meta property="og:description" content="正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹">
+<meta property="og:updated_time" content="2018-12-31T02:22:05.525Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据结构之二叉树相关">
-<meta name="twitter:description" content="二叉树的相关术语:树的结点:包含一个数据元素及若干指向子树的分支；孩子结点:结点的子树的根称为该结点的孩子；双亲结点:B 结点是A 结点的孩子，则A结点是B 结点的双亲；兄弟结点:同一双亲的孩子结点； 堂兄结点:同一层上结点；祖先结点: 从根到该结点的所经分支上的所有结点子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙结点层:根结点的层定义为1；根的孩子为第二层结点，依此类推；树的深度:">
+<meta name="twitter:title" content="正则表达式上手">
+<meta name="twitter:description" content="正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹">
   
   
     <link rel="icon" href="/assets/img/favicon.png">
@@ -146,122 +146,77 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-数据结构之二叉树相关" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-正则表达式上手" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      数据结构之二叉树相关
+      正则表达式上手
     </h1>
   
 
         
-        <a href="/2017/07/08/数据结构之二叉树相关/" class="archive-article-date">
-  	<time datetime="2017-07-08T13:00:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-08</time>
+        <a href="/2018/12/29/正则表达式上手/" class="archive-article-date">
+  	<time datetime="2018-12-29T12:02:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h4 id="二叉树的相关术语"><a href="#二叉树的相关术语" class="headerlink" title="二叉树的相关术语:"></a>二叉树的相关术语:</h4><p><strong>树的结点</strong>:包含一个数据元素及若干指向子树的分支；<br><strong>孩子结点</strong>:结点的子树的根称为该结点的孩子；<br><strong>双亲结点</strong>:B 结点是A 结点的孩子，则A结点是B 结点的双亲；<br><strong>兄弟结点</strong>:同一双亲的孩子结点； 堂兄结点:同一层上结点；<br><strong>祖先结点</strong>: 从根到该结点的所经分支上的所有结点子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙<br><strong>结点层</strong>:根结点的层定义为1；根的孩子为第二层结点，依此类推；<br><strong>树的深度</strong>:树中最大的结点层<br><strong>结点的度</strong>:结点子树的个数<br><strong>树的度</strong>: 树中最大的结点度。<br><strong>叶子结点</strong>:也叫终端结点，是度为 0 的结点；<br><strong>分枝结点</strong>:度不为0的结点；<br><strong>有序树</strong>:子树有序的树，如:家族树；<br><strong>无序树</strong>:不考虑子树的顺序；<br><a href="http://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91#2_2" target="_blank" rel="noopener">参考</a></p>
-<a id="more"></a>
-<h4 id="二叉树相关知识点"><a href="#二叉树相关知识点" class="headerlink" title="二叉树相关知识点:"></a>二叉树相关知识点:</h4><ul>
-<li><p>在二叉树中每个节点最多有两个子节点，一般称为左子节点和右子节点（或左孩子和右孩子），并且二叉树的子树有左右之分，其次序不能任意颠倒。</p>
-</li>
-<li><p>二叉树是递归定义的，因此，与二叉树有关的题目基本都可以用递归思想解决。</p>
-</li>
-</ul>
-<h4 id="二叉树相关面试题目"><a href="#二叉树相关面试题目" class="headerlink" title="二叉树相关面试题目:"></a>二叉树相关面试题目:</h4><p>参考网上的<a href="http://blog.csdn.net/luckyxiaoqiang/article/details/7518888" target="_blank" rel="noopener">相关面试题</a>，添加了自己的理解（括号部分），并将代码改为java实现。</p>
-<p><em>注意，在递归过程中，若一共有n种情况，要有m(m&lt;n)种情况用于控制递归停止，n-m个条件用于递归。</em></p>
-<p>首先，二叉树的Java定义如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 二叉树定义</div><div class="line">**/</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTree</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> rootNode = <span class="keyword">null</span>;  <span class="comment">// 根节点</span></div><div class="line">    BinaryTree leftNode = <span class="keyword">null</span>;  <span class="comment">// 左子节点</span></div><div class="line">    BinaryTree rightNode = <span class="keyword">null</span>;  <span class="comment">// 右子节点</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BinaryTree</span> <span class="params">(<span class="keyword">int</span> rootNode, BinaryTree leftNode, BinaryTree rightNode)</span></span>&#123;  <span class="comment">// 构造函数</span></div><div class="line">      <span class="keyword">this</span>.rootNode=rootNode</div><div class="line">      <span class="keyword">this</span>.leftNode=leftNode</div><div class="line">      <span class="keyword">this</span>.rightNode=rightNode</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li><strong>求二叉树中的节点个数</strong><br>递归解法:<ul>
-<li>如果二叉树为空，节点个数为0</li>
-<li>如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</li>
-</ul>
-</li>
-</ol>
-<p>参考代码如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getNodeNum</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果二叉树为空，节点个数为0</span></div><div class="line">    <span class="keyword">if</span>(bt.rootNode == <span class="keyword">null</span>)  </div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果二叉树不为空，二叉树节点个数 = 左子树节点个数 + 右子树节点个数 + 1</span></div><div class="line">    <span class="keyword">return</span> getNodeNum(bt.leftNode) + getNodeNum(bt.rightNode) + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<ol>
-<li><p><strong>求二叉树的深度</strong><br>递归解法:</p>
+        <p>正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。<a href="https://github.com/qdlaoyao/js-regex-mini-book" target="_blank" rel="noopener">任意门</a></p>
+<p>下面讲我认为书中较为重要的点记在下面：</p>
+<p>首先，正则是什么？正则是匹配模式，要么匹配字符，要么匹配位置。（匹配可以理解为搜索的意思）</p>
+<h4 id="匹配字符："><a href="#匹配字符：" class="headerlink" title="匹配字符："></a>匹配字符：</h4><p>一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种可能。</p>
+<p>其实现的方式是使用字符组。譬如[abc]，表示该字符是可以字符“a”、“b”、“c”中的任何一个，中括号里可以写任意字符，包括空格，问号等。</p>
+<h4 id="匹配位置："><a href="#匹配位置：" class="headerlink" title="匹配位置："></a>匹配位置：</h4><p>一个正则可匹配的字符串的长度不是固定的，可以是多种情况的。</p>
+<p>其实现的方式是使用量词。表示譬如{m,n}，表示连续出现最少m次，最多n次</p>
+<p>其实只要明白了匹配位置的方法{m,n}和匹配字符的方法[这里可以写任意多的字符]，就可以实现99.999%的正则表达式问题。</p>
+<p>至于其他的你看到关于正则表达式的知识都是建立在这两个基础能力之上的，要么是为了方便，创建了几个简单的写法，例如[0-5]=[012345]，又例如\d=[0-9]，这样就不用在方括号里写太多的字符，同时也增强了可读性。</p>
+<p>下面就介绍一些为了方便实现上面两种匹配而产生的各种简写：</p>
+<p><strong>1.表示字符</strong></p>
+<p>如果字符组里的字符特别多的话，怎么办？假如我想匹配所有的字符，总不能把所有的字符都输入到中括号内吧？</p>
+<p>所以，为了解决这个问题，正则表达式也可以写成这样的缩写：</p>
 <ul>
-<li>如果二叉树为空，二叉树的深度为0</li>
-<li>如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getBTDeep</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果二叉树为空，二叉树的深度为0</span></div><div class="line">    <span class="keyword">if</span>(bt.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果二叉树不为空，二叉树的深度 = max(左子树深度， 右子树深度) + 1</span></div><div class="line">    <span class="keyword">long</span> leftDeep = getBTDeep(bt.leftDeep);</div><div class="line">    <span class="keyword">long</span> rightDeep = getBTDeep(bt.rightDeep);</div><div class="line">    <span class="keyword">return</span> leftDeep&gt;rightDeep ? (leftDeep + <span class="number">1</span>) : (rightDeep + <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>比如[123456abcdefGHIJKLM]，可以写成<strong>[1-6a-fG-M]</strong>。用连字符”-“来省略和简写。<em>（那么要匹配“a”、“-”、“z”这三者中任意一个字符，该怎么做呢？可以写成如下的方式：[-az]或[az-]或[a-z]。即要么放在开头，要么放在结尾，要么转义。）</em></p>
+</li>
+<li><p><strong>[^abc]</strong>，表示是一个除”a”、”b”、”c”之外的任意一个字符。字符组的第一位放”^”（脱字符），表示求反的概念</p>
+</li>
+<li><p><strong>\d</strong> 就是<code>[0-9]</code>。表示是一位数字。记忆方式：其英文是digit（数字）。</p>
+</li>
+<li><p><strong>\D</strong> 就是<code>[^0-9]</code>。表示除数字外的任意字符。</p>
+</li>
+<li><p><strong>\w</strong> 就是<code>[0-9a-zA-Z_]</code>。表示数字、大小写字母和下划线。记忆方式：w是word的简写，也称单词字符。</p>
+</li>
+<li><p><strong>\W</strong> 就是<code>[^0-9a-zA-Z_]</code>。非单词字符。</p>
+</li>
+<li><p><strong>\s</strong> 就是<code>[ \t\v\n\r\f]</code>。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。</p>
+</li>
+<li><p><strong>\S</strong> 就是<code>[^ \t\v\n\r\f]</code>。 非空白符。</p>
+</li>
+<li><p><strong>.</strong> 就是<code>[^\n\r\u2028\u2029]</code>。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符除外。记忆方式：想想省略号…中的每个点，都可以理解成占位符，表示任何类似的东西。</p>
+<p>如果要匹配任意字符怎么办？可以使用[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个。</p>
 </li>
 </ul>
-</li>
-<li><p><strong>前序、中序和后序遍历</strong><br>前序遍历递归解法:</p>
+<p><strong>2.表示位置</strong>（数量）</p>
 <ul>
-<li>如果二叉树为空，空操作</li>
-<li>如果二叉树不为空，访问根节点，再前序遍历左子树，再前序遍历右子树<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preOrderTraverse</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span> (bt.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    doSomeThing(bt.rootNode);</div><div class="line">    preOrderTraverse(bt.leftNode);</div><div class="line">    preOrderTraverse(bt.rightNode);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p><strong>{m,}</strong> 表示至少出现m次。</p>
+</li>
+<li><p><strong>{m}</strong> 等价于<code>{m,m}</code>，表示出现m次。</p>
+</li>
+<li><p><strong>?</strong>  等价于<code>{0,1}</code>，表示出现或者不出现。记忆方式：问号的意思表示，有吗？</p>
 </li>
 </ul>
-</li>
-</ol>
-<p>中序和后序雷同。</p>
-<ol>
-<li><p><strong>分层遍历二叉树（按层次从上往下，从左往右）</strong><br>相当于广度优先搜索，使用队列实现。队列初始化，将根节点压入队列。当队列不为空，进行如下操作:弹出一个节点，访问，若左子节点或右子节点不为空，将其压入队列。<br>参考代码如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">levelTraverse</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(bt.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    LinkedList&lt;BinaryTree&gt; queue = <span class="keyword">new</span> LinkedList&lt;BinaryTree&gt;();  <span class="comment">// LinkedList实现了Java的Queen接口</span></div><div class="line">    queue.addLast(bt);</div><div class="line">    <span class="keyword">while</span> (!queue.isEmpty())&#123;</div><div class="line">        popBT = queue.pollFirst();</div><div class="line">        <span class="keyword">if</span> (bt.leftNode != <span class="keyword">null</span>)</div><div class="line">            queue.addLast(bt.leftNode);</div><div class="line">        <span class="keyword">if</span> (bt.rightNode != <span class="keyword">null</span>)</div><div class="line">            queue.addLast(bt.rightNode);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p><strong>将二叉查找树变为有序的双向链表</strong><br>要求不能创建新节点，只调整指针。<br>递归解法:<br>（1）如果二叉树查找树为空，不需要转换，对应双向链表的第一个节点是NULL，最后一个节点是NULL<br>（2）如果二叉查找树不为空:<br>如果左子树为空，对应双向有序链表的第一个节点是根节点，左边不需要其他操作；<br>如果左子树不为空，转换左子树，二叉查找树对应双向有序链表的第一个节点就是左子树转换后双向有序链表的第一个节点，同时将根节点和左子树转换后的双向有序链 表的最后一个节点连接；<br>如果右子树为空，对应双向有序链表的最后一个节点是根节点，右边不需要其他操作；<br>如果右子树不为空，对应双向有序链表的最后一个节点就是右子树转换后双向有序链表的最后一个节点，同时将根节点和右子树转换后的双向有序链表的第一个节点连接。<br>参考代码如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">TODO</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;  </div><div class="line">    <span class="keyword">private</span> TreeNode head=<span class="keyword">null</span>;  </div><div class="line">    <span class="keyword">private</span> TreeNode tail=<span class="keyword">null</span>;  </div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">Convert</span><span class="params">(TreeNode pRootOfTree)</span> </span>&#123;  </div><div class="line">        visit(pRootOfTree);  </div><div class="line">        <span class="keyword">return</span> head;  </div><div class="line">    &#125;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(TreeNode root)</span> </span>&#123;    </div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;    </div><div class="line">            <span class="keyword">return</span>;    </div><div class="line">        &#125;    </div><div class="line">        visit(root.left);    </div><div class="line">        createList(root);    </div><div class="line">        visit(root.right);    </div><div class="line">    &#125;    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createList</span><span class="params">(TreeNode cur)</span></span>&#123;    </div><div class="line">        cur.left=tail;<span class="comment">//把当前的节点接到链表的尾部     </span></div><div class="line">        <span class="keyword">if</span>(tail!=<span class="keyword">null</span>)&#123;<span class="comment">//双向连接     </span></div><div class="line">            tail.right=cur;     </div><div class="line">        &#125;<span class="keyword">else</span>&#123;     </div><div class="line">            head=cur;     </div><div class="line">        &#125;     </div><div class="line">        tail=cur;<span class="comment">//更新尾结点为当前结点，或者说:尾结点后移     </span></div><div class="line">    &#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p><strong>求二叉树第K层的节点个数</strong><br>递归解法:</p>
 <ul>
-<li>如果二叉树为空或者k&lt;1返回0 (不是k层，或节点不存在，不计数)</li>
-<li>如果二叉树不为空并且k==1，返回1 （第k层，计数+1）</li>
-<li>如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和 （递归寻找第k层）<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNodeNumOfKthLevel</span><span class="params">(BinaryTree bt, <span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果二叉树为空或者k&lt;1返回0</span></div><div class="line">    <span class="keyword">if</span> (bt.rootNode == <span class="keyword">null</span> || k&lt;<span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="comment">// 如果二叉树不为空并且k==1，返回1</span></div><div class="line">    <span class="keyword">if</span> (k == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果二叉树不为空且k&gt;1，返回左子树中k-1层的节点个数与右子树k-1层节点个数之和</span></div><div class="line">    <span class="comment">// 解释:通过控制k来控制递归，即每一层K都减一，最后到达k-1层时k减为1，停止递归。</span></div><div class="line">    <span class="keyword">int</span> leftNum = getNodeNumOfKthLevel(bt.leftNode, k-<span class="number">1</span>);</div><div class="line">    <span class="keyword">int</span> rightNum = getNodeNumOfKthLevel(bt.rightNode, k-<span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> leftNum + rightNum;  <span class="comment">// 返回左右孩子节点下的节点个数</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li><strong>+</strong>  等价于<code>{1,}</code>，表示出现至少一次。记忆方式：加号是追加的意思，得先有一个，然后才考虑追加。</li>
 </ul>
-</li>
-<li><p><strong>求二叉树中叶子节点的个数</strong><br>递归解法:</p>
 <ul>
-<li>如果二叉树为空，返回0 （节点不存在）</li>
-<li>如果二叉树不为空且左右子树为空，返回1 （节点为叶子节点，计数+1）</li>
-<li>如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数 （节点不是叶子节点，递归寻找叶子节点）<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLeafNodeNum</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果二叉树为空，返回0</span></div><div class="line">    <span class="keyword">if</span> (bt.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果二叉树不为空且左右子树为空，返回1</span></div><div class="line">    <span class="keyword">if</span> (bt.rootNode != <span class="keyword">null</span> &amp;&amp; bt.leftNode == <span class="keyword">null</span> &amp;&amp; bt.rightNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果二叉树不为空，且左右子树不同时为空，返回左子树中叶子节点个数加上右子树中叶子节点个数</span></div><div class="line">    <span class="keyword">int</span> leftNum = getLeafNodeNum(bt.leftNode);</div><div class="line">    <span class="keyword">int</span> rightNum = getLeafNodeNum(bt.rightNode);</div><div class="line">    <span class="keyword">return</span> leftNum + rightNum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li><strong>* </strong> 等价于<code>{0,}</code>，表示出现任意次，有可能不出现。记忆方式：看看天上的星星，可能一颗没有，可能零散有几颗，可能数也数不过来。</li>
 </ul>
-</li>
-<li><p><strong>判断两棵二叉树是否结构相同</strong><br>不考虑数据内容。结构相同意味着对应的左子树和对应的右子树都结构相同。<br>递归解法:</p>
-<ul>
-<li>如果两棵二叉树都为空，返回真 (判断根节点)</li>
-<li>如果两棵二叉树一棵为空，另一棵不为空，返回假 (判断根节点)</li>
-<li>如果两棵二叉树都不为空，如果对应的左子树和右子树都同构返回真，其他返回假 (递归判断孩子节点)<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">structureCmp</span><span class="params">(BinaryTree bt1, BinaryTree bt2)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果两棵二叉树都为空，返回真</span></div><div class="line">    <span class="keyword">if</span> (bt1.rootNode == <span class="keyword">null</span> &amp;&amp; bt2.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果两棵二叉树一棵为空，另一棵不为空，返回假</span></div><div class="line">    <span class="keyword">if</span> (bt1.rootNode == <span class="keyword">null</span> || bt2.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果两棵二叉树都不为空，如果对应的左子树和右子树都同构返回真，其他返回假</span></div><div class="line">    <span class="keyword">boolean</span> leftCmp = structureCmp(bt1.leftNode, bt2.leftNode);</div><div class="line">    <span class="keyword">boolean</span> rightCmp = structureCmp(bt1.rightNode, bt2.rightNode);</div><div class="line">    <span class="keyword">return</span> leftCmp &amp;&amp; rightCmp;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>扩展 <strong>判断两棵二叉树是否相同（结构+数值）</strong><br>对上述问题（8）的扩展，考虑数据内容。<br>递归解法:</p>
-<ul>
-<li>如果两棵二叉树都为空，返回真 (判断根节点结构)</li>
-<li>如果两棵二叉树一棵为空，另一棵不为空，返回假 (判断根节点结构)</li>
-<li>如果两棵二叉树都不为空，判断值不相等，返回假 (判断根节点值)</li>
-<li>如果两棵二叉树都不为空，判断值相等，判断对应的左子树和右子树都返回真则返回真，其他返回假 (递归判断孩子节点的结构和值)<br>参考代码如下:<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">structureCmp</span><span class="params">(BinaryTree bt1, BinaryTree bt2)</span></span>&#123;</div><div class="line">    <span class="comment">// 如果两棵二叉树都为空，返回真</span></div><div class="line">    <span class="keyword">if</span> (bt1.rootNode == <span class="keyword">null</span> &amp;&amp; bt2.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果两棵二叉树一棵为空，另一棵不为空，返回假</span></div><div class="line">    <span class="keyword">if</span> (bt1.rootNode == <span class="keyword">null</span> || bt2.rootNode == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果两棵二叉树都不为空，判断值不相等，返回假 (判断根节点值)</span></div><div class="line">    <span class="keyword">if</span> (bt1.rootNode != bt2.rootNode)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 如果两棵二叉树都不为空，判断值相等，判断对应的左子树和右子树都返回真则返回真，其他返回假 (递归判断孩子节点的结构和值)</span></div><div class="line">    <span class="keyword">boolean</span> leftCmp = structureCmp(bt1.leftNode, bt2.leftNode);</div><div class="line">    <span class="keyword">boolean</span> rightCmp = structureCmp(bt1.rightNode, bt2.rightNode);</div><div class="line">    <span class="keyword">return</span> leftCmp &amp;&amp; rightCmp;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>判断二叉树是不是平衡二叉树</strong></p>
-</li>
-</ol>
-<p><em>平衡二叉树（Self-balancing binary search tree）又被称为AVL树（有别于AVL算法），且具有以下性质：它是一 棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</em></p>
-<p>递归解法：</p>
-<ul>
-<li>如果二叉树为空，返回真</li>
-<li>如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> UNB = -<span class="number">1</span>;  <span class="comment">// 定义一个不可能的树的高度作为不平衡的代表</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span><span class="params">(BinaryTree bt)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = balanceJudge(bt);</div><div class="line">    <span class="comment">// 判断数的高度，如果为-1，则数不平衡，否则树是平衡的。</span></div><div class="line">    <span class="keyword">if</span>(result != UNB)<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">* 判断是否平衡，返回的为当前树的高度</div><div class="line">**/</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">balanceJudge</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(bt.rootNode==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> l = balanceJudge(bt.leftNode);</div><div class="line">    <span class="keyword">int</span> r = balanceJudge(bt.rightNode);</div><div class="line">    <span class="keyword">if</span>(l==UNB || r== UNB || Math.abs(l-r)&gt;<span class="number">1</span>) <span class="keyword">return</span> UNB;  <span class="comment">// 如果左树或右树有任何一个不平衡，或者高度相差超过1，则整个二叉树不平衡</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>+(l&gt;r?l:r);  <span class="comment">// 平衡，返回深度，深度为左右子树中最深的树的深度</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li><strong>求二叉树的镜像</strong><br>递归解法：</li>
-</ol>
-<ul>
-<li>如果二叉树为空，返回空</li>
-<li>如果二叉树不为空，求左子树和右子树的镜像，然后交换左子树和右子树</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BinaryTree <span class="title">mirrorBT</span><span class="params">(BinaryTree bt)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(bt.rootNode==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    BinaryTree leftTree = mirrorBT(bt.leftNode);</div><div class="line">    BinaryTree rightTree = mirrorBT(bt.rightNode);</div><div class="line"></div><div class="line">    <span class="comment">// 交换左右子树</span></div><div class="line">    bt.leftNode = rightTree;</div><div class="line">    bt.rightNode = leftTree;</div><div class="line">    <span class="keyword">return</span> bt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="举例说明🌰"><a href="#举例说明🌰" class="headerlink" title="举例说明🌰"></a>举例说明🌰</h4><p>明白了基本用法，就需要几个例子来实验一下了。如果要在目录中搜索文件夹名字中有Util的文件，而且只显示DreamReader文件夹中的结果，那我可以这样搜:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">find ./* | grep -e &quot;.*Dream.*StringUtil&quot;</div></pre></td></tr></table></figure>
 
       
 
@@ -313,21 +268,6 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/面试//" class="article-tag-list-link color3">面试</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/面试/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -377,7 +317,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chewenkai.github.io/2017/07/08/数据结构之二叉树相关/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chewenkai.github.io/2018/12/29/正则表达式上手/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -391,18 +331,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/08/摆动排序-归并排序-归并排序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          摆动排序-归并排序-归并排序
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/05/04/小麦抽样管理系统/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">小麦抽样管理系统说明书</div>
+    <a href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">坑--TextView同时使用maxLines=1和ellipsize时偶发崩溃</div>
       <i class="icon-circle-right"></i>
     </a>
   
