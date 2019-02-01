@@ -147,6 +147,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-对使用ViewPager的一点理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/01/对使用ViewPager的一点理解/">对使用ViewPager的一点理解</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/01/对使用ViewPager的一点理解/" class="archive-article-date">
+  	<time datetime="2019-02-01T12:05:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>大家都用过ViewPager吧😄，使用ViewPager时，需要给它配一个Adapter，通常我们要继承下面三个Adapter来，分别是：</p>
+<p>———&gt;最基本的PagerAdapter</p>
+<p>——————&gt;继承PagerAdapter的FragmentPagerAdapter</p>
+<p>——————&gt;继承PagerAdapter的FragmentStatePagerAdapter</p>
+<p>那么这三个Adapter有什么区别，我们应该怎么选择呢？</p>
+<h3 id="1-关于PagerAdapter"><a href="#1-关于PagerAdapter" class="headerlink" title="1.关于PagerAdapter"></a>1.关于PagerAdapter</h3><p>首先，我们知道如果继承了PagerAdapter，需要我们实现下面两个方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Return the number of views available.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Create the page for the given position.  The adapter is responsible</div><div class="line"> * for adding the view to the container given here, although it only</div><div class="line"> * must ensure this is done by the time it returns from</div><div class="line"> * &#123;<span class="doctag">@link</span> #finishUpdate(ViewGroup)&#125;.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> container The containing View in which the page will be shown.</div><div class="line"> * <span class="doctag">@param</span> position The page position to be instantiated.</div><div class="line"> * <span class="doctag">@return</span> Returns an Object representing the new page.  This does not</div><div class="line"> * need to be a View, but can be some other container of the page.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> instantiateItem((View) container, position);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一个是要告诉ViewPager一共有几个页面，第二个则是ViewPager需要加载页面了，你需要根据position创建不同的页面对象，这里通常是View对象。 </p>
+<p>当然，如果你的ViewPager中内容比较复杂，需要用Fragment来自动管理其生命周期，那么可以使用FragmentPagerAdapter和FragmentStatePagerAdapter中的一种，那么他俩有什么区别呢？</p>
+<p>首先我们看一下FragmentPagerAdapter的<code>instantiateItem</code>和<code>destroyItem</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"> 	<span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">       ...</div><div class="line">       <span class="keyword">final</span> <span class="keyword">long</span> itemId = getItemId(position);</div><div class="line"></div><div class="line">       <span class="comment">// Do we already have this fragment?</span></div><div class="line">       String name = makeFragmentName(container.getId(), itemId);</div><div class="line">       Fragment fragment = mFragmentManager.findFragmentByTag(name);</div><div class="line">       <span class="keyword">if</span> (fragment != <span class="keyword">null</span>) &#123;</div><div class="line">           <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"Attaching item #"</span> + itemId + <span class="string">": f="</span> + fragment);</div><div class="line">           mCurTransaction.attach(fragment);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           fragment = getItem(position);</div><div class="line">           <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"Adding item #"</span> + itemId + <span class="string">": f="</span> + fragment);</div><div class="line">           mCurTransaction.add(container.getId(), fragment,</div><div class="line">                   makeFragmentName(container.getId(), itemId));</div><div class="line">       &#125;</div><div class="line">      ...</div><div class="line">       <span class="keyword">return</span> fragment;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span> (mCurTransaction == <span class="keyword">null</span>) &#123;</div><div class="line">           mCurTransaction = mFragmentManager.beginTransaction();</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"Detaching item #"</span> + getItemId(position) + <span class="string">": f="</span> + object</div><div class="line">               + <span class="string">" v="</span> + ((Fragment)object).getView());</div><div class="line">       mCurTransaction.detach((Fragment)object);</div><div class="line">   &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getItemId</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> position;</div><div class="line">   &#125;</div><div class="line"></div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">makeFragmentName</span><span class="params">(<span class="keyword">int</span> viewId, <span class="keyword">long</span> id)</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="string">"android:switcher:"</span> + viewId + <span class="string">":"</span> + id;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>可以看出<code>instantiateItem</code>方法在添加Fragment时，会带一个Fragment的名字，其实就是Tag：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mCurTransaction.add(container.getId(), fragment, makeFragmentName(container.getId(), itemId));</div></pre></td></tr></table></figure>
+<p>这个Tag是根据一定规则从<code>makeFragmentName</code>中获得的，这里唯一变化的就是id，默认的id可从getItemId(position)中看到，就是当前的position，保证了每个fragment的tag是唯一的。</p>
+<p>当ViewPager通过<code>instantiateItem</code>获取Fragment的时候，会先根据之前设置的Tag找一下这个Fragment存不存在：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mFragmentManager.findFragmentByTag(name)</div></pre></td></tr></table></figure>
+<p>根据获取到的Fragment有两种添加方式，如果根据Tag找到了之前存在的Fragment，就attach上去：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mCurTransaction.attach(fragment);</div></pre></td></tr></table></figure>
+<p>如果没找到，那就把新创建的Fragment add上去:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mCurTransaction.add(container.getId(), fragment, makeFragmentName(container.getId(), itemId));</div></pre></td></tr></table></figure>
+<p>当不用这个Fragment的时，会调用<code>destroyItem</code>方法，可以看到这里是detach掉了Fragment，并没有销毁。</p>
+<p>综上，一个页面只会创建一次，创建时根据当前的position给Fragment设置一个Tag，当不需要时只是把Fragmetn detach掉，并不会销毁，下次需要时通过Tag复用Fragment。</p>
+<p>所以，如果你有大量的Fragment要展示，FragmentPagerAdapter会持有每一个Fragment不释放，最终走向OOM。</p>
+<p>所以，无论使用PagerAdapter还是FragmentPagerAdapter，有多少页面，就会创建多少页面对象，页面很多的情况下，会非常占用内存，虽然这样，但是它们也有各自的应用场景，例如，App的首次安装的启动引导页面个数是固定的，而且如果比较复杂，通常做成Fragment，这时使用FragmentPagerAdapter较为合适；而如果页面中有需要自动轮播卡片的地方，则可以使用PagerAdapter实现，因为其页面一般都是View，结构简单，数量也是固定的。</p>
+<p>那如果我需要做一个可以无限滑动的卡片，就需要用到FragmentStatePagerAdapter了，我们看一下FragmentStatePagerAdapter的<code>instantiateItem</code>和<code>destroyItem</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Return the Fragment associated with a specified position.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (mCurTransaction == <span class="keyword">null</span>) &#123;</div><div class="line">        mCurTransaction = mFragmentManager.beginTransaction();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Fragment fragment = getItem(position);</div><div class="line">    <span class="keyword">while</span> (mFragments.size() &lt;= position) &#123;</div><div class="line">        mFragments.add(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"> 	...</div><div class="line">    mCurTransaction.add(container.getId(), fragment);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> fragment;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</div><div class="line">    Fragment fragment = (Fragment) object;</div><div class="line">    ...</div><div class="line">    mCurTransaction.remove(fragment);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，FragmentStatePagerAdapter在初始化页面时，通过getItem这个抽象方法来获得Fragment，并将其add到容器里，而不用的时候直接remove掉，这样就不会一直占用Fragment，可以实现无限滑动，唯一关心的就是在getItem中创建一个Fragment就可以了。</p>
+<p>以上就是我对三种PagerAdapter的简单理解。在使用ViewPager的过程中，除了adapter的选择，还需要到了下面的问题。</p>
+<h3 id="2-常见的两个问题小析"><a href="#2-常见的两个问题小析" class="headerlink" title="2.常见的两个问题小析"></a>2.常见的两个问题小析</h3><h5 id="1-notifyDataSetChanged-后页面没有刷新的问题"><a href="#1-notifyDataSetChanged-后页面没有刷新的问题" class="headerlink" title="1.notifyDataSetChanged()后页面没有刷新的问题"></a>1.notifyDataSetChanged()后页面没有刷新的问题</h5><p>这个问题主要是由于当数据更新时，ViewPager会调用<code>dataSetChanged</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dataSetChanged</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// This method only gets called if our observer is attached, so mAdapter is non-null.</span></div><div class="line"></div><div class="line">  	...</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; mItems.size(); i++) &#123;</div><div class="line">        <span class="keyword">final</span> ItemInfo ii = mItems.get(i);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> newPos = mAdapter.getItemPosition(ii.object);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (newPos == PagerAdapter.POSITION_UNCHANGED) &#123;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (newPos == PagerAdapter.POSITION_NONE) &#123;</div><div class="line">            mItems.remove(i);</div><div class="line">            i--;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (!isUpdating) &#123;</div><div class="line">                mAdapter.startUpdate(<span class="keyword">this</span>);</div><div class="line">                isUpdating = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            mAdapter.destroyItem(<span class="keyword">this</span>, ii.position, ii.object);</div><div class="line">            needPopulate = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (mCurItem == ii.position) &#123;</div><div class="line">                <span class="comment">// Keep the current item in the valid range</span></div><div class="line">                newCurrItem = Math.max(<span class="number">0</span>, Math.min(mCurItem, adapterCount - <span class="number">1</span>));</div><div class="line">                needPopulate = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">     ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法会调用adapter的getItemPosition()来获得object的位置情况是否发生变化，如果不发生变化就不更新了，如果而这个方法默认是返回的就是POSITION_UNCHANGED：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">/**</span></div><div class="line"> * Called when the host view is attempting to determine if an item's position</div><div class="line"> * has changed. Returns &#123;<span class="doctag">@link</span> #POSITION_UNCHANGED&#125; if the position of the given</div><div class="line"> * item has not changed or &#123;<span class="doctag">@link</span> #POSITION_NONE&#125; if the item is no longer present</div><div class="line"> * in the adapter.</div><div class="line"> *</div><div class="line"> * &lt;p&gt;The default implementation assumes that items will never</div><div class="line"> * change position and always returns &#123;<span class="doctag">@link</span> #POSITION_UNCHANGED&#125;.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> object Object representing an item, previously returned by a call to</div><div class="line"> *               &#123;<span class="doctag">@link</span> #instantiateItem(View, int)&#125;.</div><div class="line"> * <span class="doctag">@return</span> object's new position index from [0, &#123;<span class="doctag">@link</span> #getCount()&#125;),</div><div class="line"> *         &#123;<span class="doctag">@link</span> #POSITION_UNCHANGED&#125; if the object's position has not changed,</div><div class="line"> *         or &#123;<span class="doctag">@link</span> #POSITION_NONE&#125; if the item is no longer present.</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemPosition</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> POSITION_UNCHANGED;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以要想每次刷新都让页面更新，需要在adapter中重写getItemPosition方法，并返回POSITION_NONE就可以了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemPosition</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> POSITION_NONE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="2-初始化数据时不会调用OnPageChangeListener"><a href="#2-初始化数据时不会调用OnPageChangeListener" class="headerlink" title="2.初始化数据时不会调用OnPageChangeListener"></a>2.初始化数据时不会调用OnPageChangeListener</h5><p>相信大家都遇到过这种情况，就是ViewPager初始化时并不会调用OnPageChangeListener，所以很多时候我们都是手动调用第一页的onPageSelected方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="keyword">private</span> ViewPager.OnPageChangeListener onPageChangeListener = <span class="keyword">new</span> ViewPager.OnPageChangeListener() &#123;</div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span> </span>&#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="meta">@Override</span></div><div class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnCreate</span><span class="params">()</span></span>&#123;</div><div class="line">      ...</div><div class="line">      mViewPager.setOnPageChangeListener(onPageChangeListener);</div><div class="line">onPageChangeListener.onPageSelected(<span class="number">0</span>);  <span class="comment">// 手动调用第一页</span></div><div class="line">      ...</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>但是如果如果你使用的是FragmentPagerAdapter时，会发现在onPageSelected(0)时，会发现Fragment还没有创建成功，这时候会出现NPE(NullPointerException)。所以这时候可以这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mViewPager.post(<span class="keyword">new</span> Runnable()&#123;</div><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        onPageChangeListener.onPageSelected(<span class="number">0</span>);  <span class="comment">// 手动调用第一页</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这样就会在viewpager的UI事件队列完成后处理onPageSelected方法的内容，这个时候Fragment已经好了。</p>
+<p>但是，虽然这样，讲要进行的工作交给post会打乱同步时序，让要做的事充满了不确定性，我不知道它什么时候能调用onPageSelected方法。而且这样做也存在另外一个问题，当使用notifyDataSetChanged()刷新数据时，还是不会调用当前页的onPageSelected来更新当前页面，所以我更倾向于下面这种方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentStatePagerAdapter</span> </span>&#123;</div><div class="line">    ...</div><div class="line">        </div><div class="line">    <span class="keyword">private</span> Object lastPrimaryItem;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> OnPageSwitchListener onPageSwitchListener;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyPagerAdapter</span><span class="params">(FragmentManager fm, OnPageSwitchListener onPageSwitchListener)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(fm);</div><div class="line">        <span class="keyword">this</span>.onPageSwitchListener = onPageSwitchListener;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrimaryItem</span><span class="params">(ViewGroup container, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.finishUpdate(container);</div><div class="line">        <span class="keyword">super</span>.setPrimaryItem(container, position, object);</div><div class="line">        <span class="keyword">if</span> (object == lastPrimaryItem) &#123;</div><div class="line">            <span class="keyword">return</span>;  <span class="comment">// setPrimaryItem会多次调用，过滤掉多余的调用</span></div><div class="line">        &#125;</div><div class="line">        lastPrimaryItem = object;</div><div class="line">        MyFragment fragment = (MyFragment)object;</div><div class="line">        <span class="keyword">if</span> (onPageSwitchListener != <span class="keyword">null</span> &amp;&amp; fragment != <span class="keyword">null</span>) &#123;</div><div class="line">            onPageSwitchListener.onPageSwitch(position, fragment);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishUpdate</span><span class="params">(ViewGroup container)</span> </span>&#123;</div><div class="line">		<span class="comment">// 这里将finishUpdate放到setPrimaryItem之前执行，见上面的方法👆</span></div><div class="line">        <span class="comment">// 原因是finishUpdate后的Fragment才算正式可以用了</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OnPageSwitchListener</span></span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onPageSwitch</span><span class="params">(<span class="keyword">int</span> position, MyFragment fragment)</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">MyPagerAdapter</span>.<span class="title">OnPageSwitchListener</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSwitch</span><span class="params">(<span class="keyword">int</span> position, MyFragment fragment)</span> </span>&#123;</div><div class="line">    	<span class="comment">// Do whatever you like here. :)</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单说就是，PagerAdapter中有一个重要的方法叫<code>setPrimaryItem</code>，当一个页面显示的时候都会调用这个方法（多次），通过一些简单的处理，可以实现与mViewPager.setOnPageChangeListener()类似的功能，这样就不用每次调用onPageChangeListener.onPageSelected(0)或者使用Post操作了。</p>
+<p>以上分析较为肤浅，有问题欢迎指正、补充，谢谢🙏</p>
+<p>参考</p>
+<p>[1] <a href="https://stackoverflow.com/questions/16074058/onpageselected-doesnt-work-for-first-page" target="_blank" rel="noopener">https://stackoverflow.com/questions/16074058/onpageselected-doesnt-work-for-first-page</a></p>
+<p>[2] <a href="https://stackoverflow.com/questions/11794269/onpageselected-isnt-triggered-when-calling-setcurrentitem0" target="_blank" rel="noopener">https://stackoverflow.com/questions/11794269/onpageselected-isnt-triggered-when-calling-setcurrentitem0</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/02/01/对使用ViewPager的一点理解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-正则表达式上手" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -342,7 +465,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#114;&#x69;&#46;&#46;&#46;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#114;&#x69;&#46;&#46;&#46;&#x40;&#103;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x72;&#105;&#46;&#46;&#x2e;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#x72;&#105;&#46;&#46;&#x2e;&#64;&#103;&#109;&#97;&#x69;&#108;&#46;&#x63;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -363,11 +486,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
         		</li>
       		
 		</ul>
@@ -1146,114 +1269,9 @@
 
 
   
-    <article id="post-Android面试知识点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/24/Android面试知识点/">Android面试相关知识点总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/24/Android面试知识点/" class="archive-article-date">
-  	<time datetime="2018-01-24T08:51:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Android相关"><a href="#Android相关" class="headerlink" title="Android相关"></a>Android相关</h1><hr>
-<h2 id="Activity和Fragment的生命周期"><a href="#Activity和Fragment的生命周期" class="headerlink" title="Activity和Fragment的生命周期"></a>Activity和Fragment的生命周期</h2><p><img src="http://bmob-cdn-3365.b0.upaiyun.com/2016/07/15/a47f448b4077cefe80571168e3f03eef.png" alt=""></p>
-<h2 id="加速Activity启动"><a href="#加速Activity启动" class="headerlink" title="加速Activity启动"></a>加速Activity启动</h2><ul>
-<li>精简onCreate中的代码</li>
-<li>将耗时操作放到后台线程</li>
-<li>优化布局文件（ Hierarchy Viewer， Layoutopt）</li>
-<li>缓存ListView</li>
-</ul>
-<h2 id="Android多线程的几种方式"><a href="#Android多线程的几种方式" class="headerlink" title="Android多线程的几种方式"></a>Android多线程的几种方式</h2><ul>
-<li>Handler.sendXXXMessage()</li>
-<li>Handler.post(Runnable)</li>
-<li>Activity.runOnUIThread(Runnable)</li>
-<li>View.post(Runnable)</li>
-<li>AsyncTask</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/01/24/Android面试知识点/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Andoird</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/24/Android面试知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1344,15 +1362,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">测试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">报告</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1364,15 +1386,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1392,6 +1414,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
@@ -1404,19 +1430,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">测试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">苹果损伤时间分类论文</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">报告</a>
               </li>
             
             <div class="clearfix"></div>
