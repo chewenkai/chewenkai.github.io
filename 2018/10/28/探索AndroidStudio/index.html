@@ -22,7 +22,7 @@
 <meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/wrong_break_point.gif">
 <meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/invokestack.png">
 <meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/dumpinfo.png">
-<meta property="og:updated_time" content="2018-10-28T03:14:08.191Z">
+<meta property="og:updated_time" content="2019-02-14T12:55:07.511Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原来我根本不会用Android Studio">
 <meta name="twitter:description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;gt">
@@ -181,15 +181,10 @@
 <img src="/2018/10/28/探索AndroidStudio/open_memory_indicator.png" title="image"> 
 <p>勾选了Show memory indicator 之后，就可以在Android Studio的右下角看到内存指示器了：</p>
 <img src="/2018/10/28/探索AndroidStudio/indicator.png" title="indicator">
-<p>这里显示的就是Android Studio占用的内存大小（左）和分配给Android Studio使用的最大内存（右）。如果发现占用内存基本上快要等于分配的最大内存的时候，说明需要分配更多的内存给Android Studio了。当时我的机器显示的是<code>1020/1024M</code>，这应该就是其默认分配的内存大小，基本上分配的内存已经快要用完了，这也就是为啥明明电脑内存剩余很多，但是Android Studio却很卡顿的原因。</p>
+<p>双击指示器可以手动进行GC操作。这里显示的就是Android Studio占用的内存大小（左）和分配给Android Studio使用的最大内存（右）。如果发现占用内存基本上快要等于分配的最大内存的时候，说明需要分配更多的内存给Android Studio了。当时我的机器显示的是<code>1020/1024M</code>，这应该就是其默认分配的内存大小，基本上分配的内存已经快要用完了，这也就是为啥明明电脑内存剩余很多，但是Android Studio却很卡顿的原因。</p>
 <p>于是，通过下面步骤来提高分配给Android的内存：</p>
-<p>打开菜单<code>Help-&gt;Edit Custom VM Options</code>，这时，会在新窗口打开一个<code>studo.vmoptions</code>文件（如果之前没有，会新创建一个），在打开的文件中输入下面设置代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-Xms4096m</div><div class="line">-Xmx4096m</div><div class="line">-XX:MaxPermSize=2048m</div><div class="line">-XX:ReservedCodeCacheSize=1024m</div></pre></td></tr></table></figure>
-<p>我们知道，Android Studio是使用Java开发的，运行在Java虚拟机上，所以，这里就是配置的虚拟机的内存。</p>
-<blockquote>
-<p>-Xms 是JVM启动的起始堆内存，堆内存是分配给对象的内存 </p>
-<p>-Xmx 是 Java 虚拟机启动时的参数，用于限制最大堆内存</p>
-</blockquote>
+<p>打开菜单<code>Help-&gt;Edit Custom VM Options</code>，这时，会在新窗口打开一个<code>studo.vmoptions</code>文件（如果之前没有，会新创建一个），在打开的文件中输入下面代码配置虚拟机堆栈的最大分配内存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Xmx4096m</div></pre></td></tr></table></figure>
 <p>这里可以根据自己机器的内存大小，对Android Studio进行配置，配置完成后，重启Android Studio，看到右下角的内存指示器显示的最大分配内存已经发生了变化，就说明生效了。</p>
 <a id="more"></a>
 <h3 id="2-提高生产效率的快捷键"><a href="#2-提高生产效率的快捷键" class="headerlink" title="2. 提高生产效率的快捷键"></a>2. 提高生产效率的快捷键</h3><p>无意中，在Android Studi的Help菜单中发现了一个叫Productivity Guide的窗口，里面列出的一些快捷键都是跟效率有关的：</p>
@@ -510,11 +505,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -526,11 +517,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -539,6 +538,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">单词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MacOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,19 +561,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MacOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
               </li>
              
               <li class="article-tag-list-item">
