@@ -147,6 +147,132 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-踩坑-复用RemoteView导致内存泄漏总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/">踩坑-复用RemoteView导致内存泄漏总结</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/" class="archive-article-date">
+  	<time datetime="2019-03-01T13:22:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="复用RemoteView导致内存泄漏总结"><a href="#复用RemoteView导致内存泄漏总结" class="headerlink" title="复用RemoteView导致内存泄漏总结"></a>复用RemoteView导致内存泄漏总结</h2><h3 id="关于RemoteView"><a href="#关于RemoteView" class="headerlink" title="关于RemoteView"></a>关于RemoteView</h3><p><strong>RemoteView</strong>是一个提供跨进程控制的View，主要用在通知栏或者小部件的开发上。例如音乐类APP自定义的通知栏样式就是通过RemoteView实现的。如果你之前没有听说过RemoteView，可以在这里简单了解一下：</p>
+<p><a href="https://www.jianshu.com/p/23041852bd85" target="_blank" rel="noopener">https://www.jianshu.com/p/23041852bd85</a></p>
+<p>RemoteView中可以使用的布局和控件是受限制的，能用的布局有：</p>
+<ul>
+<li><code>AdapterViewFlipper</code></li>
+<li><code>FrameLayout</code></li>
+<li><code>GridLayout</code></li>
+<li><code>GridView</code></li>
+<li><code>LinearLayout</code></li>
+<li><code>ListView</code></li>
+<li><code>RelativeLayout</code></li>
+<li><code>StackView</code></li>
+<li><code>ViewFlipper</code></li>
+</ul>
+<p>可以用的控件有:</p>
+<ul>
+<li><code>AnalogClock</code></li>
+<li><code>Button</code></li>
+<li><code>Chronometer</code></li>
+<li><code>ImageButton</code></li>
+<li><code>ImageView</code></li>
+<li><code>ProgressBar</code></li>
+<li><code>TextClock</code></li>
+<li><code>TextView</code></li>
+</ul>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>最近开发了一个音乐类的App，播放音乐时会在通知栏常驻一个自定义样式的通知，其中通知栏有一个头像是通过<code>setImageViewBitmap(int viewId, Bitmap bitmap)</code>方法进行设置的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RemoteViews mRemoteView;  <span class="comment">// 全局变量</span></div><div class="line"></div><div class="line">mRemoteView = <span class="keyword">new</span> RemoteViews(Application.getInstance().getPackageName(), resId);</div><div class="line"></div><div class="line"><span class="comment">// 每次调用setImageViewBitmap来更新通知栏的头像</span></div><div class="line">mRemoteView.setImageViewBitmap(R.id.cover, bitmap);</div></pre></td></tr></table></figure>
+<p>后来发现如果App连续放歌在3个小时左右时就会OOM崩掉，通过Profile检查内存后，发现是头像的bitmap没有销毁导致的，但是这里的bitmap对象每次使用完都会recycle掉，为什么还会内存泄漏呢？经过一番排查，发现是使用同一个<code>RemoteVIew</code>对象<code>setImageViewBitmap(R.id.cover, bitmap)</code>导致的。</p>
+<p>在<code>RemoteView</code>的源码中我们可以看到一个<code>mActions</code>变量，这是一个<code>Action</code>的列表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * An array of actions to perform on the view tree once it has been</div><div class="line">     * inflated</div><div class="line">     */</div><div class="line"><span class="keyword">private</span> ArrayList&lt;Action&gt; mActions;</div></pre></td></tr></table></figure>
+<p>而Action是其内部定义的一个可序列化的类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Action</span> <span class="keyword">implements</span> <span class="title">Parcelable</span></span></div></pre></td></tr></table></figure>
+<p>通过跟踪setImageViewBitmap(int viewId, Bitmap bitmap)中bitmap的去向，发现最终调用了setBitmap()方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBitmap</span><span class="params">(<span class="keyword">int</span> viewId, String methodName, Bitmap value)</span> </span>&#123;</div><div class="line">    addAction(<span class="keyword">new</span> BitmapReflectionAction(viewId, methodName, value));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">BitmapReflectionAction</span> <span class="keyword">extends</span> <span class="title">Action</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> bitmapId;</div><div class="line">        Bitmap bitmap;</div><div class="line">        String methodName;</div><div class="line"></div><div class="line">        BitmapReflectionAction(<span class="keyword">int</span> viewId, String methodName, Bitmap bitmap) &#123;</div><div class="line">            <span class="keyword">this</span>.bitmap = bitmap;</div><div class="line">           ...</div><div class="line">        &#125;</div><div class="line">		...</div><div class="line">            </div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">            dest.writeInt(TAG);</div><div class="line">            dest.writeInt(viewId);</div><div class="line">            dest.writeString(methodName);</div><div class="line">            dest.writeInt(bitmapId);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">     	...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>可以看出，每次<code>setImageViewBitmap()</code>，都会将Bitmap做成一个<code>BitmapReflectionAction</code>，并添加到<code>mActions</code>列表里，这里的<code>BitmapReflectionAction</code>是继承<code>Action</code>的一个可序列化的类，Bitmap在里面作为被序列化成了一组值最终存到了<code>mActions</code>列表中。在源码中，<code>mActions</code>列表只看到有添加操作，并没有看到<code>remove</code>或者<code>clear</code>操作，导致了内存泄漏。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>不要复用<code>RemoteView</code>，更新通知栏icon时，new一个新的<code>RemoteView</code>给NotificationCompat.Builder</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>So internally RemoteViews is simply a set of actions that are<br>“serialized” and sent to another process.  Each time you make a call<br>to something like setDouble(), you’re adding an additional action to<br>RemoteViews’ internal list.</p>
+<p>Because there isn’t a way of clearing these actions from a RemoteViews<br>object, all of your successive setImageViewBitmap() calls, along with<br>their Bitmaps, remain in the internal list, and are actually<br>“serialized” and applied each time your send it.  :(<br>In this case it’s best to just create a new RemoteViews object every time.</p>
+</blockquote>
+<p><a href="https://github.com/rojdes/AngryDict/blob/master/app/src/main/java/me/rds/angrydictionary/widget/BinaryClockWidget.java" target="_blank" rel="noopener">https://github.com/rojdes/AngryDict/blob/master/app/src/main/java/me/rds/angrydictionary/widget/BinaryClockWidget.java</a></p>
+<p><a href="https://blog.csdn.net/u013989732/article/details/78501462" target="_blank" rel="noopener">https://blog.csdn.net/u013989732/article/details/78501462</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-对使用ViewPager的一点理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -465,7 +591,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x72;&#x69;&#46;&#x2e;&#46;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#x72;&#x69;&#46;&#x2e;&#46;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#114;&#x69;&#x2e;&#46;&#46;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#109;">&#114;&#x69;&#x2e;&#46;&#46;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -1165,105 +1291,6 @@
 
 
   
-    <article id="post-折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/">Mac上双硬盘导致的盘符变化和权限问题引起的Vbox虚拟机启动失败</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/" class="archive-article-date">
-  	<time datetime="2018-03-05T12:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在小米笔记本上安装了黑苹果，从Arch Linux上转到了MacOS High Sierra。说实话，虽然在操作上很多东西还不是很习惯，但是MacOS丰富的软件和漂亮的界面以及合理的逻辑非常讨人喜欢。</p>
-<p>很快，我也遇到了一些问题，首先是经常用到的VirtualBox虚拟机启动物理硬盘上的Windows时遇到的问题：</p>
-<ul>
-<li><p>安装了双硬盘的笔记本在启动时设备符号是变化的，有时候是/dev/disk0，有时候则是/dev/disk1，导致保存的镜像文件（vmdk文件）需要重新生成。</p>
-</li>
-<li><p>Mac下只要重新挂载Windows分区所在的硬盘，权限也要重新授权。否则报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">VBoxManage: error: VMDK: could not open raw disk file &apos;/dev/disk2&apos;  </div><div class="line">VBoxManage: error: Error code VERR_RESOURCE_BUSY at /Users/vbox/tinderbox/4.3-mac-rel/src/VBox/Storage/VMDK.cpp(3390) in function int vmdkCreateRawImage(VMDKIMAGE*, VBOXHDDRAW*, uint64_t)</div><div class="line">VBoxManage: error: Cannot create the raw disk VMDK: VERR_RESOURCE_BUSY</div><div class="line">VBoxManage: error: The raw disk vmdk file was not created</div></pre></td></tr></table></figure>
-</li>
-</ul>
-        
-          <a class="article-more-a" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MacOS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">VirtualBox</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常记录//" class="article-tag-list-link color5">日常记录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1365,11 +1392,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1381,7 +1404,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1389,11 +1416,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1405,7 +1428,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">

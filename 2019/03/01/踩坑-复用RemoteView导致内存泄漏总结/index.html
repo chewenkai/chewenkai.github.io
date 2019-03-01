@@ -6,27 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chewenkai.github.io">
-  <title>原来我根本不会用Android Studio | 小蚊子叮叮的小屋</title>
+  <title>踩坑-复用RemoteView导致内存泄漏总结 | 小蚊子叮叮的小屋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;gt">
-<meta name="keywords" content="Android">
+  <meta name="description" content="复用RemoteView导致内存泄漏总结关于RemoteViewRemoteView是一个提供跨进程控制的View，主要用在通知栏或者小部件的开发上。例如音乐类APP自定义的通知栏样式就是通过RemoteView实现的。如果你之前没有听说过RemoteView，可以在这里简单了解一下： https://www.jianshu.com/p/23041852bd85 RemoteView中可以使用的布">
+<meta name="keywords" content="日常总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="原来我根本不会用Android Studio">
-<meta property="og:url" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/index.html">
+<meta property="og:title" content="踩坑-复用RemoteView导致内存泄漏总结">
+<meta property="og:url" content="https://chewenkai.github.io/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/index.html">
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
-<meta property="og:description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;gt">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/open_memory_indicator.png">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/indicator.png">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/breakpoints.png">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/breakpointsetting.png">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/wrong_break_point.gif">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/invokestack.png">
-<meta property="og:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/dumpinfo.png">
-<meta property="og:updated_time" content="2019-02-14T12:55:07.510Z">
+<meta property="og:description" content="复用RemoteView导致内存泄漏总结关于RemoteViewRemoteView是一个提供跨进程控制的View，主要用在通知栏或者小部件的开发上。例如音乐类APP自定义的通知栏样式就是通过RemoteView实现的。如果你之前没有听说过RemoteView，可以在这里简单了解一下： https://www.jianshu.com/p/23041852bd85 RemoteView中可以使用的布">
+<meta property="og:updated_time" content="2019-03-01T13:59:54.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="原来我根本不会用Android Studio">
-<meta name="twitter:description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;gt">
-<meta name="twitter:image" content="https://chewenkai.github.io/2018/10/28/探索AndroidStudio/open_memory_indicator.png">
+<meta name="twitter:title" content="踩坑-复用RemoteView导致内存泄漏总结">
+<meta name="twitter:description" content="复用RemoteView导致内存泄漏总结关于RemoteViewRemoteView是一个提供跨进程控制的View，主要用在通知栏或者小部件的开发上。例如音乐类APP自定义的通知栏样式就是通过RemoteView实现的。如果你之前没有听说过RemoteView，可以在这里简单了解一下： https://www.jianshu.com/p/23041852bd85 RemoteView中可以使用的布">
   
   
     <link rel="icon" href="/assets/img/favicon.png">
@@ -154,79 +146,68 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-探索AndroidStudio" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-踩坑-复用RemoteView导致内存泄漏总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      原来我根本不会用Android Studio
+      踩坑-复用RemoteView导致内存泄漏总结
     </h1>
   
 
         
-        <a href="/2018/10/28/探索AndroidStudio/" class="archive-article-date">
-  	<time datetime="2018-10-28T03:09:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-28</time>
+        <a href="/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/" class="archive-article-date">
+  	<time datetime="2019-03-01T13:22:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。</p>
-<h3 id="1-为什么明明我的电脑剩余那么多内存，用Android-Studio打开多个工程后就开始卡顿了呢？"><a href="#1-为什么明明我的电脑剩余那么多内存，用Android-Studio打开多个工程后就开始卡顿了呢？" class="headerlink" title="1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？"></a>1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？</h3><p>有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。</p>
-<p>于是，打开<strong>内存指示器</strong>，查看Android Studio的内存使用情况：</p>
-<p><code>打开设置 -&gt; Appearance -&gt; Window Options -&gt; Show memory indicator</code></p>
-<img src="/2018/10/28/探索AndroidStudio/open_memory_indicator.png" title="image"> 
-<p>勾选了Show memory indicator 之后，就可以在Android Studio的右下角看到内存指示器了：</p>
-<img src="/2018/10/28/探索AndroidStudio/indicator.png" title="indicator">
-<p>双击指示器可以手动进行GC操作。这里显示的就是Android Studio占用的内存大小（左）和分配给Android Studio使用的最大内存（右）。如果发现占用内存基本上快要等于分配的最大内存的时候，说明需要分配更多的内存给Android Studio了。当时我的机器显示的是<code>1020/1024M</code>，这应该就是其默认分配的内存大小，基本上分配的内存已经快要用完了，这也就是为啥明明电脑内存剩余很多，但是Android Studio却很卡顿的原因。</p>
-<p>于是，通过下面步骤来提高分配给Android的内存：</p>
-<p>打开菜单<code>Help-&gt;Edit Custom VM Options</code>，这时，会在新窗口打开一个<code>studo.vmoptions</code>文件（如果之前没有，会新创建一个），在打开的文件中输入下面代码配置虚拟机堆栈的最大分配内存：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Xmx4096m</div></pre></td></tr></table></figure>
-<p>这里可以根据自己机器的内存大小，对Android Studio进行配置，配置完成后，重启Android Studio，看到右下角的内存指示器显示的最大分配内存已经发生了变化，就说明生效了。</p>
-<a id="more"></a>
-<h3 id="2-提高生产效率的快捷键"><a href="#2-提高生产效率的快捷键" class="headerlink" title="2. 提高生产效率的快捷键"></a>2. 提高生产效率的快捷键</h3><p>无意中，在Android Studi的Help菜单中发现了一个叫Productivity Guide的窗口，里面列出的一些快捷键都是跟效率有关的：</p>
-
-<p>例如有我们常用的自动补全（Basic code completion），还有Complete Statement这种神奇的功能，再也不用移动箭头和手动加分号了！！点击功能名字下方会列出快捷键和说明，建议把这里面的功能过一遍，相信会很有帮助。</p>
-<p>列几个我用的非常上瘾的在下面：</p>
+        <h2 id="复用RemoteView导致内存泄漏总结"><a href="#复用RemoteView导致内存泄漏总结" class="headerlink" title="复用RemoteView导致内存泄漏总结"></a>复用RemoteView导致内存泄漏总结</h2><h3 id="关于RemoteView"><a href="#关于RemoteView" class="headerlink" title="关于RemoteView"></a>关于RemoteView</h3><p><strong>RemoteView</strong>是一个提供跨进程控制的View，主要用在通知栏或者小部件的开发上。例如音乐类APP自定义的通知栏样式就是通过RemoteView实现的。如果你之前没有听说过RemoteView，可以在这里简单了解一下：</p>
+<p><a href="https://www.jianshu.com/p/23041852bd85" target="_blank" rel="noopener">https://www.jianshu.com/p/23041852bd85</a></p>
+<p>RemoteView中可以使用的布局和控件是受限制的，能用的布局有：</p>
 <ul>
-<li>Quick Definition Lookup: 将定义以弹窗的形式打开，而不跳转到定义处，快捷键：<code>Ctrl+Shift+I</code> </li>
-<li>Extract Method/Function: 将一段代码抽出成一个函数，快捷键： <code>Ctrl+Alt+M</code></li>
-<li>Generate菜单：<code>Alt+Insert</code> </li>
-<li>Introduce Constant：使某个量变成常量<code>Ctrl+Alt+C</code></li>
-<li>继承方法 <code>Ctrl + O</code></li>
-<li>实现方法 <code>Ctrl + I</code> </li>
-<li>查看参数信息 <code>Ctrl + P</code></li>
-<li>Surround With <code>Ctrl+Alt+T</code></li>
-<li>Extend select <code>Ctrl+W</code></li>
-<li>当前行/函数/块上下移动 <code>Shift+Meta+Up/Down</code></li>
+<li><code>AdapterViewFlipper</code></li>
+<li><code>FrameLayout</code></li>
+<li><code>GridLayout</code></li>
+<li><code>GridView</code></li>
+<li><code>LinearLayout</code></li>
+<li><code>ListView</code></li>
+<li><code>RelativeLayout</code></li>
+<li><code>StackView</code></li>
+<li><code>ViewFlipper</code></li>
 </ul>
-<h3 id="3-调试的技巧"><a href="#3-调试的技巧" class="headerlink" title="3. 调试的技巧"></a>3. 调试的技巧</h3><p>首先，日常调试中最常用的调试方法就是打断点和加Log了，AdroidStudro中的断点功能非常强大，在断点上点右键，在弹出的窗口中点More或者直接点击Debug标签中的断点列表<img src="/2018/10/28/探索AndroidStudio/breakpoints.png" title="断点列表">可以对断点进行更有用的设置，下面来详细说下这个断点设置页面：</p>
-<img src="/2018/10/28/探索AndroidStudio/breakpointsetting.png" title="断点设置">
+<p>可以用的控件有:</p>
 <ul>
-<li><strong>Suspend + Evaluate and log：</strong>调试的时候需要在某处添加一个Log，这时候如果用Log.e(xx,xxx)加入需要重新编译并安装到手机上才能查看。我们可以取消勾选Suspend，这样程序运行到断点处并不会停下，在<strong>Evaluate and log</strong>中写好想打印的log，运行到断点处在Console中就会打出Log信息了。</li>
-<li><strong>Evaluate and log：</strong>这个功能与Evaluate功能相同，可以在调试时，对一个实例进行操作，例如读取某个对象的值，修改某个对象的值等。这里的Evaluate and log的区别就是会将操作的结果打印到Console。</li>
-<li>使用<strong>Condition</strong>给断点添加条件。在Condition中输入一个返回值为Bollean的语句，那么只有返回true的时候，断点才会生效。</li>
+<li><code>AnalogClock</code></li>
+<li><code>Button</code></li>
+<li><code>Chronometer</code></li>
+<li><code>ImageButton</code></li>
+<li><code>ImageView</code></li>
+<li><code>ProgressBar</code></li>
+<li><code>TextClock</code></li>
+<li><code>TextView</code></li>
 </ul>
-<p>通过上面的工具可以更方便的了解程序的运行状态。当然，这还是避免不了我们有时会设置了错误的断点位置，导致：</p>
-<img src="/2018/10/28/探索AndroidStudio/wrong_break_point.gif" title="错误的断点位置">
-<p>这时，我们可以利用调用栈，从下往上的查看调用顺序，调试时，调用栈会在Debug标签中的Debugger-&gt;Frames中显示：</p>
-<img src="/2018/10/28/探索AndroidStudio/invokestack.png" title="错误的断点位置">
-<p>在上面的调用栈中，背景底色是黄色的表示是来自SDK的调用，背景是正常的Android的主题色表示的是来自你代码的调用。</p>
-<p>调用栈非常有用，举个例子：有一次在调试时，点击了界面上一个按钮后Activity就关掉了，但是代码中却无论怎么找都找不到对这个按钮的监听，没有setOnClickListener，那点击后是怎么执行的呢？就在我愁眉不展的时候，老司机出现了，告诉我既然肯定会被Activity被Finish掉了，那在Finish函数里加断点，查看调用栈就可以顺藤摸瓜的找到按钮的点击事件处理代码。果然就找到了，原来按钮的监听定义在了Base类中。</p>
-<h3 id="4-定位当前页面的源码位置"><a href="#4-定位当前页面的源码位置" class="headerlink" title="4. 定位当前页面的源码位置"></a>4. 定位当前页面的源码位置</h3><p>阅读新项目代码时，领导让我修改页面上一个控件，这时首先要做的就是代码中找到这个页面，于是，菜鸟的我我就开始从MainActivity开始顺着代码往下捋着找，发现要找到一个控件要找半天，有时候甚至半天都找不到。于是，我总结了两条寻找Activity或者某个View的方法：</p>
-<ol>
-<li>在Androd Studio中点击Tools-&gt;Layout Inspector，选择当前进程后就会弹出当前任务栈中所有的Activity的列表，这时候在源码中搜索（Ctrl+Shift+F）名字就可以Activity的源码位置。如果需要找页面上某一个控件View，可以继续点击Activity，在打开的节面中选中要寻找的控件，查看其id，再根据id搜索就可以找到View了。但是这个方法并不总是那么好用，有时任务栈中只有一个Activity时，就不会出现Activity列表，直接打开布局的Capture文件了。</li>
-<li>另一种方法跟Android Studio无关，是通过Android系统自带的dumpsys命令获取任务栈及Activity信息，在命令行中输入下面语句:</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adb shell dumpsys activity activities | grep -A 20 &quot;A=com.xxxx.xxxx&quot;</div></pre></td></tr></table></figure>
-<p>这样就能得到当前的Activity信息了：</p>
-<img src="/2018/10/28/探索AndroidStudio/dumpinfo.png" title="dump信息">
-<p>把这条命设置别名，放到bashrc文件中，就可以在在命令行里直接使用了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 放到bashrc文件中</div><div class="line">export package_name=&quot;A=xxx.xxx.xxx&quot;  # 写好包名</div><div class="line">alias whatisthispage=&quot;adb shell dumpsys activity activities | grep -A 20 &quot;</div></pre></td></tr></table></figure>
-<p>运行时，直接运行whatisthispage $package_name就可以了。</p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>最近开发了一个音乐类的App，播放音乐时会在通知栏常驻一个自定义样式的通知，其中通知栏有一个头像是通过<code>setImageViewBitmap(int viewId, Bitmap bitmap)</code>方法进行设置的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RemoteViews mRemoteView;  <span class="comment">// 全局变量</span></div><div class="line"></div><div class="line">mRemoteView = <span class="keyword">new</span> RemoteViews(Application.getInstance().getPackageName(), resId);</div><div class="line"></div><div class="line"><span class="comment">// 每次调用setImageViewBitmap来更新通知栏的头像</span></div><div class="line">mRemoteView.setImageViewBitmap(R.id.cover, bitmap);</div></pre></td></tr></table></figure>
+<p>后来发现如果App连续放歌在3个小时左右时就会OOM崩掉，通过Profile检查内存后，发现是头像的bitmap没有销毁导致的，但是这里的bitmap对象每次使用完都会recycle掉，为什么还会内存泄漏呢？经过一番排查，发现是使用同一个<code>RemoteVIew</code>对象<code>setImageViewBitmap(R.id.cover, bitmap)</code>导致的。</p>
+<p>在<code>RemoteView</code>的源码中我们可以看到一个<code>mActions</code>变量，这是一个<code>Action</code>的列表：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * An array of actions to perform on the view tree once it has been</div><div class="line">     * inflated</div><div class="line">     */</div><div class="line"><span class="keyword">private</span> ArrayList&lt;Action&gt; mActions;</div></pre></td></tr></table></figure>
+<p>而Action是其内部定义的一个可序列化的类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Action</span> <span class="keyword">implements</span> <span class="title">Parcelable</span></span></div></pre></td></tr></table></figure>
+<p>通过跟踪setImageViewBitmap(int viewId, Bitmap bitmap)中bitmap的去向，发现最终调用了setBitmap()方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBitmap</span><span class="params">(<span class="keyword">int</span> viewId, String methodName, Bitmap value)</span> </span>&#123;</div><div class="line">    addAction(<span class="keyword">new</span> BitmapReflectionAction(viewId, methodName, value));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">BitmapReflectionAction</span> <span class="keyword">extends</span> <span class="title">Action</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> bitmapId;</div><div class="line">        Bitmap bitmap;</div><div class="line">        String methodName;</div><div class="line"></div><div class="line">        BitmapReflectionAction(<span class="keyword">int</span> viewId, String methodName, Bitmap bitmap) &#123;</div><div class="line">            <span class="keyword">this</span>.bitmap = bitmap;</div><div class="line">           ...</div><div class="line">        &#125;</div><div class="line">		...</div><div class="line">            </div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeToParcel</span><span class="params">(Parcel dest, <span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">            dest.writeInt(TAG);</div><div class="line">            dest.writeInt(viewId);</div><div class="line">            dest.writeString(methodName);</div><div class="line">            dest.writeInt(bitmapId);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">     	...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>可以看出，每次<code>setImageViewBitmap()</code>，都会将Bitmap做成一个<code>BitmapReflectionAction</code>，并添加到<code>mActions</code>列表里，这里的<code>BitmapReflectionAction</code>是继承<code>Action</code>的一个可序列化的类，Bitmap在里面作为被序列化成了一组值最终存到了<code>mActions</code>列表中。在源码中，<code>mActions</code>列表只看到有添加操作，并没有看到<code>remove</code>或者<code>clear</code>操作，导致了内存泄漏。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>不要复用<code>RemoteView</code>，更新通知栏icon时，new一个新的<code>RemoteView</code>给NotificationCompat.Builder</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><blockquote>
+<p>So internally RemoteViews is simply a set of actions that are<br>“serialized” and sent to another process.  Each time you make a call<br>to something like setDouble(), you’re adding an additional action to<br>RemoteViews’ internal list.</p>
+<p>Because there isn’t a way of clearing these actions from a RemoteViews<br>object, all of your successive setImageViewBitmap() calls, along with<br>their Bitmaps, remain in the internal list, and are actually<br>“serialized” and applied each time your send it.  :(<br>In this case it’s best to just create a new RemoteViews object every time.</p>
+</blockquote>
+<p><a href="https://github.com/rojdes/AngryDict/blob/master/app/src/main/java/me/rds/angrydictionary/widget/BinaryClockWidget.java" target="_blank" rel="noopener">https://github.com/rojdes/AngryDict/blob/master/app/src/main/java/me/rds/angrydictionary/widget/BinaryClockWidget.java</a></p>
+<p><a href="https://blog.csdn.net/u013989732/article/details/78501462" target="_blank" rel="noopener">https://blog.csdn.net/u013989732/article/details/78501462</a></p>
 
       
 
@@ -271,7 +252,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
         		</li>
       		
 		</ul>
@@ -283,7 +264,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/日常记录//" class="article-tag-list-link color5">日常记录</a>
+        			<a href="/categories/Android//" class="article-tag-list-link color3">Android</a>
         		</li>
       		
 		</ul>
@@ -338,7 +319,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chewenkai.github.io/2018/10/28/探索AndroidStudio/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chewenkai.github.io/2019/03/01/踩坑-复用RemoteView导致内存泄漏总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -352,18 +333,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/12/02/Android中动画的使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android中动画的使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/10/20/祝小美生日快乐/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">祝小美生日快乐</div>
+    <a href="/2019/02/01/对使用ViewPager的一点理解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">对使用ViewPager的一点理解</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -147,6 +147,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/">Mac上双硬盘导致的盘符变化和权限问题引起的Vbox虚拟机启动失败</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/" class="archive-article-date">
+  	<time datetime="2018-03-05T12:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在小米笔记本上安装了黑苹果，从Arch Linux上转到了MacOS High Sierra。说实话，虽然在操作上很多东西还不是很习惯，但是MacOS丰富的软件和漂亮的界面以及合理的逻辑非常讨人喜欢。</p>
+<p>很快，我也遇到了一些问题，首先是经常用到的VirtualBox虚拟机启动物理硬盘上的Windows时遇到的问题：</p>
+<ul>
+<li><p>安装了双硬盘的笔记本在启动时设备符号是变化的，有时候是/dev/disk0，有时候则是/dev/disk1，导致保存的镜像文件（vmdk文件）需要重新生成。</p>
+</li>
+<li><p>Mac下只要重新挂载Windows分区所在的硬盘，权限也要重新授权。否则报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">VBoxManage: error: VMDK: could not open raw disk file &apos;/dev/disk2&apos;  </div><div class="line">VBoxManage: error: Error code VERR_RESOURCE_BUSY at /Users/vbox/tinderbox/4.3-mac-rel/src/VBox/Storage/VMDK.cpp(3390) in function int vmdkCreateRawImage(VMDKIMAGE*, VBOXHDDRAW*, uint64_t)</div><div class="line">VBoxManage: error: Cannot create the raw disk VMDK: VERR_RESOURCE_BUSY</div><div class="line">VBoxManage: error: The raw disk vmdk file was not created</div></pre></td></tr></table></figure>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MacOS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">VirtualBox</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/日常记录//" class="article-tag-list-link color5">日常记录</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/05/折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android面试知识点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1011,108 +1110,6 @@
 
 
   
-    <article id="post-4月第三周报告" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/25/4月第三周报告/">4月第三周报告</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/25/4月第三周报告/" class="archive-article-date">
-  	<time datetime="2017-03-25T03:02:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="做小麦采样软件"><a href="#做小麦采样软件" class="headerlink" title="做小麦采样软件"></a>做小麦采样软件</h2><h3 id="抽样单协议的变化原因"><a href="#抽样单协议的变化原因" class="headerlink" title="抽样单协议的变化原因"></a>抽样单协议的变化原因</h3><ol>
-<li>根据老师对软件的要求，分析出新需求与之前软件的差别：</li>
-</ol>
-<ul>
-<li>要求给农民使用，所以不能存在<code>被抽样单位</code>，<code>抽样单位</code>等字眼，而这些在以前的抽样的里是固定死的。</li>
-<li>要求能够最后添加一遍样品。之前抽样的只能对样品情况进行添加，与现在需求不符</li>
-<li>要求可以添加病虫害的照片。之前每个抽样单中固定设置为只有一个单元格用于拍照，一个单元格录像和一个单元格定位。与现在需求不符</li>
-<li>要求地理位置可以进行补充。</li>
-<li>出现了新的单元格类型，比如二级单选单元格(type_radio_with_secondary_choice)，多选单元格(type_multi_select)，之前只有一级单选单元格。</li>
-</ul>
-<ol>
-<li>之前抽样单存在的诟病</li>
-</ol>
-<ul>
-<li>没有留下一个清楚的协议，后期需求变动时通过阅读代码分析协议。</li>
-<li>抽样单部分的代码质量差，注释少。</li>
-<li>以前的抽样单列表中显示的是样品编号和被抽样单位地址，在新软件中没有这两个选项</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">报告</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常汇报//" class="article-tag-list-link color5">日常汇报</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/25/4月第三周报告/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1214,11 +1211,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1230,7 +1223,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1238,11 +1235,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1254,7 +1247,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">
