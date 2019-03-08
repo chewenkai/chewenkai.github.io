@@ -147,6 +147,202 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-【搬运】一种在本地写代码、远程高性能电脑编译代码的方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">一种基于MainFramer进行远程编译的应用（以Android开发为例）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/" class="archive-article-date">
+  	<time datetime="2018-10-11T16:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、故事背景（可略过）"><a href="#一、故事背景（可略过）" class="headerlink" title="一、故事背景（可略过）"></a>一、故事背景（可略过）</h3><p>鲁迅说：</p>
+<blockquote>
+<p>世界上只有三种电脑：卡爆的轻薄本、丑爆的游戏本和搬不动的台式机</p>
+</blockquote>
+<p>我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上20次就能差出一个小时，有这个时间提前让我下班多好。最重要的是，我只要一点击Build，整个机器就开始满负荷运行，除了温度飙升外，CPU也被占满，这时候开个网页都卡成了幻灯片。</p>
+<p>为了提高工作效率，我尝试一直用台式机工作，于是我的MBP吃灰了很久，这么优秀的笔记本放在那里吃灰实在是心疼。最关键的是，台式机让我完全没有<strong>工作流</strong>的感觉，当我周末无聊想充电的时候，我发现我所有想看的东西都在公司，当我一个个软件打开，一个个网页从历史记录中找到后，我发现我已经没有了学习的欲望。这时候我非常想念用笔记本时那种“合盖走人”后，回家打开盖子发现我所有的思路都还在的感觉。</p>
+<p>于是我急切的找一种方法，让简单的任务在笔记本上来做，复杂的任务能够利用台式机完成，并且在体验上做到“无差别”。终于，我在浏览全球最大的同性社交网站时惊喜的发现了<a href="https://github.com/gojuno/mainframer" target="_blank" rel="noopener"><strong>mainframer</strong></a>，这是一个工具，可以将编译这件占内存和CPU的事从本地电脑放到远程电脑上来做。</p>
+<p>简单的说，你只需要一台本地机器（Local Machine：例如我的性能不咋地的MacBook）和一台远程机器（Remote Machine：性能强悍的台式机或者云主机），通过mainframer，就可以实现在本地机器上写代码，在远程机器上编译代码。你可以在笔记本上写代码，到了需要调试的时候，mainframer会快速同步代码到远程机器并进行编译，并将编译的结果返回到你的笔记本，这一切仿佛都是在你的笔记本上进行的，你可以正常的build和调试程序。这样一来，就可以享受笔记本的便捷，又能享受台式机的高性能了，美滋滋。</p>
+<p>下面就是我配置成功后，录制的在MacBookPro上写代码，在Linux发行版Manjaro上进行Build的视频：</p>
+<video src="http://chewenkai.cf/owncloud/index.php/s/Mo209sjNvN2iOLU/download" controls="controls" style="max-width: 100%; display: block; margin-left: auto; margin-right: auto;"> your browser does not support the video tag </video>
+        
+          <a class="article-more-a" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/工具//" class="article-tag-list-link color3">工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-VIM常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/30/VIM常用命令/">VIM常用命令</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/30/VIM常用命令/" class="archive-article-date">
+  	<time datetime="2018-03-30T04:13:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率的提高大有裨益。但是剑一天不用，锈的也是很快的。前几天在终端中偶然发现了命令<code>vimtutor</code>，该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总于下，方便记忆。</p>
+<h3 id="浏览命令"><a href="#浏览命令" class="headerlink" title="浏览命令"></a>浏览命令</h3><ol>
+<li><p>光标在屏幕文本中的移动既可以用箭头键，也可以使用 <code>hjkl</code> 字母键。<br><code>h (左移)       j (下行)       k (上行)     l (右移)</code></p>
+</li>
+<li><p>欲进入 Vim 编辑器(从命令行提示符)，请输入：vim 文件名 <code>&lt;回车&gt;</code></p>
+</li>
+<li><p>欲退出 Vim 编辑器，请输入 <code>&lt;ESC&gt;</code>   <code>:q!</code>   <code>&lt;回车&gt;</code> 放弃所有改动。<br>或者输入 <code>&lt;ESC&gt;</code>   <code>:wq</code>   <code>&lt;回车&gt;</code> 保存改动。</p>
+</li>
+<li><p>在正常模式下删除光标所在位置的字符，请按： <code>x</code></p>
+</li>
+<li><p>欲插入或添加文本，请输入：<br><code>i   输入欲插入文本   &lt;ESC&gt;             在光标前插入文本</code><br><code>A   输入欲添加文本   &lt;ESC&gt;             在一行后添加文本</code></p>
+</li>
+</ol>
+<p>特别提示：按下 <esc> 键会带您回到正常模式或者撤消一个不想输入或部分完整<br>的命令。</esc></p>
+        
+          <a class="article-more-a" href="/2018/03/30/VIM常用命令/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">VIM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/30/VIM常用命令/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-折腾记-解决虚拟机在Mac上从双硬盘启动Windows遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -914,202 +1110,6 @@
 
 
   
-    <article id="post-学术词汇列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/13/学术词汇列表/">学术词汇列表</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/13/学术词汇列表/" class="archive-article-date">
-  	<time datetime="2017-04-13T14:48:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今日在网上发现一个<a href="http://www.victoria.ac.nz/lals/resources/academicwordlist" target="_blank" rel="noopener">学术词汇列表</a>，是学习语言学的Dr Averil Coxhead整治所得。其网站上整理了570个词，另外提供了最常用的2000个<a href="http://jbauman.com/gsl.html" target="_blank" rel="noopener">英文词汇链接</a>，并且作者调皮的说，如果你在学术论文中使用的词汇不在这个学术词汇列表(academic word list, AWL)，也不在2000个常用词汇中时，那你就要小心的使用这个词了。</p>
-<p>除了列出了常用的学术词汇，作者在网站还介绍了学习这些词汇的方法，个人认为也很符合我背单词的习惯：</p>
-<ul>
-<li><p><strong>从记忆中检索单词，而不是对着单词去认。</strong> 每次从脑中检索单词都会加深对单词拼写和含义的记忆与理解。建议使用单词卡片，一面写英文，一面写翻译，对着翻译去想中文。</p>
-</li>
-<li><p><strong>增加单词的记忆次数，而不是每次背单词的时长。</strong> 注重重复，重复记忆是最有效的记忆方式，先是几分钟回顾一下背的单词，再几个小时回顾一下，再几天，几个星期的去回顾，最后就会牢牢地记住。</p>
-</li>
-<li><p><strong>背单词的时候仔细思考该单词的含义会加深对单词的理解</strong> 背单词时，联想该单词的使用场景，比如你在什么场景下会用到该词。</p>
-</li>
-<li><p><strong>不要同时记忆相似拼写或相似含义的单词</strong>  在这里我的建议是，可以整理拼写相似或意思相似的词，但是不要同时去记，先认真记住一个，做好标记，再去记与它相似的单词，并注重差异。</p>
-</li>
-</ul>
-<p>下面，为了方便利用中文查询相关英文，对作者列出的常用词汇做一个总结与翻译，其具体的扩展词（例如，analyse -&gt; analysed analyser analysers analyses analysing…）可以在网站上查询。</p>
-        
-          <a class="article-more-a" href="/2017/04/13/学术词汇列表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">英语</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">单词</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/13/学术词汇列表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-新采样系统设计" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/25/新采样系统设计/">新采样系统设计</a>
-    </h1>
-  
-
-        
-        <a href="/2017/03/25/新采样系统设计/" class="archive-article-date">
-  	<time datetime="2017-03-25T03:02:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>抽样监督管理系统，致力于提高我国农业现代化建设水平，具有以下<strong>优势</strong>：</p>
-<ul>
-<li>国家可以迅速的发现问题，根据质检结果制定相应的应急措施。</li>
-<li>缩短抽样任务下发和上传的时间周期。</li>
-<li>保证抽样过程的严谨性，提高抽样的质量和效率。</li>
-<li>节省人力、物力，提高抽样检测的溯源能力。</li>
-</ul>
-        
-          <a class="article-more-a" href="/2017/03/25/新采样系统设计/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">抽样监督管理系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常汇报//" class="article-tag-list-link color5">日常汇报</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/03/25/新采样系统设计/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1207,11 +1207,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1231,7 +1235,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1244,14 +1252,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">

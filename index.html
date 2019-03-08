@@ -147,6 +147,265 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android-Studio创建多文件模版-Templates" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/07/Android-Studio创建多文件模版-Templates/">Android Studio创建多文件模版(Templates)</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/07/Android-Studio创建多文件模版-Templates/" class="archive-article-date">
+  	<time datetime="2019-03-07T15:43:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Android-Studio创建多文件模版-Templates"><a href="#Android-Studio创建多文件模版-Templates" class="headerlink" title="Android Studio创建多文件模版(Templates)"></a>Android Studio创建多文件模版(Templates)</h2><p>如果说使用快捷键是程序员提高效率的首要手段，那灵活的使用代码模版可能紧随其后。</p>
+<p>模版(Templates)或者Live Templates，是指在创建类文件，甚至是某些代码块时，IDE自动按照一定格式创建出类或代码的功能。如果类中有大量相似代码，使用模版可以极大的提高开发效率，降低出错概率。</p>
+<p>下面我们看一下如何在Android Studio上使用<strong>模版</strong>，我将讲述四种模版的创建，分别是：</p>
+<ul>
+<li>使用<strong>Live Templates</strong>创建代码块模版</li>
+<li>使用<strong>File and Code Templates</strong>创建类模版</li>
+<li><strong>基于FreeMarker</strong>创建多文件模版</li>
+</ul>
+<h3 id="1-代码块模版"><a href="#1-代码块模版" class="headerlink" title="1.代码块模版"></a>1.代码块模版</h3><p>java中经常需要定义这样的静态常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_VALUE = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>使用Live Templates后，就可以直接输入const就可以快速定义静态常量：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxO5IP.png" alt=""></p>
+<p>其设置方法是，打开File-&gt;Setting（⌘+,）,搜索“Live Templates”，打开如下的界面：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxLON6.png" alt=""></p>
+<p>其中，<em>1</em>指的是缩写和该缩写的描述；<em>2</em>中输入的是模版的内容；<em>3</em>中可以指定该模版应用生效的语言和场所，例如，可以限制该模版只应用到Java语言定义变量(declaration)的时候; <em>4</em>可以将模版中变化的部分定义为变量，如上图中的<code>${name}</code>和<code>${value}</code>     </p>
+<p>上面例子中的const是默认的模版，你可以点击加号添加自己的模版，例如为kotlin定义一个tag常量的模版：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxXswn.png" alt=""></p>
+<h3 id="2-创建类模版"><a href="#2-创建类模版" class="headerlink" title="2.创建类模版"></a>2.创建类模版</h3><p>如果我经常创建Fragment，有些必填的步骤就可以放到模版里去</p>
+<p>打开File-&gt;setting,找到<strong>File and Code Templates</strong>，打开如下页面：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxjS0A.png" alt=""></p>
+<ol>
+<li>点击加号创建新的类模版</li>
+<li>在这填写模版的名字和生效的类型文件名</li>
+<li>模版的内容，可变的部分用变量代替</li>
+</ol>
+<p>举例一个简单的Fragment模版:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#if ($&#123;PACKAGE_NAME&#125; != "")package $&#123;PACKAGE_NAME&#125;;#end</div><div class="line">import android.os.Bundle;</div><div class="line">import android.view.LayoutInflater;</div><div class="line">import android.view.View;</div><div class="line">import android.view.ViewGroup;</div><div class="line"></div><div class="line">import androidx.annotation.NonNull;</div><div class="line">import androidx.annotation.Nullable;</div><div class="line">import androidx.fragment.app.Fragment;</div><div class="line"></div><div class="line">public class $&#123;NAME&#125; extends Fragment &#123;</div><div class="line"></div><div class="line">    private static final String TAG  = "$&#123;NAME&#125;";</div><div class="line">    </div><div class="line">    public static $&#123;NAME&#125; newInstance() &#123;</div><div class="line">        return new $&#123;NAME&#125;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Nullable</div><div class="line">    @Override</div><div class="line">    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) &#123;</div><div class="line">        return inflater.inflate(R.layout.$&#123;layout&#125;, container, false);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中<code>${NAME}</code>代表的是类名变量，${layout}代表了资源文件名变量，这些变量在创建文件时会要求手动填入。</p>
+<p>使用时，在文件夹上点击右键 new 的时候，就可以看到自己定义的模版了：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxjpTI.md.png" alt=""></p>
+<p>点击后，填写一下自定义的变量，就可以生成模版文件了：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxjiff.md.png" alt=""></p>
+<p>上方的layout就是在定义模版时定义的变量，而NAME变量是系统预留变量，会被影射成File name这个名字。关于定义类模版的具体用法，可以参考设置中其他的模版，或者参考文档：</p>
+<p><a href="https://www.jetbrains.com/help/idea/using-file-and-code-templates.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/using-file-and-code-templates.html</a></p>
+<p><strong>一个小尾巴</strong></p>
+<p>这里顺便说一下如何<strong>定义类的作者信息</strong>模版：File and Code Template中有一个Includes标签，打开后是这个样子的：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxjE6g.png" alt=""></p>
+<p>这里填写一个模版，以后创建类的时候会自动把模版内容放在类名上方。一些像日期一样的变量可以在右下方查询。</p>
+<h3 id="3-创建多文件模版"><a href="#3-创建多文件模版" class="headerlink" title="3.创建多文件模版"></a>3.创建多文件模版</h3><p>上面两种方法都是可以在设置中搞定的，比较好理解，下面这种就稍微复杂一点了。</p>
+<p>相信大家肯定用File -&gt; new -&gt; Activity -&gt; EmptyActivity来创建一个新的页面，Android Studio会自动在manifest文件中注册Activity的名字，并创建好一个固定模版的Java和xml布局文件。</p>
+<p>那么它是怎么实现的呢？我们可不可以像它一样也自定义创建多个不同类型的文件模版呢？答案是可以的。<strong>Android Studio使用的是Apache的FreeMarker模版引擎生成代码。</strong></p>
+<p>Android Studio将所有的这种模版的配置文件放在下面路径：</p>
+<p><strong>Windows</strong>:<code>{ANDROID_STUDIO_LOCATION}/plugins/android/lib/templates/</code></p>
+<p><strong>MacOS</strong>:<code>Applications/Android Studio.app/Contents/plugins/android/lib/templates/</code></p>
+<p>可以看下它的目录结构：</p>
+<blockquote>
+<p>-activities<br>-gradle<br>-gradle-projects<br>-other</p>
+</blockquote>
+<p>可以看出它大致对不同类型的模版进行了简单的分类，下面我们以就以activities为例，看一下它是怎么做的。</p>
+<p>打开activities-&gt;EmptyActivity文件夹，可以看到创建模版所涉及的几个主要文件/夹：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-template.xml</div><div class="line">-recipe.xml.ftl</div><div class="line">-root</div><div class="line">-------src</div><div class="line">-----------app_package    </div><div class="line">----------------------**.java.ftl</div></pre></td></tr></table></figure>
+<h4 id="template-xml"><a href="#template-xml" class="headerlink" title="template.xml"></a>template.xml</h4><p>在template.xml文件中，定义的是一些模版需要用到的变量：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">template</span></span></div><div class="line">    <span class="attr">format</span>=<span class="string">"5"</span></div><div class="line">    <span class="attr">revision</span>=<span class="string">"5"</span></div><div class="line">    <span class="attr">name</span>=<span class="string">"Empty Activity"</span></div><div class="line">    <span class="attr">minApi</span>=<span class="string">"9"</span></div><div class="line">    <span class="attr">minBuildApi</span>=<span class="string">"14"</span></div><div class="line">    <span class="attr">description</span>=<span class="string">"Creates a new empty activity"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">value</span>=<span class="string">"Activity"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">formfactor</span> <span class="attr">value</span>=<span class="string">"Mobile"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">parameter</span></span></div><div class="line">        <span class="attr">id</span>=<span class="string">"activityClass"</span></div><div class="line">        <span class="attr">name</span>=<span class="string">"Activity Name"</span></div><div class="line">        <span class="attr">type</span>=<span class="string">"string"</span></div><div class="line">        <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></div><div class="line">        <span class="attr">suggest</span>=<span class="string">"$&#123;layoutToActivity(layoutName)&#125;"</span></div><div class="line">        <span class="attr">default</span>=<span class="string">"MainActivity"</span></div><div class="line">        <span class="attr">help</span>=<span class="string">"The name of the activity class to create"</span> /&gt;</div><div class="line"></div><div class="line">    ...// 省略一些参数// ...</div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 128x128 thumbnails relative to template.xml --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">thumbs</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- default thumbnail is required --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">thumb</span>&gt;</span>template_blank_activity.png<span class="tag">&lt;/<span class="name">thumb</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">thumbs</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">globals</span> <span class="attr">file</span>=<span class="string">"globals.xml.ftl"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">execute</span> <span class="attr">file</span>=<span class="string">"recipe.xml.ftl"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这里简单介绍几个重要的属性和标签：</p>
+<ul>
+<li><strong>template中的name属性</strong>指定了该模版在Android Studio中显示的名字，如：File -&gt; new -&gt; Activity -&gt; <strong>EmptyActivity</strong></li>
+<li><strong>category标签</strong>指定了该模版放在Android Studio的那个分类中，如File -&gt; new -&gt; <strong>Activity</strong> -&gt; EmptyActivity。这里的分类名字可以自己指定。</li>
+<li><strong>parameter标签</strong>指定了该模版需要的参数，例如我在创建EmptyActivity时弹出的Wizard中的每一项其实都是在这里配置的(顺便说一下，<thumbs>标签配置的就是下图中的那个图片)：</thumbs></li>
+</ul>
+<p><img src="https://s2.ax1x.com/2019/03/08/kxjrcD.png" alt=""></p>
+<ul>
+<li><strong>globals标签和execute标签</strong>分别制定了全局变量的配置文件和最核心的行为控制的文件(这里recipe.xml.ftl文件我也不知道应该叫什么，暂时这么称呼吧)</li>
+</ul>
+<h4 id="recipe-xml-ftl"><a href="#recipe-xml-ftl" class="headerlink" title="recipe.xml.ftl"></a>recipe.xml.ftl</h4><p>这是整个配置的核心文件，如果template.xml文件是Android工程中的Layout布局文件，那recipe.xml.ftl就是java文件，它告诉Android Studio需要按照一定的顺序做一些逻辑工作，例如，创建文件，在IDE中打开文件等。下面我们看一下其内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">#import</span> "<span class="attr">root:</span>//<span class="attr">activities</span>/<span class="attr">common</span>/<span class="attr">kotlin_macros.ftl</span>" <span class="attr">as</span> <span class="attr">kt</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">recipe</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">#include</span> "<span class="attr">..</span>/<span class="attr">common</span>/<span class="attr">recipe_manifest.xml.ftl</span>" /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">@kt.addAllKotlinDependencies</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">#if</span> <span class="attr">generateLayout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">#in</span></span></div><div class="line"><span class="attr">clude</span> "<span class="attr">..</span>/<span class="attr">common</span>/<span class="attr">recipe_simple.xml.ftl</span>" /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(resOut)&#125;/layout/$&#123;layoutName&#125;.xml"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">#if</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/SimpleActivity.$&#123;ktOrJavaExt&#125;.ftl"</span></span></div><div class="line">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.$&#123;ktOrJavaExt&#125;"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;activityClass&#125;.$&#123;ktOrJavaExt&#125;"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">recipe</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面的&lt;#include/&gt;标签主要做了一些复用的工作，例如<code>&lt;#include &quot;../common/recipe_manifest.xml.ftl&quot; /&gt;</code>就是调用了recipe_manifest.xml.ftl文件在Manifest文件中插入了activity的信息。</p>
+<p>我们主要关注下instantiate标签和open标签，这两句话翻译成自然语言就是：</p>
+<blockquote>
+<p>根据模版文件：<code>root/src/app_package/SimpleActivity.${ktOrJavaExt}.ftl</code>生成类文件到<code>${escapeXmlAttribute(srcOut)}/${activityClass}.${ktOrJavaExt}</code>中去。</p>
+<p>然后在Android Studio中打开文件：<code>${escapeXmlAttribute(srcOut)}/${activityClass}.${ktOrJavaExt}</code></p>
+</blockquote>
+<p>如果需要同时生成多个文件，就需要在这里用instantiate标签生成。那么生成文件的模版是在哪里定义的呢？下面说的root文件夹就是。</p>
+<h4 id="root文件夹（模版文件夹）"><a href="#root文件夹（模版文件夹）" class="headerlink" title="root文件夹（模版文件夹）"></a>root文件夹（模版文件夹）</h4><p>root指的是工程的代码根目录，其内部是src、res甚至AndroidManifest.xml.ftl这样跟工程目录对应位置的模版文件。我们以root/src/app_package/SimpleActivity.java.ftl文件为例，看下其模版是怎么定义的：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">package $&#123;packageName&#125;;</div><div class="line"></div><div class="line">import $&#123;superClassFqcn&#125;;</div><div class="line">import android.os.Bundle;</div><div class="line">&lt;#if (includeCppSupport!false) &amp;&amp; generateLayout&gt;</div><div class="line">import android.widget.TextView;</div><div class="line">&lt;/#if&gt;</div><div class="line"></div><div class="line">public class $&#123;activityClass&#125; extends $&#123;superClass&#125; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">&lt;#if generateLayout&gt;</div><div class="line">        setContentView(R.layout.$&#123;layoutName&#125;);</div><div class="line">       &lt;#include "../../../../common/jni_code_usage.java.ftl"&gt;</div><div class="line">&lt;#elseif includeCppSupport!false&gt;</div><div class="line"></div><div class="line">        // Example of a call to a native method</div><div class="line">        android.util.Log.d("$&#123;activityClass&#125;", stringFromJNI());</div><div class="line">&lt;/#if&gt;</div><div class="line">    &#125;</div><div class="line">&lt;#include "../../../../common/jni_code_snippet.java.ftl"&gt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出，就是对一个Activity进行了模版化，其中很多变量提高了该模版的可扩展性，这里可以使用include引入其他模版的内容，或者使用if来进行条件判断，功能还是蛮强大的，更多的语法内容，可以参考FreeMarker模版引擎的文档：</p>
+<p><a href="https://freemarker.apache.org/" target="_blank" rel="noopener">https://freemarker.apache.org/</a></p>
+<p>关于AndroidStudio的EmptyActivity模版创建分析就先到这里，下面我们实际的应用一下看看。</p>
+<h3 id="实战：创建列表Adapter模版"><a href="#实战：创建列表Adapter模版" class="headerlink" title="实战：创建列表Adapter模版"></a>实战：创建列表Adapter模版</h3><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>目前做的工程中对RecycleView进行了封装，每次创建列表的Adapter时需要创建一系列文件才能开始写逻辑，这些文件包括：</p>
+<ul>
+<li><p>列表的Adapter文件</p>
+</li>
+<li><p>数据Model的Pojo文件</p>
+</li>
+<li>列表中的View文件(ListItemView)</li>
+<li>View文件的layout文件</li>
+</ul>
+<p>为了减少创建列表Adapter的工作量，按照下面步骤为其创建一套类似于EmptyActivity的模版：</p>
+<h4 id="Step-1-创建相关文件"><a href="#Step-1-创建相关文件" class="headerlink" title="Step 1. 创建相关文件"></a>Step 1. 创建相关文件</h4><p>在第三节提到的Templates路径中的other文件夹下新建一个文件夹，随意命名为“ListAdapter”，然后在内部创建下面的文件目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">f├── globals.xml.ftl</div><div class="line">f├── recipe.xml.ftl</div><div class="line">d├── root</div><div class="line">d│   ├── res</div><div class="line">d│   │   └── layout</div><div class="line">f│   │       └── layout.xml.ftl</div><div class="line">d│   └── src</div><div class="line">d│       └── app_package</div><div class="line">f│           ├── Adapter.kt.ftl</div><div class="line">f│           ├── ItemView.kt.ftl</div><div class="line">f│           └── Model.kt.ftl</div><div class="line">f└── template.xml</div></pre></td></tr></table></figure>
+<h4 id="Step-2-配置template-xml"><a href="#Step-2-配置template-xml" class="headerlink" title="Step 2. 配置template.xml"></a>Step 2. 配置template.xml</h4><p>要想灵活的填写创建Adapter时涉及到的文件的名字，就要将这些名字参数化，在创建之前让程序员填写，这就需要在template文件中配置相应的参数：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">template</span></span></div><div class="line">        <span class="attr">format</span>=<span class="string">"5"</span></div><div class="line">        <span class="attr">revision</span>=<span class="string">"1"</span></div><div class="line">        <span class="attr">name</span>=<span class="string">"Create RecycleView Adapter"</span></div><div class="line">        <span class="attr">minApi</span>=<span class="string">"9"</span></div><div class="line">        <span class="attr">minBuildApi</span>=<span class="string">"14"</span></div><div class="line">        <span class="attr">description</span>=<span class="string">"Create a RecycleView Adapter in DreamReader."</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">value</span>=<span class="string">"DreamReader"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">formfactor</span> <span class="attr">value</span>=<span class="string">"Mobile"</span> /&gt;</span></div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">parameter</span> <span class="attr">id</span>=<span class="string">"adapterName"</span></span></div><div class="line">    <span class="attr">name</span>=<span class="string">"Adapter Name"</span></div><div class="line">    <span class="attr">type</span>=<span class="string">"string"</span></div><div class="line">    <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></div><div class="line">    <span class="attr">default</span>=<span class="string">"RecycleViewAdapter"</span></div><div class="line">    <span class="attr">help</span>=<span class="string">"The name of the adapter of RecycleView"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">parameter</span> <span class="attr">id</span>=<span class="string">"layoutName"</span></span></div><div class="line">    <span class="attr">name</span>=<span class="string">"Layout Name"</span></div><div class="line">    <span class="attr">type</span>=<span class="string">"string"</span></div><div class="line">    <span class="attr">constraints</span>=<span class="string">"layout|nonempty|unique"</span></div><div class="line">    <span class="attr">default</span>=<span class="string">"view_list_item"</span></div><div class="line">    <span class="attr">help</span>=<span class="string">"The name of the layout file of RecycleView"</span>/&gt;</div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">parameter</span> <span class="attr">id</span>=<span class="string">"itemViewName"</span></span></div><div class="line">    <span class="attr">name</span>=<span class="string">"Item View Name"</span></div><div class="line">    <span class="attr">type</span>=<span class="string">"string"</span></div><div class="line">    <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></div><div class="line">    <span class="attr">default</span>=<span class="string">"ItemListView"</span></div><div class="line">    <span class="attr">help</span>=<span class="string">"The name of the item list view class of RecycleView"</span>/&gt;</div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">parameter</span> <span class="attr">id</span>=<span class="string">"modelName"</span></span></div><div class="line">    <span class="attr">name</span>=<span class="string">"Model Name"</span></div><div class="line">    <span class="attr">type</span>=<span class="string">"string"</span></div><div class="line">    <span class="attr">constraints</span>=<span class="string">"class|unique|nonempty"</span></div><div class="line">    <span class="attr">default</span>=<span class="string">"ItemModel"</span></div><div class="line">    <span class="attr">help</span>=<span class="string">"The name of the data model class of RecycleView"</span>/&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">globals</span> <span class="attr">file</span>=<span class="string">"globals.xml.ftl"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">execute</span> <span class="attr">file</span>=<span class="string">"recipe.xml.ftl"</span>/&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>从上面可以看出，我们自定义了一个名字为DreamReader的category，并将该模版的名字命名为:Create RecycleView Adapter.然后添加了四个参数：<code>adapterName</code>，<code>layoutName</code>，<code>itemViewName</code>，<code>modelName</code>。最后制定了global文件和execute文件的名字。</p>
+<h4 id="Step-3-配置global文件"><a href="#Step-3-配置global文件" class="headerlink" title="Step 3.配置global文件"></a>Step 3.配置global文件</h4><p>global文件需要指定用到的全局变量，这里只需要用到src和res路径：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">globals</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">global</span> <span class="attr">id</span>=<span class="string">"srcOut"</span> <span class="attr">value</span>=<span class="string">"$&#123;srcDir&#125;/$&#123;slashedPackageName(packageName)&#125;"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">global</span> <span class="attr">id</span>=<span class="string">"resOut"</span> <span class="attr">value</span>=<span class="string">"$&#123;resDir&#125;"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">globals</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="Step-4-配置recipe文件"><a href="#Step-4-配置recipe文件" class="headerlink" title="Step 4. 配置recipe文件"></a>Step 4. 配置recipe文件</h4><p>recipe文件中写明了具体要进行的操作，指定了具体模版文件的路径和名字:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">#import</span> "<span class="attr">root:</span>//<span class="attr">activities</span>/<span class="attr">common</span>/<span class="attr">kotlin_macros.ftl</span>" <span class="attr">as</span> <span class="attr">kt</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">recipe</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/Adapter.kt.ftl"</span></span></div><div class="line">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;adapterName&#125;.kt"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;adapterName&#125;.kt"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/Model.kt.ftl"</span></span></div><div class="line">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;modelName&#125;.kt"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;modelName&#125;.kt"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/src/app_package/ItemView.kt.ftl"</span></span></div><div class="line">                   <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;itemViewName&#125;.kt"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(srcOut)&#125;/$&#123;itemViewName&#125;.kt"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">instantiate</span> <span class="attr">from</span>=<span class="string">"root/res/layout/layout.xml.ftl"</span></span></div><div class="line">                 <span class="attr">to</span>=<span class="string">"$&#123;escapeXmlAttribute(resOut)&#125;/layout/$&#123;layoutName&#125;.xml"</span> /&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">open</span> <span class="attr">file</span>=<span class="string">"$&#123;escapeXmlAttribute(resOut)&#125;/layout/$&#123;layoutName&#125;.xml"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">recipe</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>上面代码生成(instantiate)了四个文件，并且让其全部在IDE中打开(open)。其中每个生成一个文件，都为其指定了具体的模版文件:<code>Adapter.kt.ftl</code>、<code>Model.kt.ftl</code>、<code>ItemView.kt.ftl</code>、<code>layout.xml.ftl</code></p>
+<h4 id="Step-5-编写具体的模版文件"><a href="#Step-5-编写具体的模版文件" class="headerlink" title="Step 5. 编写具体的模版文件"></a>Step 5. 编写具体的模版文件</h4><p>下面贴出我写的具体的模版文件内容，由于我是用kotlin写的，所以后缀是kt.ftl，如果是java文件则应该是java.ftl后缀:</p>
+<p>Adapter.kt.ftl</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> $&#123;escapeKotlinIdentifiers(packageName)&#125;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context</div><div class="line"><span class="keyword">import</span> android.view.View</div><div class="line"><span class="keyword">import</span> android.view.ViewGroup</div><div class="line"><span class="keyword">import</span> com.tencent.news.pullrefreshrecyclerview.RecyclerViewAdapterEx</div><div class="line"><span class="keyword">import</span> com.tencent.news.pullrefreshrecyclerview.RecyclerViewHolderEx</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> $</span>&#123;adapterName&#125;(<span class="keyword">val</span> context:Context) : RecyclerViewAdapterEx&lt;$&#123;modelName&#125;&gt;() &#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">val</span> TYPE_DEFAULT = <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getNormalItemType</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> TYPE_DEFAULT</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getLayoutViewByViewType</span><span class="params">(parent: <span class="type">ViewGroup</span>?, viewType: <span class="type">Int</span>)</span></span>: View &#123;</div><div class="line">        <span class="keyword">return</span> $&#123;itemViewName&#125;(context)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">bindData</span><span class="params">(holder: <span class="type">RecyclerViewHolderEx</span>?, <span class="keyword">data</span>: $&#123;<span class="type">modelName</span>&#125;?, dataPos: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">        (holder?.itemView <span class="keyword">as</span>? $&#123;itemViewName&#125;)?.setData(<span class="keyword">data</span>, dataPos)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中用到的变量名字都是在第二步中的template中定义的。</p>
+<p>Model.kt.ftl</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> $&#123;escapeKotlinIdentifiers(packageName)&#125;</div><div class="line"></div><div class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> $</span>&#123;modelName&#125;(<span class="keyword">var</span> name:String)</div></pre></td></tr></table></figure>
+<p>ItemView.kt.ftl</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> $&#123;escapeKotlinIdentifiers(packageName)&#125;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context</div><div class="line"><span class="keyword">import</span> android.util.AttributeSet</div><div class="line"><span class="keyword">import</span> android.view.LayoutInflater</div><div class="line"><span class="keyword">import</span> android.widget.RelativeLayout</div><div class="line">&lt;#<span class="keyword">if</span> applicationPackage??&gt;</div><div class="line"><span class="keyword">import</span> $&#123;applicationPackage&#125;.R</div><div class="line">&lt;/#<span class="keyword">if</span>&gt;</div><div class="line"></div><div class="line"><span class="keyword">import</span> kotlinx.android.synthetic.main.$&#123;layoutName&#125;.*</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> $</span>&#123;itemViewName&#125; <span class="meta">@JvmOverloads</span> <span class="keyword">constructor</span>(context: Context,</div><div class="line">                                                        attributeSet: AttributeSet? = <span class="literal">null</span>,</div><div class="line">                                                        defStyleAttributeSet: <span class="built_in">Int</span> = <span class="number">0</span>)</div><div class="line">    : RelativeLayout(context, attributeSet, defStyleAttributeSet) &#123;</div><div class="line"></div><div class="line">    init &#123;</div><div class="line">        LayoutInflater.from(context).inflate(R.layout.$&#123;layoutName&#125;, <span class="keyword">this</span>, <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">setData</span><span class="params">(<span class="keyword">data</span>: $&#123;<span class="type">modelName</span>&#125;?, index: <span class="type">Int</span>)</span></span> &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>layout.xml.ftl</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span></div><div class="line">    <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span></div><div class="line">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/sample_text"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:text</span>=<span class="string">"Hello World!"</span></div><div class="line">        <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">"parent"</span></div><div class="line">        <span class="attr">app:layout_constraintLeft_toLeftOf</span>=<span class="string">"parent"</span></div><div class="line">        <span class="attr">app:layout_constraintRight_toRightOf</span>=<span class="string">"parent"</span></div><div class="line">        <span class="attr">app:layout_constraintTop_toTopOf</span>=<span class="string">"parent"</span> /&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Step 6.使用</p>
+<p>重启Android Studio，这样，再写列表时，就可以一键生成上面四个文件了，在New列表中可以看到我们定义的category和name：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/ASP654.png" alt=""></p>
+<p>点击后，弹出填写参数的窗口:</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/ASP4r6.png" alt=""></p>
+<p>框中的内容都是我们自定义的内容，可以在这里填入想要的文件名，点击finish就生成了相应的文件：</p>
+<p><img src="https://s2.ax1x.com/2019/03/08/ASiiGj.png" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是对Android Studio中模版用法的介绍和简单理解，可能有很多错误的地方，如有问题欢迎指正。本文主要讲了在Android Studio中创建<strong>Live Templates</strong>代码块模版、<strong>File and Code Templates</strong>类模版以及创建多文件模版，希望大家在工作中能巧用模版，提高效率。(Jetbrain真是在让程序员变懒这条路上一去不复返了😂。)</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>[1] <a href="https://medium.com/androidstarters/mastering-android-studio-templates-ed8fdd98cb78" target="_blank" rel="noopener">https://medium.com/androidstarters/mastering-android-studio-templates-ed8fdd98cb78</a></p>
+<p>[2] <a href="https://riggaroo.co.za/custom-file-template-group-android-studiointellij/" target="_blank" rel="noopener">https://riggaroo.co.za/custom-file-template-group-android-studiointellij/</a></p>
+<p>[3] <a href="https://www.jetbrains.com/help/idea/using-file-and-code-templates.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/using-file-and-code-templates.html</a></p>
+<p>[4] <a href="https://www.jetbrains.com/help/idea/using-live-templates.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/using-live-templates.html</a></p>
+<p>[5] <a href="https://freemarker.apache.org/" target="_blank" rel="noopener">https://freemarker.apache.org/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/07/Android-Studio创建多文件模版-Templates/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-将ViewPager放在RecyclerView中的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/03/将ViewPager放在RecyclerView中的问题/">将ViewPager放在RecyclerView中的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/03/将ViewPager放在RecyclerView中的问题/" class="archive-article-date">
+  	<time datetime="2019-03-03T04:24:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/03/将ViewPager放在RecyclerView中的问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-踩坑-复用RemoteView导致内存泄漏总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -591,7 +850,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#111;&#58;&#114;&#x69;&#x2e;&#46;&#46;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#109;">&#114;&#x69;&#x2e;&#46;&#46;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x72;&#105;&#46;&#46;&#x2e;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x72;&#105;&#46;&#46;&#x2e;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -1095,202 +1354,6 @@
 
 
   
-    <article id="post-【搬运】一种在本地写代码、远程高性能电脑编译代码的方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">一种基于MainFramer进行远程编译的应用（以Android开发为例）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/" class="archive-article-date">
-  	<time datetime="2018-10-11T16:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一、故事背景（可略过）"><a href="#一、故事背景（可略过）" class="headerlink" title="一、故事背景（可略过）"></a>一、故事背景（可略过）</h3><p>鲁迅说：</p>
-<blockquote>
-<p>世界上只有三种电脑：卡爆的轻薄本、丑爆的游戏本和搬不动的台式机</p>
-</blockquote>
-<p>我就遇到了这种情况，上班后公司配的是MacBookPro的笔记本和一个Windows的台式机（PC），我曾尝试过使用MacBook作为主力机工作，MacOS的体验非常优秀，但是唯一的不足就是其在处理大型复杂任务时的速度远不如我那台高配的台式机，编译一次工程的时间差在3分钟左右，而我每天编译上20次就能差出一个小时，有这个时间提前让我下班多好。最重要的是，我只要一点击Build，整个机器就开始满负荷运行，除了温度飙升外，CPU也被占满，这时候开个网页都卡成了幻灯片。</p>
-<p>为了提高工作效率，我尝试一直用台式机工作，于是我的MBP吃灰了很久，这么优秀的笔记本放在那里吃灰实在是心疼。最关键的是，台式机让我完全没有<strong>工作流</strong>的感觉，当我周末无聊想充电的时候，我发现我所有想看的东西都在公司，当我一个个软件打开，一个个网页从历史记录中找到后，我发现我已经没有了学习的欲望。这时候我非常想念用笔记本时那种“合盖走人”后，回家打开盖子发现我所有的思路都还在的感觉。</p>
-<p>于是我急切的找一种方法，让简单的任务在笔记本上来做，复杂的任务能够利用台式机完成，并且在体验上做到“无差别”。终于，我在浏览全球最大的同性社交网站时惊喜的发现了<a href="https://github.com/gojuno/mainframer" target="_blank" rel="noopener"><strong>mainframer</strong></a>，这是一个工具，可以将编译这件占内存和CPU的事从本地电脑放到远程电脑上来做。</p>
-<p>简单的说，你只需要一台本地机器（Local Machine：例如我的性能不咋地的MacBook）和一台远程机器（Remote Machine：性能强悍的台式机或者云主机），通过mainframer，就可以实现在本地机器上写代码，在远程机器上编译代码。你可以在笔记本上写代码，到了需要调试的时候，mainframer会快速同步代码到远程机器并进行编译，并将编译的结果返回到你的笔记本，这一切仿佛都是在你的笔记本上进行的，你可以正常的build和调试程序。这样一来，就可以享受笔记本的便捷，又能享受台式机的高性能了，美滋滋。</p>
-<p>下面就是我配置成功后，录制的在MacBookPro上写代码，在Linux发行版Manjaro上进行Build的视频：</p>
-<video src="http://chewenkai.cf/owncloud/index.php/s/Mo209sjNvN2iOLU/download" controls="controls" style="max-width: 100%; display: block; margin-left: auto; margin-right: auto;"> your browser does not support the video tag </video>
-        
-          <a class="article-more-a" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/工具//" class="article-tag-list-link color3">工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/12/【搬运】一种在本地写代码、远程高性能电脑编译代码的方式/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-VIM常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/30/VIM常用命令/">VIM常用命令</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/30/VIM常用命令/" class="archive-article-date">
-  	<time datetime="2018-03-30T04:13:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率的提高大有裨益。但是剑一天不用，锈的也是很快的。前几天在终端中偶然发现了命令<code>vimtutor</code>，该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总于下，方便记忆。</p>
-<h3 id="浏览命令"><a href="#浏览命令" class="headerlink" title="浏览命令"></a>浏览命令</h3><ol>
-<li><p>光标在屏幕文本中的移动既可以用箭头键，也可以使用 <code>hjkl</code> 字母键。<br><code>h (左移)       j (下行)       k (上行)     l (右移)</code></p>
-</li>
-<li><p>欲进入 Vim 编辑器(从命令行提示符)，请输入：vim 文件名 <code>&lt;回车&gt;</code></p>
-</li>
-<li><p>欲退出 Vim 编辑器，请输入 <code>&lt;ESC&gt;</code>   <code>:q!</code>   <code>&lt;回车&gt;</code> 放弃所有改动。<br>或者输入 <code>&lt;ESC&gt;</code>   <code>:wq</code>   <code>&lt;回车&gt;</code> 保存改动。</p>
-</li>
-<li><p>在正常模式下删除光标所在位置的字符，请按： <code>x</code></p>
-</li>
-<li><p>欲插入或添加文本，请输入：<br><code>i   输入欲插入文本   &lt;ESC&gt;             在光标前插入文本</code><br><code>A   输入欲添加文本   &lt;ESC&gt;             在一行后添加文本</code></p>
-</li>
-</ol>
-<p>特别提示：按下 <esc> 键会带您回到正常模式或者撤消一个不想输入或部分完整<br>的命令。</esc></p>
-        
-          <a class="article-more-a" href="/2018/03/30/VIM常用命令/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">VIM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/日常总结//" class="article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/30/VIM常用命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1388,11 +1451,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1412,7 +1479,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Android</a>
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1425,14 +1496,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
               </li>
              
               <li class="article-tag-list-item">
