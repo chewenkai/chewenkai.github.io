@@ -147,6 +147,116 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-初识ViewPager2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/11/初识ViewPager2/">初识ViewPager2</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/11/初识ViewPager2/" class="archive-article-date">
+  	<time datetime="2019-03-11T01:32:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ViewPager2是Google于2019年2月7号发布的ViewPager的升级版本，目前最新版本是1.0.0-alpha01。ViewPager2主要解决了传统ViewPager中的几个问题：</p>
+<ul>
+<li>不支持从右到左布局</li>
+<li>不支持纵向滚动</li>
+<li>notifyDataSetChanged()有时不起作用的Bug</li>
+</ul>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>查看ViewPager2内部代码可以看出，其实现原理是在其内部封装了一个RecyclerView，利用LinearLayoutManager+PagerSnapHelper实现了ViewPager的滚动效果以及对纵向滚动的支持。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPager2</span> <span class="keyword">extends</span> <span class="title">ViewGroup</span> </span>&#123;</div><div class="line">    </div><div class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">            mRecyclerView = <span class="keyword">new</span> RecyclerView(context) &#123;</div><div class="line">               ...</div><div class="line">            &#125;;</div><div class="line"></div><div class="line">            mLayoutManager = <span class="keyword">new</span> LinearLayoutManager(context);</div><div class="line">            mRecyclerView.setLayoutManager(mLayoutManager);</div><div class="line">            setOrientation(context, attrs);</div><div class="line"></div><div class="line">            <span class="keyword">new</span> PagerSnapHelper().attachToRecyclerView(mRecyclerView);</div><div class="line">            ...</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="目前存在的问题："><a href="#目前存在的问题：" class="headerlink" title="目前存在的问题："></a>目前存在的问题：</h3><p>由于直接使用的RecycleView实现，一些ViewPager的特性没有得到完全实现，官方指出了下面几个问题：</p>
+<ul>
+<li>不支持设置offscreen limit</li>
+<li>与TabLayout的集成存在问题</li>
+<li>FragmentStateAdapter还有稳定性问题</li>
+<li>不支持设置pageWitch，默认100%/100%</li>
+<li>不支持clipToPadding</li>
+<li>不支持fakeDrag</li>
+<li>设置page transformer时，不支持设置绘制顺序</li>
+</ul>
+<h3 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h3><p>其使用方法与传统ViewPager类似：</p>
+<p>1.在模块gradle中添加依赖：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">implementation <span class="string">'androidx.viewpager2:viewpager2:1.0.0-alpha01'</span></div></pre></td></tr></table></figure>
+<p>2.在Layout文件中布局，这里可以设置滚动方向:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;androidx.viewpager2.widget.ViewPager2</div><div class="line">        android:id=<span class="string">"@+id/viewPager2"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"match_parent"</span></div><div class="line">        android:orientation=<span class="string">"vertical"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>3.创建Adapter，ViewPager2使用FragmentStateAdapter来实现Fragment的管理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPager2Adapter</span> <span class="keyword">extends</span> <span class="title">FragmentStateAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ViewPager2Adapter</span><span class="params">(@NonNull FragmentManager fragmentManager)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(fragmentManager);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@NonNull</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SimpleFragment();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">10</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.应用Adapter:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">viewPager2 = findViewById(R.id.viewpager2);</div><div class="line">ViewPager2Adapter adapter = <span class="keyword">new</span> ViewPager2Adapter(getSupportFragmentManager());</div><div class="line">viewPager2.setAdapter(adapter);</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>ViewPager2具有原生支持垂直方向滑动的特性，但是由于目前FragmentStateAdapter还有稳定性问题，以及设置page transformer时，不支持设置绘制顺序，在实际应用时还需要多进行修改和测试。建议等官方推出稳定版本后，再考虑接入。</p>
+<p><strong>参考：</strong></p>
+<p>[1] <a href="https://developer.android.com/jetpack/androidx/releases/viewpager2" target="_blank" rel="noopener">https://developer.android.com/jetpack/androidx/releases/viewpager2</a></p>
+<p>[2] <a href="https://developer.android.google.cn/reference/androidx/viewpager2/adapter/FragmentStateAdapter" target="_blank" rel="noopener">https://developer.android.google.cn/reference/androidx/viewpager2/adapter/FragmentStateAdapter</a></p>
+<p>[3] <a href="https://developer.android.google.cn/reference/androidx/viewpager2/widget/ViewPager2" target="_blank" rel="noopener">https://developer.android.google.cn/reference/androidx/viewpager2/widget/ViewPager2</a></p>
+<p>[4] <a href="https://www.journaldev.com/26148/android-viewpager2" target="_blank" rel="noopener">https://www.journaldev.com/26148/android-viewpager2</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/11/初识ViewPager2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android Studio的三种类型的模版创建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -749,7 +859,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#114;&#x69;&#46;&#46;&#x2e;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;">&#114;&#x69;&#46;&#46;&#x2e;&#x40;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#114;&#x69;&#x2e;&#x2e;&#x2e;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#114;&#x69;&#x2e;&#x2e;&#x2e;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -1188,71 +1298,6 @@
 
 
   
-    <article id="post-祝小美生日快乐" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/20/祝小美生日快乐/">祝小美生日快乐</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/20/祝小美生日快乐/" class="archive-article-date">
-  	<time datetime="2018-10-19T17:45:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        The article has been encrypted, please enter your password to view.<br>
-        
-          <a class="article-more-a" href="/2018/10/20/祝小美生日快乐/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/20/祝小美生日快乐/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1370,7 +1415,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1379,6 +1424,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1415,10 +1464,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
             
             <div class="clearfix"></div>
