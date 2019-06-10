@@ -147,6 +147,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-记一次overloadaggressively造成的崩溃" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/10/记一次overloadaggressively造成的崩溃/">记一次overloadaggressively造成的崩溃</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/10/记一次overloadaggressively造成的崩溃/" class="archive-article-date">
+  	<time datetime="2019-06-10T03:29:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>将Kotlin版本从1.1.2-4升级到1.3.11后，发现打的release包开机就会崩溃：崩溃日志为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">java.lang.RuntimeException: Unable to instantiate application com.tencent.sigma.patch.HotPatchApplication: java.lang.ClassNotFoundException: Didn<span class="string">'t find class "com.tencent.sigma.patch.HotPatchApplication" on path: DexPathList[[zip file "/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk"],nativeLibraryDirectories=[/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/lib/arm, /data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk!/lib/armeabi, /system/lib, /vendor/lib]]</span></div><div class="line">     at android.app.LoadedApk.makeApplication(LoadedApk.java:993)</div><div class="line">     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:5801)</div><div class="line">     at android.app.ActivityThread.-wrap1(Unknown Source:0)</div><div class="line">     at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1683)</div><div class="line">     at android.os.Handler.dispatchMessage(Handler.java:106)</div><div class="line">     at android.os.Looper.loop(Looper.java:173)</div><div class="line">     at android.app.ActivityThread.main(ActivityThread.java:6650)</div><div class="line">     at java.lang.reflect.Method.invoke(Native Method)</div><div class="line">     at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:547)</div><div class="line">     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:818)</div><div class="line">  Caused by: java.lang.ClassNotFoundException: Didn't find class <span class="string">"com.tencent.sigma.patch.HotPatchApplication"</span> on path: DexPathList[[zip file <span class="string">"/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk"</span>],nativeLibraryDirectories=[/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/lib/arm, /data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk!/lib/armeabi, /system/lib, /vendor/lib]]</div><div class="line">     at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:125)</div><div class="line">     at java.lang.ClassLoader.loadClass(ClassLoader.java:379)</div><div class="line">     at java.lang.ClassLoader.loadClass(ClassLoader.java:312)</div><div class="line">     at android.app.Instrumentation.newApplication(Instrumentation.java:1088)</div><div class="line">     at android.app.LoadedApk.makeApplication(LoadedApk.java:987)</div><div class="line">     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:5801) </div><div class="line">     at android.app.ActivityThread.-wrap1(Unknown Source:0) </div><div class="line">     at android.app.ActivityThread<span class="variable">$H</span>.handleMessage(ActivityThread.java:1683) </div><div class="line">     at android.os.Handler.dispatchMessage(Handler.java:106) </div><div class="line">     at android.os.Looper.loop(Looper.java:173) </div><div class="line">     at android.app.ActivityThread.main(ActivityThread.java:6650) </div><div class="line">     at java.lang.reflect.Method.invoke(Native Method) </div><div class="line">     at com.android.internal.os.RuntimeInit<span class="variable">$MethodAndArgsCaller</span>.run(RuntimeInit.java:547) </div><div class="line">     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:818) </div><div class="line"> 	Suppressed: java.io.IOException: Failed to open dex files from /data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk because: Failure to verify dex file <span class="string">'/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk'</span>: Out-of-order annotation_element name_idx: 7150 <span class="keyword">then</span> 7150</div><div class="line">     at dalvik.system.DexFile.openDexFileNative(Native Method)</div><div class="line">     at dalvik.system.DexFile.openDexFile(DexFile.java:353)</div><div class="line">     at dalvik.system.DexFile.&lt;init&gt;(DexFile.java:100)</div><div class="line">     at dalvik.system.DexFile.&lt;init&gt;(DexFile.java:74)</div><div class="line">     at dalvik.system.DexPathList.loadDexFile(DexPathList.java:374)</div><div class="line">     at dalvik.system.DexPathList.makeDexElements(DexPathList.java:337)</div><div class="line">     at dalvik.system.DexPathList.&lt;init&gt;(DexPathList.java:157)</div><div class="line">     at dalvik.system.BaseDexClassLoader.&lt;init&gt;(BaseDexClassLoader.java:65)</div><div class="line">     at dalvik.system.PathClassLoader.&lt;init&gt;(PathClassLoader.java:64)</div><div class="line">     at com.android.internal.os.ClassLoaderFactory.createClassLoader(ClassLoaderFactory.java:73)</div><div class="line">     at com.android.internal.os.ClassLoaderFactory.createClassLoader(ClassLoaderFactory.java:88)</div><div class="line">     at android.app.ApplicationLoaders.getClassLoader(ApplicationLoaders.java:69)</div><div class="line">     at android.app.ApplicationLoaders.getClassLoader(ApplicationLoaders.java:35)</div><div class="line">     at android.app.LoadedApk.createOrUpdateClassLoaderLocked(LoadedApk.java:695)</div><div class="line">     at android.app.LoadedApk.getClassLoader(LoadedApk.java:729)</div><div class="line">     at android.app.LoadedApk.getResources(LoadedApk.java:956)</div><div class="line">     at android.app.ContextImpl.createAppContext(ContextImpl.java:2282)</div><div class="line">     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:5723)</div><div class="line">     		... 8 more</div></pre></td></tr></table></figure>
+<p>乍一看，以为是HotPatchApplication被混淆的原因导致Class Not Found，于是尝试keep住HotPatchApplication这个类，但是发现问题依旧。于是又怀疑是前不久升级gradle对分包造成了影响，对apk中的dex文件进行分析，发现HotPatchApplication这个类稳稳的躺在第一个dex文件中。</p>
+<p>后来又进行了以下的尝试：</p>
+<p>​     1.尝试按顺序更改Kotlin版本，最后，当Kotlin版本为1.3.0时，发现问题出现了。  </p>
+<p>​    2.另一个线索是当我打开Proguard时，那就是<code>minifyEnable true</code>，崩溃就出现了。</p>
+<p>经过以上排查，基本确定了问题出在Kotlin和混淆的身上。最后发现上述日志中有一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Suppressed: java.io.IOException: Failed to open dex files from /data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk because: Failure to verify dex file <span class="string">'/data/app/com.tencent.dreamreader-P2-qUIVdDrdEOhONvRwOtw==/base.apk'</span>: Out-of-order annotation_element name_idx: 7150 <span class="keyword">then</span> 7150</div></pre></td></tr></table></figure>
+<p>这个报错是第一次见到，上网搜了下，最终定位在混淆时的一个参数身上：<code>-overloadaggressively</code></p>
+<p>ProGuard官网解释：</p>
+<blockquote>
+<p>-overloadaggressively<br>Specifies to apply aggressive overloading while obfuscating. Multiple fields and methods can then get the same names, as long as their arguments and return types are different, as required by Java bytecode (not just their arguments, as required by the Java language). This option can make the processed code even smaller (and less comprehensible). Only applicable when obfuscating.</p>
+</blockquote>
+<p>可以看出，开启该选项可能把不同的方法或者变量混淆成相同的名字，这样会尽可能的减小代码体积。但是由于过于激进，造成了dex文件中有重复annotation_element，这个问题在编译和打包时并不会报错，只有在开启软件时才会发现。</p>
+<p>至于为什么升级了Kotlin才有这个问题，猜测原因是新版本的kotlin中加入了Keep注释与Java的Keep注释同名造成的。</p>
+<p><strong>解决办法：</strong></p>
+<p>去掉混淆文件（proguard.txt）中的-overloadaggressively</p>
+<p>参考：</p>
+<p><a href="https://stackoverflow.com/questions/56458360/app-crashed-when-r8-enabled-with-existing-proguard-settings" target="_blank" rel="noopener">https://stackoverflow.com/questions/56458360/app-crashed-when-r8-enabled-with-existing-proguard-settings</a></p>
+<p><a href="https://issuetracker.google.com/issues/129241209#comment11" target="_blank" rel="noopener">https://issuetracker.google.com/issues/129241209#comment11</a></p>
+<p><a href="https://stackoverflow.com/questions/51948250/failure-to-verify-dex-file-out-of-order-annotation-element-name-idx" target="_blank" rel="noopener">https://stackoverflow.com/questions/51948250/failure-to-verify-dex-file-out-of-order-annotation-element-name-idx</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常记录</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/10/记一次overloadaggressively造成的崩溃/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-春游故宫" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -935,7 +1033,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#109;&#x61;&#x69;&#108;&#116;&#111;&#58;&#x72;&#x69;&#x2e;&#x2e;&#x2e;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x72;&#x69;&#x2e;&#x2e;&#x2e;&#64;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x72;&#105;&#46;&#x2e;&#46;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#x72;&#105;&#46;&#x2e;&#46;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -1075,207 +1173,6 @@
 
 
   
-    <article id="post-Android中动画的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/02/Android中动画的使用/">Android中动画的使用</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/02/Android中动画的使用/" class="archive-article-date">
-  	<time datetime="2018-12-02T11:43:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Android中动画的使用"><a href="#Android中动画的使用" class="headerlink" title="Android中动画的使用"></a>Android中动画的使用</h1><h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>在Android中，如果想让一个View的消失，如果没有做任何处理，直接<code>setVisibility(View.GONE)</code>，你会发现整个View是瞬间消失的，没有任何过度。为了让用户感知到View的消失，就要让这个View消失的时候带一个动画效果，这样可以减轻用户的焦虑感。</p>
-<h4 id="Android中动画的种类"><a href="#Android中动画的种类" class="headerlink" title="Android中动画的种类"></a>Android中动画的种类</h4><p>Android中共有三种动画系统，分别是：</p>
-<ul>
-<li><a href="http://developer.android.com/guide/topics/graphics/view-animation.html" target="_blank" rel="noopener">View Animations</a> - 最原始的Android动画，性能差而且不够灵活.Property Animations动画出现后就被废弃了。</li>
-<li><a href="http://developer.android.com/guide/topics/graphics/prop-animation.html" target="_blank" rel="noopener">Property Animations</a> - 自Android 3.0后引入的强大灵活的动画系统</li>
-<li><a href="https://developer.android.com/training/transitions/overview.html" target="_blank" rel="noopener">Transition Animations</a> - 上面两种动画只是对某个View进行改变，而不会影响其所在的容器及周边的Views，而Transition动画可以适应layout的变化。默认的Transition框架支持Andorid 4.4以上的系统，使用<code>com.android.support:transition</code>支持库可以使Transition框架兼容到Android 4.0及以上。</li>
-</ul>
-<h4 id="Property-Animation-属性动画"><a href="#Property-Animation-属性动画" class="headerlink" title="Property Animation 属性动画"></a>Property Animation 属性动画</h4><p>其中我们最常用的是<strong>Property animation</strong>，称之为，属性动画。顾名思义，属性动画可以对任意对象的任意属性在一段时长内进行渐变：</p>
-<blockquote>
-<p>Property animations allow us to animate any property of any object from one value to another over a specified duration.</p>
-</blockquote>
-<p>所以，属性动画除了可以对View的位置、角度做变换外，还可以对字体的大小、View的颜色等属性进行变换。</p>
-<p>Android中常用的动画叫<strong>Property Animation（属性动画）</strong>，它是出现在<strong>View Animation(视图动画)</strong> （包括 Tween Animation（补间动画）和 Frame Animation(逐帧动画)） 之后的，相比老的视图动画，Property Animation的主要优势是：</p>
-<blockquote>
-<p>老的View Animation只是对View对象的外观进行动画操作，但是并没有真正的改变对象本身的属性。例如对某个View平移以后，只是视觉特效，并没有真正改变这个View的位置，也就是说你点击平移后的View是不能触发onClick的，因为其属性中的位置还在原来的位置(the previous animations changed the visual appearance of the target objects… but they didn’t actually change the objects themselves.)。而Property Animation除了视觉效果，还能真正的改变View的属性。而使用Property Animation不仅可以对View进行透明度渐变、缩放、平移操作，还可以对其他的一些<strong>属性</strong>进行动画操作，例如字体大小，颜色，背景等，实现炫酷的字体颜色变化，或者背景颜色变化等等。</p>
-</blockquote>
-<p>Property Animation（属性动画）的主要实现类是：ObjectAnimation。这个类是我们实现动画最常用的类。</p>
-<h2 id="ObjectAnimator-动画"><a href="#ObjectAnimator-动画" class="headerlink" title="ObjectAnimator 动画"></a>ObjectAnimator 动画</h2><h4 id="用法示例"><a href="#用法示例" class="headerlink" title="用法示例"></a>用法示例</h4><p>ObjectAnimator的主要用法如下，假设要让一个View进行透明度从透明到不透明：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(view,<span class="string">"Alpha"</span>, <span class="number">0f</span>, <span class="number">1f</span>) .setDuration(getResources().getInteger(R.integer.china_date_switch_btn_gone_duration));</div></pre></td></tr></table></figure>
-<p>上面代码中ofFloat就是指让这个动画按照float类型的精度去变化。ofFloat函数源码中的常用构造函数如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ofFloat(Object target, String propertyName, <span class="keyword">float</span>... values)</div></pre></td></tr></table></figure>
-<p>第一个target是要赋予动画的对象，第二个propertyName是赋予什么动画或者对这个对象的什么属性进行变化，第三个是一个可变长度的参数，那三个点表示这个参数可以有多个，例如上面示例代码中有两个，分别是0f和1f，表示从透明变到不透明。也可以添加任何多个，例如0f, 1f, 0.5f，指的就是从透明到不透明又到半透明。</p>
-<p>上面简单的例子就实现了透明度动画。除了透明度属性，常用的属性还有：</p>
-<p><strong>常用的propertyName有以下：</strong></p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>作用</th>
-<th>数值类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Alpha</td>
-<td>控制View的透明度</td>
-<td>float</td>
-</tr>
-<tr>
-<td>TranslationX</td>
-<td>控制X方向的位移（相对于当前位置）</td>
-<td>float</td>
-</tr>
-<tr>
-<td>TranslationY</td>
-<td>控制Y方向的位移（相对于当前位置）</td>
-<td>float</td>
-</tr>
-<tr>
-<td>ScaleX</td>
-<td>控制X方向的缩放倍数</td>
-<td>float</td>
-</tr>
-<tr>
-<td>ScaleY</td>
-<td>控制Y方向的缩放倍数</td>
-<td>float</td>
-</tr>
-<tr>
-<td>Rotation</td>
-<td>控制以屏幕方向为轴的旋转度数</td>
-<td>float</td>
-</tr>
-<tr>
-<td>RotationX</td>
-<td>控制以X轴为轴的旋转度数</td>
-<td>float</td>
-</tr>
-<tr>
-<td>RotationY</td>
-<td>控制以Y轴为轴的旋转度数</td>
-<td>float</td>
-</tr>
-</tbody>
-</table>
-<p>除了上面的属性，ObjectAnimator可以对一个对象的任意属性进行动画渐变，例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ObjectAnimator.ofFloat(mTextView,<span class="string">"textSize"</span>,  <span class="number">0</span>, <span class="number">100</span>, <span class="number">50</span>)</div><div class="line">                .setDuration(<span class="number">5000</span>)</div><div class="line">                .start();</div></pre></td></tr></table></figure>
-<p>这样就相当于不断调用TextView的setTextSize()方法对文字大小进行设置，就实现字体变大，再变小的动画。</p>
-<p><img src="http://chewenkai.cf/owncloud/index.php/s/9MpkcPg9Z2eBFGU/download" alt="示例"></p>
-<p>但是需要注意的是，如果要对一个对象的属性进行变化，这个对象必须有公开的<code>set</code>的方法例如TextView有setTextSize这个方法，那么就可以用“textSize”这个属性。</p>
-<p>这时你可能会疑惑了🤔，如果想控制的对象方法名字不是set开头，而是叫changeTextSize或者moveXPosition等，或者一个对象有set方法，但是没有public暴露给大家使用怎么办呢？</p>
-<p>这时可以提出两种抛砖引玉的方法：</p>
-<ul>
-<li>在对象外层包装一个类，自己写一个public的set方法控制对象的属性。</li>
-<li>使用ValueAnimator。至于什么是ValueAnimator，下面就马上会讲到。</li>
-</ul>
-<h4 id="ValueAnimator"><a href="#ValueAnimator" class="headerlink" title="ValueAnimator"></a>ValueAnimator</h4><p>明白了怎么用，我们再简单了解一下它实现的原理，想一想怎样实现对象的属性动画呢？如果我们想实现一个1秒钟内将透明度从0变到1的动画，其实是把整个工作分成了两部分：</p>
-<ul>
-<li><p>计算属性（透明度）的值。也就是这一秒内，每个时间点的属性值应该是多少，这部分工作由ValueAnimator完成。</p>
-</li>
-<li><p>设置属性（透明度）的值。将每个时间点的值设置到对象上。这部分由ObjectAnimator完成。</p>
-</li>
-</ul>
-<p>其实ValueAnimator就是一个时间机制，你甚至可以单纯的利用它的时间机制实现除了动画以外的其他逻辑：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ValueAnimator anim = ValueAnimator.ofFloat(<span class="number">0f</span>, <span class="number">1f</span>);</div><div class="line">anim.setDuration(<span class="number">500</span>);</div><div class="line">anim.addUpdateListener(<span class="keyword">new</span> ValueAnimator.AnimatorUpdateListener() &#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</div><div class="line">            Float value = (Float) animation.getAnimatedValue();</div><div class="line">            <span class="comment">// do something with value...</span></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">anim.start();</div></pre></td></tr></table></figure>
-<h4 id="AnimatorSet"><a href="#AnimatorSet" class="headerlink" title="AnimatorSet"></a>AnimatorSet</h4><p>如果需要组合多个动画，可以借助<code>AnimatorSet</code>进行统一管理。AnimatorSet类可以将单个的ObjectAnimator组合起来形成动画集，可以同时创建多个特效，例如，一边放大一边变透明化或者按照顺序先放大再透明化等等。通过组合不同的动画属性，可以满足生活中大部分常用的场景。其用法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(view,<span class="string">"Alpha"</span>, <span class="number">0f</span>, <span class="number">1f</span>)</div><div class="line">        .setDuration(getResources().getInteger(R.integer.china_date_switch_btn_gone_duration));</div><div class="line">ObjectAnimator scaleAnim = ObjectAnimator.ofFloat(view,<span class="string">"scaleY"</span>,  <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">        .setDuration(getResources().getInteger(R.integer.china_date_switch_btn_gone_duration));</div><div class="line">AnimatorSet fadeInAnim = <span class="keyword">new</span> AnimatorSet();</div><div class="line">fadeInAnim.play(alphaAnim).with(scaleAnim);</div><div class="line">fadeInAnim.addListener(<span class="keyword">new</span> AnimatorListenerAdapter() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationStart</span><span class="params">(Animator animation)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onAnimationStart(animation);</div><div class="line">        view.setVisibility(View.VISIBLE);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">fadeInAnim.start();</div></pre></td></tr></table></figure>
-<h4 id="两大神器TypeEvaluator和Interpolation"><a href="#两大神器TypeEvaluator和Interpolation" class="headerlink" title="两大神器TypeEvaluator和Interpolation"></a>两大神器TypeEvaluator和Interpolation</h4><h5 id="TypeEvaluator"><a href="#TypeEvaluator" class="headerlink" title="TypeEvaluator"></a>TypeEvaluator</h5><p>恐怕不少刚接触ObjectAnimator的人都会想为啥ObjectAnimator后面要跟ofFloat, ofInt和ofObject，ofObject又是个什么东西呢？</p>
-<p>如果一个动画变化的属性是数字，例如透明度就是从0到1的，ofFloat会在要求的时间范围内把每个时间点的值计算成一个个的float值，相应的，ofInt就会把属性值计算成Int值，这些都是动画系统实现的方法。那如果现在属性的变化不是时间而是Point类，那动画系统怎么知道如何计算每个时间点的Point值呢，答案是你来告诉动画系统如何计算。只要继承TypeEvaluator类，实现其中的evaluate方法即可：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PointEvaluator</span> <span class="keyword">implements</span> <span class="title">TypeEvaluator</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">evaluate</span><span class="params">(<span class="keyword">float</span> fraction, Object startValue, Object endValue)</span> </span>&#123;</div><div class="line">        Point startPoint = (Point) startValue;</div><div class="line">        Point endPoint = (Point) endValue;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Point(startPoint.x + fraction * (endPoint.x - startPoint.x),</div><div class="line">                         startPoint.y + fraction * (endPoint.y - startPoint.y));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样就可以计算两个点之间的值了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Point p0 = <span class="keyword">new</span> Point(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">Point p1 = <span class="keyword">new</span> Point(<span class="number">100</span>, <span class="number">200</span>);</div><div class="line">ValueAnimator anim = ValueAnimator.ofObject(<span class="keyword">new</span> PointEvaluator(), p0, p1);</div></pre></td></tr></table></figure>
-<h5 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h5><p>放大，缩小，平移等这样的动画方式非常普通，因为这些动画是线性的，也就是说在动画时间内，属性值的变化是线性变化的。大家有时会看到一些非常炫酷的动画例如，回弹，果冻效果等等，这些效果多是非线性变化的结果，如果想实现这样的效果，就用到了Interpolation（插值器）。</p>
-<p>Android已经实现了常用的Interpolation，如：</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AccelerateInterpolator</td>
-<td>加速</td>
-</tr>
-<tr>
-<td>BounceInterpolator</td>
-<td>弹跳</td>
-</tr>
-<tr>
-<td>DecelerateInterpolator</td>
-<td>减速</td>
-</tr>
-</tbody>
-</table>
-<p>还有AccelerateDecelerateInterpolator、AnticipateInterpolator、PathInterpolator、OvershootInterpolator、AnticipateOvershootInterpolator 、DecelerateInterpolator 、CycleInterpolator等，这些基本上涵盖了我们使用的范围。</p>
-<p>当然，如果上面插值器不满足需求，也可以定制插值器，只需要继承BaseInterpolator并实现TimeInterpolator接口就可以了，例如OvershootInterpolator的实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OvershootInterpolator</span> <span class="keyword">extends</span> <span class="title">BaseInterpolator</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">float</span> mTension;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OvershootInterpolator</span><span class="params">()</span> </span>&#123;</div><div class="line">        mTension = <span class="number">2.0f</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OvershootInterpolator</span><span class="params">(<span class="keyword">float</span> tension)</span> </span>&#123;</div><div class="line">        mTension = tension;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> t)</span> </span>&#123;</div><div class="line">        <span class="comment">// _o(t) = t * t * ((tension + 1) * t + tension)</span></div><div class="line">        <span class="comment">// o(t) = _o(t - 1) + 1</span></div><div class="line">        t -= <span class="number">1.0f</span>;</div><div class="line">        <span class="keyword">return</span> t * t * ((mTension + <span class="number">1</span>) * t + mTension) + <span class="number">1.0f</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里的getInterpolation方法里是一个插值器函数，如果输入的t直接返回，那这就是一个线性插值器。<a href="http://inloop.github.io/interpolator/" target="_blank" rel="noopener">这个网站</a>看一查看插值器函数生成的曲线，安利给大家。</p>
-<h2 id="Android-Transition-Framework"><a href="#Android-Transition-Framework" class="headerlink" title="Android Transition Framework"></a>Android Transition Framework</h2><p>上面介绍的动画针对的是某一个对象进行动画操作，但是实际应用中，我更多的使用Android的Transition动画来移动某个View。Transition动画与Property动画最大的区别就是：View动的过程中会对其周边的View产生影响。也就是说，如果我想让一个View逐渐变大，那它在变大的过程中不会覆盖在其周边的View上面，而是挤推着周围的View移动，也就是整个Layout都在变化，而这一切都是Transition框架自动实现的，开发者不需要关心实现细节。</p>
-<p>后续补充：</p>
-<p><a href="https://developer.android.com/training/transitions/" target="_blank" rel="noopener">https://developer.android.com/training/transitions/</a></p>
-<p><a href="https://developer.android.com/training/transitions/start-activity" target="_blank" rel="noopener">https://developer.android.com/training/transitions/start-activity</a></p>
-<p><a href="https://cloud.tencent.com/info/8fb508a6e6115e59e4f151fbaadd432e.html" target="_blank" rel="noopener">https://cloud.tencent.com/info/8fb508a6e6115e59e4f151fbaadd432e.html</a></p>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>ObjectAnimator 基本使用  <a href="http://wiki.jikexueyuan.com/project/android-animation/7.html" target="_blank" rel="noopener">http://wiki.jikexueyuan.com/project/android-animation/7.html</a></p>
-<p>Android 属性动画：这是一篇很详细的 属性动画 总结&amp;攻略 <a href="https://blog.csdn.net/carson_ho/article/details/72909894" target="_blank" rel="noopener">https://blog.csdn.net/carson_ho/article/details/72909894</a></p>
-<p>为什么要废弃掉Android之前的动画？<a href="https://android-developers.googleblog.com/2011/02/animation-in-honeycomb.html" target="_blank" rel="noopener">https://android-developers.googleblog.com/2011/02/animation-in-honeycomb.html</a></p>
-<p>查看Interpolation曲线：<a href="http://inloop.github.io/interpolator/" target="_blank" rel="noopener">http://inloop.github.io/interpolator/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/02/Android中动画的使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1377,6 +1274,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
@@ -1393,19 +1294,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1425,6 +1318,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
@@ -1441,11 +1338,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">牛客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">生活</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">牛客</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常记录</a>
               </li>
             
             <div class="clearfix"></div>
