@@ -147,6 +147,130 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Git保命大全" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/06/Git保命大全/">Git保命大全</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/06/Git保命大全/" class="archive-article-date">
+  	<time datetime="2019-08-06T09:48:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="💥我不小心删除了分支-或者-删除了Stash-或者-丢失了提交（reset-—hard）-怎么办！"><a href="#💥我不小心删除了分支-或者-删除了Stash-或者-丢失了提交（reset-—hard）-怎么办！" class="headerlink" title="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！"></a>💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！</h3><p>操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。</p>
+<h5 id="1-确定正确的"><a href="#1-确定正确的" class="headerlink" title="1/ 确定正确的"></a>1/ 确定正确的</h5><p>首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。</p>
+<p>通过<code>git reflog</code>命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, rebase, checkout, reset等。示例如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="comment"># git reflog</span></div><div class="line">a55a2725e HEAD@&#123;846&#125;: checkout: moving from calvinche/3650/voiceopt to calvinche/3650/bugfix</div><div class="line">5271cecfc HEAD@&#123;847&#125;: commit: --story=855394891 【语音控制】语音控制功能优化</div><div class="line">5413bd7ce HEAD@&#123;848&#125;: checkout: moving from calvinche/3650/bugfix to calvinche/3650/voiceopt</div><div class="line">a55a2725e HEAD@&#123;849&#125;: commit: --bug=74100899 【畅听页卡】活动弹窗遮挡播放列表的问题</div><div class="line">5413bd7ce HEAD@&#123;850&#125;: checkout: moving from calvinche/3650/voiceopt to calvinche/3650/bugfix</div><div class="line">5413bd7ce HEAD@&#123;851&#125;: reset: moving to 5413bd7ce1a1ddfbd12406175a83c863f9d68da6</div><div class="line">ff1200963 HEAD@&#123;852&#125;: commit: --story=855394891 【语音控制】语音控制功能优化</div></pre></td></tr></table></figure>
+<p>第一列就是所在提交的SHA-1值</p>
+<p>如果通过reflog无法找到丢失的分支或者提交，那你还可以通过<code>git fsck</code>命令查找git数据库中所有丢失的分支信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git fsck --full --no-reflogs --unreachable --lost-found | grep commit | cut <span class="_">-d</span>\  <span class="_">-f</span>3 | xargs -n 1 git <span class="built_in">log</span> -n 1 --pretty=oneline &gt; ~/lost-found.txt</div></pre></td></tr></table></figure>
+<p>由于输出的结果通常较大，我们一般将命令的输出重定向到一个文本文件中进行查看，其输出的结果如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">e005<span class="built_in">fc</span>257bb96252e9bc84deb255bba28f829e63 --story=854880635 【技术优化】升级gradle: 修复打包无产物</div><div class="line">b90bace85ba53c9a229f84a458935aeb6858bc6c --story=854880635 【技术优化】升级gradle: 修改build_patch失败</div><div class="line">9b51c859899d0699a73c699fb349d8ff952cf7ae WIP on master: c5312d039 Merge branch <span class="string">'calvinche/dev/car_adapt'</span> into <span class="string">'master'</span></div><div class="line">aa0c44873d24bc07487e4e5b8883189573c55029 --story=64610857 【语音交互】播放控制功能:UI走查</div><div class="line">d40e8c2ed3122a30164c82696a72bf4d5fbd8c58 --story=854880635 【技术优化】升级gradle: 修复打包无产物</div><div class="line">ed0f98b6ebd7bb9bbb6da21467fdea2931bab598 --story=64610857 【语音交互】播放控制功能:实现语音识别和命令执行</div></pre></td></tr></table></figure>
+<p>然后我们就可以通过提交的名字或者通过<code>git log -p &lt;commit&gt;</code>查看提交的内容或<code>git cat-file -p &lt;commit&gt;</code>查看提交的信息来确定我们要恢复的提交，确定了要恢复的提交后，复制它的SHA-1值备用。</p>
+<h6 id="2-恢复"><a href="#2-恢复" class="headerlink" title="2/ 恢复"></a>2/ 恢复</h6><p>如果你要恢复的是分支，使用类似于下面的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b &lt;new branch name&gt; &lt;SHA-1&gt;</div></pre></td></tr></table></figure>
+<p>如果你要恢复的是提交，那么可以直接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard &lt;SHA-1&gt;</div></pre></td></tr></table></figure>
+<h3 id="💥我的提交历史重复臃肿，杂乱无章怎么办！"><a href="#💥我的提交历史重复臃肿，杂乱无章怎么办！" class="headerlink" title="💥我的提交历史重复臃肿，杂乱无章怎么办！"></a>💥我的提交历史重复臃肿，杂乱无章怎么办！</h3><p>有时候，在开发过程中，可能被产品或设计打断，或者前期考虑不够严谨导致后面补充了过多的修补提交，这时候可以通过Rebase的交互模式，对提交历史进行“美化”。</p>
+<p>例如下面一个提交记录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">--story=854849047(d01f70f39)【技术优化】fresco图片库更新 hypertian* 2019-05-23 13:12</div><div class="line">--story=64746051 【个人中心】增加开机兴趣选择修改: UI走查修改1 calvinche 2019-05-20 22:25</div><div class="line">--story=64746051 【个人中心】增加开机兴趣选择修改: 产品补充逻辑1 calvinche 2019-05-23 15:59</div><div class="line">--story=64746051 【个人中心】增加开机兴趣选择修改: UI走查修改2 calvinche 2019-05-21 14:50</div><div class="line">--story=64746051 【个人中心】增加开机兴趣选择修改:产品补充逻辑2 calvinche 2019-05-23 18:25</div></pre></td></tr></table></figure>
+<p>可以看出，UI修改和逻辑修改提交了多次，这个时候如果把两个UI走查的提交合并，把两个补充逻辑的提交合并，提交历史看起来会清楚干净很多，于是，我们使用rebase操作来整理提交记录：</p>
+<h5 id="1-进入Rebase交互模式"><a href="#1-进入Rebase交互模式" class="headerlink" title="1/ 进入Rebase交互模式"></a>1/ 进入Rebase交互模式</h5><p>找到要修改提交的上一条提交的SHA值，如上面例子，要对下面四个提交进行修改，则需要找到”fresco图片库更新”这个提交的SHA值：d01f70f39，然后运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rebase -i d01f70f3</div></pre></td></tr></table></figure>
+<p>就进入到下面的页面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">pick 39741ee1a --story=64746051 【个人中心】增加开机兴趣选择修改:  UI走查修改1</div><div class="line">pick 8078fa8f9 --story=64746051 【个人中心】增加开机兴趣选择修改: 产品补充逻辑1</div><div class="line">pick 6f830afa3 --story=64746051 【个人中心】增加开机兴趣选择修改: UI走查修改2</div><div class="line">pick 5efe76189 --story=64746051 【个人中心】增加开机兴趣选择修改:产品补充逻辑2</div><div class="line"></div><div class="line"><span class="comment"># Rebase d01f70f39..5efe76189 onto d01f70f39 (4 commands)</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Commands:</span></div><div class="line"><span class="comment"># p, pick &lt;commit&gt; = use commit</span></div><div class="line"><span class="comment"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span></div><div class="line"><span class="comment"># e, edit &lt;commit&gt; = use commit, but stop for amending</span></div><div class="line"><span class="comment"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span></div><div class="line"><span class="comment"># f, fixup &lt;commit&gt; = like "squash", but discard this commit's log message</span></div><div class="line"><span class="comment"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span></div><div class="line"><span class="comment"># d, drop &lt;commit&gt; = remove commit</span></div><div class="line"><span class="comment"># l, label &lt;label&gt; = label current HEAD with a name</span></div><div class="line"><span class="comment"># t, reset &lt;label&gt; = reset HEAD to a label</span></div><div class="line"><span class="comment"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span></div><div class="line"><span class="comment"># .       create a merge commit using the original merge commit's</span></div><div class="line"><span class="comment"># .       message (or the oneline, if no original merge commit was</span></div><div class="line"><span class="comment"># .       specified). Use -c &lt;commit&gt; to reword the commit message.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># These lines can be re-ordered; they are executed from top to bottom.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># If you remove a line here THAT COMMIT WILL BE LOST.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment">#       However, if you remove everything, the rebase will be aborted.</span></div></pre></td></tr></table></figure>
+<h5 id="2-使用合适的命令对提交记录进行修改"><a href="#2-使用合适的命令对提交记录进行修改" class="headerlink" title="2/ 使用合适的命令对提交记录进行修改"></a>2/ 使用合适的命令对提交记录进行修改</h5><p>每次提交按照时间升序排列，也就是最上面的提交是最早的提交。每个提交前面是要进行修改的命令，下面列出了所有可用的命令的名字及其功能，默认是pick，也就是保留这条提交，什么也不做的意思。这里解释一下几个常用的命令：</p>
+<blockquote>
+<p>reword：重命名提交信息</p>
+<p>edit：编辑提交的内容，可以用于添加或移出提交的文件</p>
+<p>squash：将当前提交和前一条提交合并，使用后，会跳到另一个页面，编辑合并后的提交信息</p>
+<p>fixup：将当前提交和前一条提交合并，使用后，丢弃当前的提交信息，直接以上一条提交信息为合并后的提交信息</p>
+<p>drop：删除当前的提交</p>
+</blockquote>
+<p>⚠️ 需要<strong>注意</strong>的是这句话：</p>
+<blockquote>
+<p>These lines can be re-ordered; they are executed from top to bottom.</p>
+</blockquote>
+<p>意思是说，改变上面一行行的提交记录的顺序是可以改变最终的提交顺序的，不过需要注意的是，改变顺序可能会带来conflict，如果遇到冲突，需要解决冲突后才能继续Rebase。</p>
+<p>可以看下视频中的演示消化理解</p>
+<a href="/2019/08/06/Git保命大全/rebase.mov" title="rebase interactively">rebase interactively</a>
+<h5 id="3-恢复到Rebase前"><a href="#3-恢复到Rebase前" class="headerlink" title="3/ 恢复到Rebase前"></a>3/ 恢复到Rebase前</h5><p>如果你rebase结束后发现并不是自己想要的结果，这个时候怎么恢复到rebase之前呢？很简单，运行下下面这个命令即可:</p>
+<p><code>git reset --hard ORIG_HEAD</code></p>
+<p>In case <code>ORIG_HEAD</code> is no longer useful, you can also use the <code>branchName@{n}</code> syntax, where <code>n</code> is the nth prior position of the branch pointer. So for example, if you rebase <code>featureA</code> branch onto your <code>master</code> branch, but you don’t like the result of the rebase, then you can simply do <code>git reset --hard featureA@{1}</code> to reset the branch back to exactly where it was before you did the rebase. You can read more about the branch@{n} syntax at <a href="http://git-scm.com/docs/gitrevisions" target="_blank" rel="noopener">the official Git docs for revisions</a>. </p>
+<h5 id="⚠️⚠️⚠️-Rebase的最基本原则"><a href="#⚠️⚠️⚠️-Rebase的最基本原则" class="headerlink" title="⚠️⚠️⚠️ Rebase的最基本原则"></a>⚠️⚠️⚠️ Rebase的最基本原则</h5><p>既然Rebase命令可以删除和编辑历史提交，那同样也有一个重要的原则：</p>
+<blockquote>
+<p> <strong>永远不要对已经推到主干分支服务器或者团队其他成员的提交进行Rebase，我们选择Rebase范围应该在自己本地工作范围内。</strong></p>
+</blockquote>
+<p> 否则，人民群众会仇恨你，你的朋友和家人也会嘲笑你，唾弃你。</p>
+<h4 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h4><p>[1] <a href="https://www.internalpointers.com/post/squash-commits-into-one-git" target="_blank" rel="noopener">https://www.internalpointers.com/post/squash-commits-into-one-git</a></p>
+<p>[2] <a href="https://ohshitgit.com/" target="_blank" rel="noopener">https://ohshitgit.com/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/08/06/Git保命大全/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-记一次overloadaggressively造成的崩溃" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1033,7 +1157,7 @@
 <p>来源：<a href="https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/" target="_blank" rel="noopener">https://code.luasoftware.com/tutorials/android/android-textview-singleline-with-ellipsis/</a></p>
 <hr>
 <p>问题 Crash when using ellipsize=”start” (Jelly Bean) 的回复</p>
-<p>ri…@gmail.com <a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#x72;&#105;&#46;&#x2e;&#46;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#x72;&#105;&#46;&#x2e;&#46;&#x40;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
+<p>ri…@gmail.com <a href="&#x6d;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x72;&#x69;&#46;&#x2e;&#46;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;">&#x72;&#x69;&#46;&#x2e;&#46;&#64;&#x67;&#x6d;&#x61;&#105;&#108;&#x2e;&#99;&#111;&#109;</a> <a href="https://issuetracker.google.com/issues/36950033#comment3" target="_blank" rel="noopener">#3</a>Jul 12, 2012 08:17AM </p>
 <p><strong>I do notice that changing android:lines=”1” to android:singleLine=”true” causes the crash not to happen.</strong></p>
 <p>来源:<a href="https://issuetracker.google.com/issues/36950033" target="_blank" rel="noopener">https://issuetracker.google.com/issues/36950033</a></p>
 <hr>
@@ -1069,81 +1193,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/12/26/坑-TextView同时使用maxLines-1和ellipsize时偶发崩溃/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-对Lamda表达式的简单理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/08/对Lamda表达式的简单理解/">对Lamda表达式的简单理解</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/08/对Lamda表达式的简单理解/" class="archive-article-date">
-  	<time datetime="2018-12-08T12:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="第一次见Lamda表达式"><a href="#第一次见Lamda表达式" class="headerlink" title="第一次见Lamda表达式"></a>第一次见Lamda表达式</h3><p>第一次看到这行代码的时候，我是百思不得姐：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Toolkit.let(mUserTabFragment, f -&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
-<p>点击进入let函数看到其定义如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">let</span><span class="params">(@Nullable T input, Consumer&lt;T&gt; consumer)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (input == <span class="keyword">null</span> || consumer == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    consumer.accept(input);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看出let的第二个参数是一个Consumer，但是上面的f-&gt;f.setUserVisibleHint(isVisibleToUser));是什么鬼，是Consumer吗？答案是 是的，这样看就明白了，首先，我们创建一个Consumer对象：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Consumer&lt;Fragment&gt; consumer = <span class="keyword">new</span> Consumer&lt;Fragment&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Fragment f)</span> </span>&#123;</div><div class="line">		f.setUserVisibleHint(<span class="keyword">true</span>));</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>上面代码的Lamda形式为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Consumer&lt;Fragment&gt; consumer = (f)-&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
-<p>所以 可以直接将等号右边带入let函数的第二个参数，就变成了那个样子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Toolkit.let(mUserTabFragment, f -&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
-<p> 现在应该就明白了第二个参数到底是啥了，其实就是一种Lamda表达式。</p>
-        
-          <a class="article-more-a" href="/2018/12/08/对Lamda表达式的简单理解/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/12/08/对Lamda表达式的简单理解/">展开全文 >></a>
         </p>
       
 
@@ -1274,10 +1323,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
@@ -1291,6 +1336,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">报告</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1318,10 +1375,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
@@ -1334,15 +1387,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">生活</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">生活</a>
               </li>
              
               <li class="article-tag-list-item">

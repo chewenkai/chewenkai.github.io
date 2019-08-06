@@ -147,6 +147,81 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-对Lamda表达式的简单理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/08/对Lamda表达式的简单理解/">对Lamda表达式的简单理解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/08/对Lamda表达式的简单理解/" class="archive-article-date">
+  	<time datetime="2018-12-08T12:30:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="第一次见Lamda表达式"><a href="#第一次见Lamda表达式" class="headerlink" title="第一次见Lamda表达式"></a>第一次见Lamda表达式</h3><p>第一次看到这行代码的时候，我是百思不得姐：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Toolkit.let(mUserTabFragment, f -&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
+<p>点击进入let函数看到其定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">let</span><span class="params">(@Nullable T input, Consumer&lt;T&gt; consumer)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (input == <span class="keyword">null</span> || consumer == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    consumer.accept(input);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看出let的第二个参数是一个Consumer，但是上面的f-&gt;f.setUserVisibleHint(isVisibleToUser));是什么鬼，是Consumer吗？答案是 是的，这样看就明白了，首先，我们创建一个Consumer对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Consumer&lt;Fragment&gt; consumer = <span class="keyword">new</span> Consumer&lt;Fragment&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(Fragment f)</span> </span>&#123;</div><div class="line">		f.setUserVisibleHint(<span class="keyword">true</span>));</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上面代码的Lamda形式为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Consumer&lt;Fragment&gt; consumer = (f)-&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
+<p>所以 可以直接将等号右边带入let函数的第二个参数，就变成了那个样子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Toolkit.let(mUserTabFragment, f -&gt; f.setUserVisibleHint(<span class="keyword">true</span>));</div></pre></td></tr></table></figure>
+<p> 现在应该就明白了第二个参数到底是啥了，其实就是一种Lamda表达式。</p>
+        
+          <a class="article-more-a" href="/2018/12/08/对Lamda表达式的简单理解/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/12/08/对Lamda表达式的简单理解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Android中动画的使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1097,98 +1172,6 @@
 
 
   
-    <article id="post-数据结构之二叉树相关" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/08/数据结构之二叉树相关/">数据结构之二叉树相关</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/08/数据结构之二叉树相关/" class="archive-article-date">
-  	<time datetime="2017-07-08T13:00:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<h4 id="二叉树的相关术语"><a href="#二叉树的相关术语" class="headerlink" title="二叉树的相关术语:"></a>二叉树的相关术语:</h4><p><strong>树的结点</strong>:包含一个数据元素及若干指向子树的分支；<br><strong>孩子结点</strong>:结点的子树的根称为该结点的孩子；<br><strong>双亲结点</strong>:B 结点是A 结点的孩子，则A结点是B 结点的双亲；<br><strong>兄弟结点</strong>:同一双亲的孩子结点； 堂兄结点:同一层上结点；<br><strong>祖先结点</strong>: 从根到该结点的所经分支上的所有结点子孙结点:以某结点为根的子树中任一结点都称为该结点的子孙<br><strong>结点层</strong>:根结点的层定义为1；根的孩子为第二层结点，依此类推；<br><strong>树的深度</strong>:树中最大的结点层<br><strong>结点的度</strong>:结点子树的个数<br><strong>树的度</strong>: 树中最大的结点度。<br><strong>叶子结点</strong>:也叫终端结点，是度为 0 的结点；<br><strong>分枝结点</strong>:度不为0的结点；<br><strong>有序树</strong>:子树有序的树，如:家族树；<br><strong>无序树</strong>:不考虑子树的顺序；<br><a href="http://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91#2_2" target="_blank" rel="noopener">参考</a></p>
-        
-          <a class="article-more-a" href="/2017/07/08/数据结构之二叉树相关/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/面试//" class="article-tag-list-link color3">面试</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/面试/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/08/数据结构之二叉树相关/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1290,10 +1273,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
@@ -1307,6 +1286,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">报告</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1334,10 +1325,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
               </li>
              
@@ -1350,15 +1337,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">生活</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">牛客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">生活</a>
               </li>
              
               <li class="article-tag-list-item">
