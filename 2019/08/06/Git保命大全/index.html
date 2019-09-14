@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://chewenkai.github.io">
   <title>Git保命大全 | 小蚊子叮叮的小屋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, rebase,">
+  <meta name="description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的SHA-1值首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, r">
 <meta name="keywords" content="日常总结,Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git保命大全">
 <meta property="og:url" content="https://chewenkai.github.io/2019/08/06/Git保命大全/index.html">
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
-<meta property="og:description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, rebase,">
-<meta property="og:updated_time" content="2019-08-06T13:43:00.382Z">
+<meta property="og:description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的SHA-1值首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, r">
+<meta property="og:updated_time" content="2019-08-19T14:20:35.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git保命大全">
-<meta name="twitter:description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, rebase,">
+<meta name="twitter:description" content="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。 1/ 确定正确的SHA-1值首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。 通过git reflog命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, r">
   
   
     <link rel="icon" href="/assets/img/favicon.png">
@@ -167,7 +167,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="💥我不小心删除了分支-或者-删除了Stash-或者-丢失了提交（reset-—hard）-怎么办！"><a href="#💥我不小心删除了分支-或者-删除了Stash-或者-丢失了提交（reset-—hard）-怎么办！" class="headerlink" title="💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！"></a>💥我不小心删除了分支  或者  删除了Stash 或者  丢失了提交（reset —hard） 怎么办！</h3><p>操作前，建议备份一下当前的分支，或者切换到新的分支进行操作。</p>
-<h5 id="1-确定正确的"><a href="#1-确定正确的" class="headerlink" title="1/ 确定正确的"></a>1/ 确定正确的</h5><p>首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。</p>
+<h5 id="1-确定正确的SHA-1值"><a href="#1-确定正确的SHA-1值" class="headerlink" title="1/ 确定正确的SHA-1值"></a>1/ 确定正确的SHA-1值</h5><p>首先，你需要找到分支或者提交的SHA-1值，如果你已经知道丢失分支的SHA-1值，可跳过这个步骤。</p>
 <p>通过<code>git reflog</code>命令查找对git作出过的修改，可以查询到HEAD的变更记录，如commit, rebase, checkout, reset等。示例如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="comment"># git reflog</span></div><div class="line">a55a2725e HEAD@&#123;846&#125;: checkout: moving from calvinche/3650/voiceopt to calvinche/3650/bugfix</div><div class="line">5271cecfc HEAD@&#123;847&#125;: commit: --story=855394891 【语音控制】语音控制功能优化</div><div class="line">5413bd7ce HEAD@&#123;848&#125;: checkout: moving from calvinche/3650/bugfix to calvinche/3650/voiceopt</div><div class="line">a55a2725e HEAD@&#123;849&#125;: commit: --bug=74100899 【畅听页卡】活动弹窗遮挡播放列表的问题</div><div class="line">5413bd7ce HEAD@&#123;850&#125;: checkout: moving from calvinche/3650/voiceopt to calvinche/3650/bugfix</div><div class="line">5413bd7ce HEAD@&#123;851&#125;: reset: moving to 5413bd7ce1a1ddfbd12406175a83c863f9d68da6</div><div class="line">ff1200963 HEAD@&#123;852&#125;: commit: --story=855394891 【语音控制】语音控制功能优化</div></pre></td></tr></table></figure>
 <p>第一列就是所在提交的SHA-1值</p>
@@ -331,6 +331,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2019/09/14/English-Memory-Week-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          English Memory: Week 1
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/06/10/记一次overloadaggressively造成的崩溃/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">记一次overloadaggressively造成的崩溃</div>
@@ -471,7 +480,79 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">报告</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Study</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">英语</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">单词</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MacOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">牛客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">生活</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,75 +568,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常总结</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">报告</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Andoird</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">面试</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">VIM</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">英语</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">单词</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">StarDict</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">抽样监督管理系统</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MacOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">VirtualBox</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">生活</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常记录</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">牛客</a>
               </li>
             
             <div class="clearfix"></div>
