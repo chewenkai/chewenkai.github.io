@@ -6,18 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chewenkai.github.io">
-  <title>Archives: 2019/8 | 小蚊子叮叮的小屋</title>
+  <title>日常开发总结 | 小蚊子叮叮的小屋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="小蚊子叮叮的博客">
-<meta name="keywords" content="笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小蚊子叮叮的小屋">
-<meta property="og:url" content="https://chewenkai.github.io/archives/2019/08/index.html">
+  <meta name="description" content="前言零零碎碎的记录下日常问题。">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日常开发总结">
+<meta property="og:url" content="https://chewenkai.github.io/2020/05/01/日常开发总结/index.html">
 <meta property="og:site_name" content="小蚊子叮叮的小屋">
-<meta property="og:description" content="小蚊子叮叮的博客">
+<meta property="og:description" content="前言零零碎碎的记录下日常问题。">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/16/dVb9RP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/16/dVHxIA.png">
+<meta property="og:updated_time" content="2020-08-16T15:42:50.317Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小蚊子叮叮的小屋">
-<meta name="twitter:description" content="小蚊子叮叮的博客">
+<meta name="twitter:title" content="日常开发总结">
+<meta name="twitter:description" content="前言零零碎碎的记录下日常问题。">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/08/16/dVb9RP.png">
   
   
     <link rel="icon" href="/assets/img/favicon.png">
@@ -145,64 +149,242 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-日常开发总结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/06/Git保命大全/" class="archive-article-date">
-  	<time datetime="2019-08-06T09:48:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/06/Git保命大全/">Git保命大全</a>
+    <h1 class="article-title" itemprop="name">
+      日常开发总结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/05/01/日常开发总结/" class="archive-article-date">
+  	<time datetime="2020-05-01T12:01:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>零零碎碎的记录下日常问题。</p>
+<a id="more"></a>
+<h4 id="StringBuffer、StringBuilder区别"><a href="#StringBuffer、StringBuilder区别" class="headerlink" title="StringBuffer、StringBuilder区别"></a>StringBuffer、StringBuilder区别</h4><p>HashTable是线程安全的，很多方法都是synchronized方法，而HashMap不是线程安全的，但其在单线程程序中的性能比HashTable要高。StringBuffer和StringBuilder类的区别也是如此，他们的原理和操作基本相同，区别在于StringBufferd支持并发操作，线性安全的，适 合多线程中使用。StringBuilder不支持并发操作，线性不安全的，不适合多线程中使用。新引入的StringBuilder类不是线程安全的，但其在单线程中的性能比StringBuffer高。</p>
+<hr>
+<h4 id="parseInt和valueOf的区别"><a href="#parseInt和valueOf的区别" class="headerlink" title="parseInt和valueOf的区别"></a>parseInt和valueOf的区别</h4><p>valueOf内部就用了parseInt，区别在于parseInt直接返回原始int类型数据；而valueOf又装了下箱，返回Integer类型。</p>
+<p>还有一个区别，parseInt期待输入是String，而valueOf不是</p>
+<hr>
+<h4 id="从git移除已经跟踪的文件"><a href="#从git移除已经跟踪的文件" class="headerlink" title="从git移除已经跟踪的文件"></a>从git移除已经跟踪的文件</h4><p><code>git rm --cached &lt;file&gt;</code></p>
+<hr>
+<h4 id="shell-script-读参数"><a href="#shell-script-读参数" class="headerlink" title="shell script 读参数"></a>shell script 读参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> <span class="built_in">getopts</span> <span class="string">":a:b:c:"</span> opt</div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="keyword">case</span> <span class="variable">$opt</span> <span class="keyword">in</span></div><div class="line">        a)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"参数a的值<span class="variable">$OPTARG</span>"</span></div><div class="line">        ;;</div><div class="line">        b)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"参数b的值<span class="variable">$OPTARG</span>"</span></div><div class="line">        ;;</div><div class="line">        c)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"参数c的值<span class="variable">$OPTARG</span>"</span></div><div class="line">        ;;</div><div class="line">        ?)</div><div class="line">        <span class="built_in">echo</span> <span class="string">"未知参数"</span></div><div class="line">        <span class="built_in">exit</span> 1;;</div><div class="line">    <span class="keyword">esac</span></div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>调用：<br><code>./test.sh -a 1 -b 2 -c 3</code></p>
+<hr>
+<h4 id="Shortcuts-in-Anroid"><a href="#Shortcuts-in-Anroid" class="headerlink" title="Shortcuts in Anroid"></a>Shortcuts in Anroid</h4><h4 id="分为三种："><a href="#分为三种：" class="headerlink" title="分为三种："></a>分为三种：</h4><p>静态快捷方式、动态快捷方式和固定快捷方式(pinned shortcuts)</p>
+<p><img src="https://s1.ax1x.com/2020/08/16/dVb9RP.png" alt="2b013b5027b57f515097cf1c6990eb60.png"></p>
+<p>其中静态和动态快捷方式又叫做”App shortcuts”</p>
+<p>静态和动态快捷方式合在一起可以添加5个（但多数启动器只会显示4个）</p>
+<h4 id="创建："><a href="#创建：" class="headerlink" title="创建："></a>创建：</h4><h5 id="静态："><a href="#静态：" class="headerlink" title="静态："></a>静态：</h5><ul>
+<li><p>在manifest的main activity下指定shortcuts资源文件：   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">          <span class="attr">package</span>=<span class="string">"com.example.myapplication"</span>&gt;</div><div class="line">  <span class="tag">&lt;<span class="name">application</span> <span class="attr">...</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">"Main"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line">      </div><div class="line">      <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">"android.app.shortcuts"</span></span></div><div class="line">                 <span class="attr">android:resource</span>=<span class="string">"@xml/shortcuts"</span> /&gt; </div><div class="line">    <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">application</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>xml文件中写明静态的快捷方式属性：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">shortcuts</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">shortcut</span></span></div><div class="line">    <span class="attr">android:shortcutId</span>=<span class="string">"compose"</span></div><div class="line">    <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">    <span class="attr">android:icon</span>=<span class="string">"@drawable/compose_icon"</span></div><div class="line">    <span class="attr">android:shortcutShortLabel</span>=<span class="string">"@string/compose_shortcut_short_label1"</span></div><div class="line">    <span class="attr">android:shortcutLongLabel</span>=<span class="string">"@string/compose_shortcut_long_label1"</span></div><div class="line">    <span class="attr">android:shortcutDisabledMessage</span>=<span class="string">"@string/compose_disabled_message1"</span>&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">intent</span></span></div><div class="line">      <span class="attr">android:action</span>=<span class="string">"android.intent.action.VIEW"</span></div><div class="line">      <span class="attr">android:targetPackage</span>=<span class="string">"com.example.myapplication"</span></div><div class="line">      <span class="attr">android:targetClass</span>=<span class="string">"com.example.myapplication.ComposeActivity"</span> /&gt;</div><div class="line">    <span class="comment">&lt;!-- If your shortcut is associated with multiple intents, include them</span></div><div class="line">         here. The last intent in the list determines what the user sees when</div><div class="line">         they launch this shortcut. --&gt;</div><div class="line">    <span class="tag">&lt;<span class="name">categories</span> <span class="attr">android:name</span>=<span class="string">"android.shortcut.conversation"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">shortcut</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- Specify more shortcuts here. --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">shortcuts</span>&gt;</span></div></pre></td></tr></table></figure>
+<h5 id="动态："><a href="#动态：" class="headerlink" title="动态："></a>动态：</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);</div><div class="line"></div><div class="line">ShortcutInfo shortcut = <span class="keyword">new</span> ShortcutInfo.Builder(context, <span class="string">"id1"</span>)</div><div class="line">    .setShortLabel(<span class="string">"Website"</span>)</div><div class="line">    .setLongLabel(<span class="string">"Open the website"</span>)</div><div class="line">    .setIcon(Icon.createWithResource(context, R.drawable.icon_website))</div><div class="line">    .setIntent(<span class="keyword">new</span> Intent(Intent.ACTION_VIEW,</div><div class="line">                   Uri.parse(<span class="string">"https://www.mysite.example.com/"</span>)))</div><div class="line">    .build();</div><div class="line"></div><div class="line">shortcutManager.setDynamicShortcuts(Arrays.asList(shortcut));</div></pre></td></tr></table></figure>
+<h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>创建pinned shortcut时，如果快捷方式已经在桌面上存在了，再调用<code>requestPinShortcut</code>添加快捷方式时，不会再更新。</p>
+<p>reference:<br>[1] <a href="https://www.jianshu.com/p/1d16c3a04593" target="_blank" rel="noopener">https://www.jianshu.com/p/1d16c3a04593</a><br>[2] <a href="https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts" target="_blank" rel="noopener">https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts</a></p>
+<hr>
+<p>-–</p>
+<h4 id="kotlin中的scope表达式："><a href="#kotlin中的scope表达式：" class="headerlink" title="kotlin中的scope表达式："></a><strong>kotlin中的scope表达式：</strong></h4><p><img src="https://s1.ax1x.com/2020/08/16/dVHxIA.png" alt="8ad78025670cdfdcb96523170710a017"></p>
+<h4 id="kotlin中多维数组："><a href="#kotlin中多维数组：" class="headerlink" title="kotlin中多维数组："></a>kotlin中多维数组：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function">fun <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//</span></div><div class="line"></div><div class="line">val a = Array(<span class="number">10</span>)&#123;i -&gt;</div><div class="line"></div><div class="line">Array(<span class="number">8</span>) &#123; j -&gt;</div><div class="line"></div><div class="line"><span class="number">1</span></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">a[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">3</span></div><div class="line"></div><div class="line">a[<span class="number">0</span>][<span class="number">1</span>]=<span class="number">4</span></div><div class="line"></div><div class="line">println(a[<span class="number">0</span>][<span class="number">1</span>]) <span class="comment">// output: 4</span></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常总结</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/日常记录//" class="article-tag-list-link color5">日常记录</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chewenkai.github.io/2020/05/01/日常开发总结/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/07/23/【内推】猿辅导2021校招内推/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          【内推】猿辅导2021校招内推
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/03/15/每日单词/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">每日单词计划</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+    <section id="comments">
+      <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'https-chewenkai-github-io'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section>
+  
+
+  
 
 
           </div>
@@ -225,8 +407,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
