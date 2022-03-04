@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>原来我根本不会用Android Studio - Calvin</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="CalvinChe"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="CalvinChe"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;amp;gt"><meta property="og:type" content="blog"><meta property="og:title" content="原来我根本不会用Android Studio"><meta property="og:url" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/"><meta property="og:site_name" content="Calvin"><meta property="og:description" content="背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;amp;gt"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/open_memory_indicator.png"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/indicator.png"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpoints.png"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpointsetting.png"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/wrong_break_point.gif"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/invokestack.png"><meta property="og:image" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/dumpinfo.png"><meta property="article:published_time" content="2018-10-28T03:09:47.000Z"><meta property="article:author" content="calvinche"><meta property="article:tag" content="Android"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/open_memory_indicator.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/"},"headline":"原来我根本不会用Android Studio","image":["https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/open_memory_indicator.png","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/indicator.png","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpoints.png","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpointsetting.png","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/wrong_break_point.gif","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/invokestack.png","https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/dumpinfo.png"],"datePublished":"2018-10-28T03:09:47.000Z","author":{"@type":"Person","name":"calvinche"},"publisher":{"@type":"Organization","name":"Calvin","logo":{"@type":"ImageObject","url":"https://chewenkai.github.io/img/logo.svg"}},"description":"背景最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。 1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。 于是，打开内存指示器，查看Android Studio的内存使用情况： 打开设置 -&amp;gt"}</script><link rel="canonical" href="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-72437521-5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-72437521-5');</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.0.0">
+<style>.not-gallery-item { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .not-gallery-item > span { position: relative; z-index: 10; }  .not-gallery-item img, .not-gallery-item .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .not-gallery-item img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .not-gallery-item-fallback { color: inherit; } .not-gallery-item-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Calvin" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-10-28T03:09:47.000Z" title="2018/10/28 上午11:09:47">2018-10-28</time></span><span class="level-item"><a class="link-muted" href="/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/">日常记录</a></span><span class="level-item">13 minutes read (About 1927 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">原来我根本不会用Android Studio</h1><div class="content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近在工作中解锁了一些使用Android Studio的技巧，在这里记录一下。</p>
+<h3 id="1-为什么明明我的电脑剩余那么多内存，用Android-Studio打开多个工程后就开始卡顿了呢？"><a href="#1-为什么明明我的电脑剩余那么多内存，用Android-Studio打开多个工程后就开始卡顿了呢？" class="headerlink" title="1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？"></a>1. 为什么明明我的电脑剩余那么多内存，用Android Studio打开多个工程后就开始卡顿了呢？</h3><p>有一次在使用Android stuido的时候发现会卡顿无比，滚动鼠标都卡，但我的机器明明配置很高，系统剩余的内存也很多啊。</p>
+<p>于是，打开<strong>内存指示器</strong>，查看Android Studio的内存使用情况：</p>
+<p><code>打开设置 -&gt; Appearance -&gt; Window Options -&gt; Show memory indicator </code></p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/open_memory_indicator.png" class="" title="image"> 
+
+<p>勾选了Show memory indicator 之后，就可以在Android Studio的右下角看到内存指示器了：</p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/indicator.png" class="" title="indicator">
+
+<p>双击指示器可以手动进行GC操作。这里显示的就是Android Studio占用的内存大小（左）和分配给Android Studio使用的最大内存（右）。如果发现占用内存基本上快要等于分配的最大内存的时候，说明需要分配更多的内存给Android Studio了。当时我的机器显示的是<code>1020/1024M</code>，这应该就是其默认分配的内存大小，基本上分配的内存已经快要用完了，这也就是为啥明明电脑内存剩余很多，但是Android Studio却很卡顿的原因。</p>
+<p>于是，通过下面步骤来提高分配给Android的内存：</p>
+<p>打开菜单<code>Help-&gt;Edit Custom VM Options</code>，这时，会在新窗口打开一个<code>studo.vmoptions</code>文件（如果之前没有，会新创建一个），在打开的文件中输入下面代码配置虚拟机堆栈的最大分配内存：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Xmx4096m</span><br></pre></td></tr></tbody></table></figure>
+<p>这里可以根据自己机器的内存大小，对Android Studio进行配置，配置完成后，重启Android Studio，看到右下角的内存指示器显示的最大分配内存已经发生了变化，就说明生效了。</p>
+<span id="more"></span>
+
+<h3 id="2-提高生产效率的快捷键"><a href="#2-提高生产效率的快捷键" class="headerlink" title="2. 提高生产效率的快捷键"></a>2. 提高生产效率的快捷键</h3><p>无意中，在Android Studi的Help菜单中发现了一个叫Productivity Guide的窗口，里面列出的一些快捷键都是跟效率有关的：</p>
+
+
+<p>例如有我们常用的自动补全（Basic code completion），还有Complete Statement这种神奇的功能，再也不用移动箭头和手动加分号了！！点击功能名字下方会列出快捷键和说明，建议把这里面的功能过一遍，相信会很有帮助。</p>
+<p>列几个我用的非常上瘾的在下面：</p>
+<ul>
+<li>Quick Definition Lookup: 将定义以弹窗的形式打开，而不跳转到定义处，快捷键：<code>Ctrl+Shift+I</code> </li>
+<li>Extract Method/Function: 将一段代码抽出成一个函数，快捷键： <code>Ctrl+Alt+M</code></li>
+<li>Generate菜单：<code>Alt+Insert</code> </li>
+<li>Introduce Constant：使某个量变成常量<code>Ctrl+Alt+C</code></li>
+<li>继承方法 <code>Ctrl + O</code></li>
+<li>实现方法 <code>Ctrl + I</code> </li>
+<li>查看参数信息 <code>Ctrl + P</code></li>
+<li>Surround With <code>Ctrl+Alt+T</code></li>
+<li>Extend select <code>Ctrl+W</code></li>
+<li>当前行/函数/块上下移动 <code>Shift+Meta+Up/Down</code></li>
+</ul>
+<h3 id="3-调试的技巧"><a href="#3-调试的技巧" class="headerlink" title="3. 调试的技巧"></a>3. 调试的技巧</h3><p>首先，日常调试中最常用的调试方法就是打断点和加Log了，AdroidStudro中的断点功能非常强大，在断点上点右键，在弹出的窗口中点More或者直接点击Debug标签中的断点列表<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpoints.png" class="" title="断点列表">可以对断点进行更有用的设置，下面来详细说下这个断点设置页面：</p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/breakpointsetting.png" class="" title="断点设置">
+
+<ul>
+<li><strong>Suspend + Evaluate and log：</strong>调试的时候需要在某处添加一个Log，这时候如果用Log.e(xx,xxx)加入需要重新编译并安装到手机上才能查看。我们可以取消勾选Suspend，这样程序运行到断点处并不会停下，在<strong>Evaluate and log</strong>中写好想打印的log，运行到断点处在Console中就会打出Log信息了。</li>
+<li><strong>Evaluate and log：</strong>这个功能与Evaluate功能相同，可以在调试时，对一个实例进行操作，例如读取某个对象的值，修改某个对象的值等。这里的Evaluate and log的区别就是会将操作的结果打印到Console。</li>
+<li>使用<strong>Condition</strong>给断点添加条件。在Condition中输入一个返回值为Bollean的语句，那么只有返回true的时候，断点才会生效。</li>
+</ul>
+<p>通过上面的工具可以更方便的了解程序的运行状态。当然，这还是避免不了我们有时会设置了错误的断点位置，导致：</p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/wrong_break_point.gif" class="" title="错误的断点位置">
+
+<p>这时，我们可以利用调用栈，从下往上的查看调用顺序，调试时，调用栈会在Debug标签中的Debugger-&gt;Frames中显示：</p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/invokestack.png" class="" title="错误的断点位置">
+
+<p>在上面的调用栈中，背景底色是黄色的表示是来自SDK的调用，背景是正常的Android的主题色表示的是来自你代码的调用。</p>
+<p>调用栈非常有用，举个例子：有一次在调试时，点击了界面上一个按钮后Activity就关掉了，但是代码中却无论怎么找都找不到对这个按钮的监听，没有setOnClickListener，那点击后是怎么执行的呢？就在我愁眉不展的时候，老司机出现了，告诉我既然肯定会被Activity被Finish掉了，那在Finish函数里加断点，查看调用栈就可以顺藤摸瓜的找到按钮的点击事件处理代码。果然就找到了，原来按钮的监听定义在了Base类中。</p>
+<h3 id="4-定位当前页面的源码位置"><a href="#4-定位当前页面的源码位置" class="headerlink" title="4. 定位当前页面的源码位置"></a>4. 定位当前页面的源码位置</h3><p>阅读新项目代码时，领导让我修改页面上一个控件，这时首先要做的就是代码中找到这个页面，于是，菜鸟的我我就开始从MainActivity开始顺着代码往下捋着找，发现要找到一个控件要找半天，有时候甚至半天都找不到。于是，我总结了两条寻找Activity或者某个View的方法：</p>
+<ol>
+<li>在Androd Studio中点击Tools-&gt;Layout Inspector，选择当前进程后就会弹出当前任务栈中所有的Activity的列表，这时候在源码中搜索（Ctrl+Shift+F）名字就可以Activity的源码位置。如果需要找页面上某一个控件View，可以继续点击Activity，在打开的节面中选中要寻找的控件，查看其id，再根据id搜索就可以找到View了。但是这个方法并不总是那么好用，有时任务栈中只有一个Activity时，就不会出现Activity列表，直接打开布局的Capture文件了。</li>
+<li>另一种方法跟Android Studio无关，是通过Android系统自带的dumpsys命令获取任务栈及Activity信息，在命令行中输入下面语句:</li>
+</ol>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep -A 20 "A=com.xxxx.xxxx"</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这样就能得到当前的Activity信息了：</p>
+<img src="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/dumpinfo.png" class="" title="dump信息">
+
+<p>把这条命设置别名，放到bashrc文件中，就可以在在命令行里直接使用了：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 放到bashrc文件中</span><br><span class="line">export package_name="A=xxx.xxx.xxx"  # 写好包名</span><br><span class="line">alias whatisthispage="adb shell dumpsys activity activities | grep -A 20 "</span><br></pre></td></tr></tbody></table></figure>
+
+<p>运行时，直接运行whatisthispage $package_name就可以了。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>原来我根本不会用Android Studio</p><p><a href="https://chewenkai.github.io/日常记录/原来我根本不会用android-studio/">https://chewenkai.github.io/日常记录/原来我根本不会用android-studio/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-10-28</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Android/">Android</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/uncategorized/android%E4%B8%AD%E5%8A%A8%E7%94%BB%E7%9A%84%E4%BD%BF%E7%94%A8/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Android中动画的使用</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E5%B7%A5%E5%85%B7/%E5%9F%BA%E4%BA%8Emainframer%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%BC%96%E8%AF%91%EF%BC%88%E4%BB%A5android%E5%BC%80%E5%8F%91%E4%B8%BA%E4%BE%8B%EF%BC%89/"><span class="level-item">基于MainFramer进行远程编译（以Android开发为例）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="calvinche"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">calvinche</p><p class="is-size-6 is-block">Android Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Center of the universe.</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">19</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/chewenkai" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/chewenkai"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="level-start"><span class="level-item">工具</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="level-start"><span class="level-item">日常总结</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%B1%87%E6%8A%A5/"><span class="level-start"><span class="level-item">日常汇报</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="level-start"><span class="level-item">日常记录</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/"><span class="level-start"><span class="level-item">面试</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Andoird/"><span class="tag">Andoird</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Demo/"><span class="tag">Demo</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/English/"><span class="tag">English</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StarDict/"><span class="tag">StarDict</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Study/"><span class="tag">Study</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VIM/"><span class="tag">VIM</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VirtualBox/"><span class="tag">VirtualBox</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%A5%E5%91%8A/"><span class="tag">报告</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E6%A0%B7%E7%9B%91%E7%9D%A3%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"><span class="tag">抽样监督管理系统</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8E%92%E5%BA%8F/"><span class="tag">排序</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="tag">日常总结</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="tag">日常记录</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%89%9B%E5%AE%A2/"><span class="tag">牛客</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a><p class="is-size-7"><span>&copy; 2022 calvinche</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><!-- hexo injector body_end start -->
+    <script>
+    (() => {
+        function switchTab() {
+            if (!location.hash) {
+              return;
+            }
+            Array
+                .from(document.querySelectorAll('.tab-content'))
+                .forEach($tab => {
+                    $tab.classList.add('is-hidden');
+                });
+            Array
+                .from(document.querySelectorAll('.tabs li'))
+                .forEach($tab => {
+                    $tab.classList.remove('is-active');
+                });
+            const $activeTab = document.querySelector(location.hash);
+            if ($activeTab) {
+                $activeTab.classList.remove('is-hidden');
+            }
+            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            if ($tabMenu) {
+                $tabMenu.parentElement.classList.add('is-active');
+            }
+        }
+        switchTab();
+        window.addEventListener('hashchange', switchTab, false);
+    })();
+    </script>
+    <!-- hexo injector body_end end --></body></html>

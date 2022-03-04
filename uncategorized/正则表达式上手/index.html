@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>正则表达式上手 - Calvin</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="CalvinChe"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="CalvinChe"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹"><meta property="og:type" content="blog"><meta property="og:title" content="正则表达式上手"><meta property="og:url" content="https://chewenkai.github.io/uncategorized/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8A%E6%89%8B/"><meta property="og:site_name" content="Calvin"><meta property="og:description" content="正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://chewenkai.github.io/img/og_image.png"><meta property="article:published_time" content="2018-12-29T12:02:48.000Z"><meta property="article:author" content="calvinche"><meta property="article:tag" content="日常总结"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://chewenkai.github.io/uncategorized/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8A%E6%89%8B/"},"headline":"正则表达式上手","image":["https://chewenkai.github.io/img/og_image.png"],"datePublished":"2018-12-29T12:02:48.000Z","author":{"@type":"Person","name":"calvinche"},"publisher":{"@type":"Organization","name":"Calvin","logo":{"@type":"ImageObject","url":"https://chewenkai.github.io/img/logo.svg"}},"description":"正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。任意门 下面讲我认为书中较为重要的点记在下面： 首先，正则是什么？正则是匹"}</script><link rel="canonical" href="https://chewenkai.github.io/uncategorized/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8A%E6%89%8B/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-72437521-5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-72437521-5');</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.0.0">
+<style>.not-gallery-item { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .not-gallery-item > span { position: relative; z-index: 10; }  .not-gallery-item img, .not-gallery-item .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .not-gallery-item img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .not-gallery-item-fallback { color: inherit; } .not-gallery-item-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Calvin" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-12-29T12:02:48.000Z" title="2018/12/29 下午8:02:48">2018-12-29</time></span><span class="level-item">9 minutes read (About 1298 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">正则表达式上手</h1><div class="content"><p>正则表达式是计算机世界里的基础技能，很多东西都是建立在正则表达式之上。学会使用正则表达式会帮助你理解更多，之前对正则表达式总是非常敬畏，感觉很难上手，直到看了老姚的《JavaScript 正则表达式迷你书》，才打开了新世界的大门，有时间的朋友可以去读一下，不要被书名中的JavaScript吓到，这本书其实跟某种语言关系不大。<a target="_blank" rel="noopener" href="https://github.com/qdlaoyao/js-regex-mini-book">任意门</a></p>
+<p>下面讲我认为书中较为重要的点记在下面：</p>
+<p>首先，正则是什么？正则是匹配模式，要么匹配字符，要么匹配位置。（匹配可以理解为搜索的意思）</p>
+<h4 id="匹配字符："><a href="#匹配字符：" class="headerlink" title="匹配字符："></a>匹配字符：</h4><p>一个正则匹配的字符串，具体到某一位字符时，它可以不是某个确定的字符，可以有多种可能。</p>
+<p>其实现的方式是使用字符组。譬如[abc]，表示该字符是可以字符“a”、“b”、“c”中的任何一个，中括号里可以写任意字符，包括空格，问号等。</p>
+<h4 id="匹配位置："><a href="#匹配位置：" class="headerlink" title="匹配位置："></a>匹配位置：</h4><p>一个正则可匹配的字符串的长度不是固定的，可以是多种情况的。</p>
+<p>其实现的方式是使用量词。表示譬如{m,n}，表示连续出现最少m次，最多n次</p>
+<p>其实只要明白了匹配位置的方法{m,n}和匹配字符的方法[这里可以写任意多的字符]，就可以实现99.999%的正则表达式问题。</p>
+<p>至于其他的你看到关于正则表达式的知识都是建立在这两个基础能力之上的，要么是为了方便，创建了几个简单的写法，例如[0-5]=[012345]，又例如\d=[0-9]，这样就不用在方括号里写太多的字符，同时也增强了可读性。</p>
+<p>下面就介绍一些为了方便实现上面两种匹配而产生的各种简写：</p>
+<p><strong>1.表示字符</strong></p>
+<p>如果字符组里的字符特别多的话，怎么办？假如我想匹配所有的字符，总不能把所有的字符都输入到中括号内吧？</p>
+<p>所以，为了解决这个问题，正则表达式也可以写成这样的缩写：</p>
+<ul>
+<li><p>比如[123456abcdefGHIJKLM]，可以写成**[1-6a-fG-M]*<em>。用连字符”-“来省略和简写。</em>（那么要匹配“a”、“-”、“z”这三者中任意一个字符，该怎么做呢？可以写成如下的方式：[-az]或[az-]或[a-z]。即要么放在开头，要么放在结尾，要么转义。）*</p>
+</li>
+<li><p>**[^abc]**，表示是一个除”a”、”b”、”c”之外的任意一个字符。字符组的第一位放”^”（脱字符），表示求反的概念</p>
+</li>
+<li><p><strong>\d</strong> 就是<code>[0-9]</code>。表示是一位数字。记忆方式：其英文是digit（数字）。</p>
+</li>
+<li><p><strong>\D</strong> 就是<code>[^0-9]</code>。表示除数字外的任意字符。</p>
+</li>
+<li><p><strong>\w</strong> 就是<code>[0-9a-zA-Z_]</code>。表示数字、大小写字母和下划线。记忆方式：w是word的简写，也称单词字符。</p>
+</li>
+<li><p><strong>\W</strong> 就是<code>[^0-9a-zA-Z_]</code>。非单词字符。</p>
+</li>
+<li><p><strong>\s</strong> 就是<code>[ \t\v\n\r\f]</code>。表示空白符，包括空格、水平制表符、垂直制表符、换行符、回车符、换页符。记忆方式：s是space character的首字母。</p>
+</li>
+<li><p><strong>\S</strong> 就是<code>[^ \t\v\n\r\f]</code>。 非空白符。</p>
+</li>
+<li><p><strong>.</strong> 就是<code>[^\n\r\u2028\u2029]</code>。通配符，表示几乎任意字符。换行符、回车符、行分隔符和段分隔符除外。记忆方式：想想省略号…中的每个点，都可以理解成占位符，表示任何类似的东西。</p>
+<p>如果要匹配任意字符怎么办？可以使用[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个。</p>
+</li>
+</ul>
+<p><strong>2.表示位置</strong>（数量）</p>
+<ul>
+<li><p><strong>{m,}</strong> 表示至少出现m次。</p>
+</li>
+<li><p><strong>{m}</strong> 等价于<code>{m,m}</code>，表示出现m次。</p>
+</li>
+<li><p><strong>?</strong>  等价于<code>{0,1}</code>，表示出现或者不出现。记忆方式：问号的意思表示，有吗？</p>
+</li>
+</ul>
+<ul>
+<li><strong>+</strong>  等价于<code>{1,}</code>，表示出现至少一次。记忆方式：加号是追加的意思，得先有一个，然后才考虑追加。</li>
+</ul>
+<ul>
+<li>*** ** 等价于<code>{0,}</code>，表示出现任意次，有可能不出现。记忆方式：看看天上的星星，可能一颗没有，可能零散有几颗，可能数也数不过来。</li>
+</ul>
+<h4 id="举例说明🌰"><a href="#举例说明🌰" class="headerlink" title="举例说明🌰"></a>举例说明🌰</h4><p>明白了基本用法，就需要几个例子来实验一下了。如果要在目录中搜索文件夹名字中有Util的文件，而且只显示DreamReader文件夹中的结果，那我可以这样搜:</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find ./* | grep -e ".*Dream.*StringUtil"</span><br></pre></td></tr></tbody></table></figure>
+
+</div><div class="article-licensing box"><div class="licensing-title"><p>正则表达式上手</p><p><a href="https://chewenkai.github.io/uncategorized/正则表达式上手/">https://chewenkai.github.io/uncategorized/正则表达式上手/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-12-29</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/">日常总结</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/uncategorized/%E5%AF%B9%E4%BD%BF%E7%94%A8viewpager%E7%9A%84%E4%B8%80%E7%82%B9%E7%90%86%E8%A7%A3/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">对使用ViewPager的一点理解</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/uncategorized/%E5%9D%91-textview%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8maxlines-1%E5%92%8Cellipsize%E6%97%B6%E5%81%B6%E5%8F%91%E5%B4%A9%E6%BA%83/"><span class="level-item">坑--TextView同时使用maxLines=1和ellipsize时偶发崩溃</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="calvinche"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">calvinche</p><p class="is-size-6 is-block">Android Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Center of the universe.</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">19</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/chewenkai" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/chewenkai"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="level-start"><span class="level-item">工具</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="level-start"><span class="level-item">日常总结</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%B1%87%E6%8A%A5/"><span class="level-start"><span class="level-item">日常汇报</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="level-start"><span class="level-item">日常记录</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/"><span class="level-start"><span class="level-item">面试</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Andoird/"><span class="tag">Andoird</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Demo/"><span class="tag">Demo</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/English/"><span class="tag">English</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StarDict/"><span class="tag">StarDict</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Study/"><span class="tag">Study</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VIM/"><span class="tag">VIM</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VirtualBox/"><span class="tag">VirtualBox</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%A5%E5%91%8A/"><span class="tag">报告</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E6%A0%B7%E7%9B%91%E7%9D%A3%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"><span class="tag">抽样监督管理系统</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8E%92%E5%BA%8F/"><span class="tag">排序</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="tag">日常总结</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="tag">日常记录</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%89%9B%E5%AE%A2/"><span class="tag">牛客</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a><p class="is-size-7"><span>&copy; 2022 calvinche</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><!-- hexo injector body_end start -->
+    <script>
+    (() => {
+        function switchTab() {
+            if (!location.hash) {
+              return;
+            }
+            Array
+                .from(document.querySelectorAll('.tab-content'))
+                .forEach($tab => {
+                    $tab.classList.add('is-hidden');
+                });
+            Array
+                .from(document.querySelectorAll('.tabs li'))
+                .forEach($tab => {
+                    $tab.classList.remove('is-active');
+                });
+            const $activeTab = document.querySelector(location.hash);
+            if ($activeTab) {
+                $activeTab.classList.remove('is-hidden');
+            }
+            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            if ($tabMenu) {
+                $tabMenu.parentElement.classList.add('is-active');
+            }
+        }
+        switchTab();
+        window.addEventListener('hashchange', switchTab, false);
+    })();
+    </script>
+    <!-- hexo injector body_end end --></body></html>

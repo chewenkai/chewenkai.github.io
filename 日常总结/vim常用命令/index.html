@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>VIM常用命令 - Calvin</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="CalvinChe"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="CalvinChe"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率的提高大有裨益。但是剑一天不用，锈的也是很快的。前几天在终端中偶然发现了命令vimtutor，该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总于下，方便记忆。 浏览命令 光标在屏幕文本中的移动既可以用箭头键，也可以使用 hjkl 字母键。 h (左移)       j (下行)"><meta property="og:type" content="blog"><meta property="og:title" content="VIM常用命令"><meta property="og:url" content="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><meta property="og:site_name" content="Calvin"><meta property="og:description" content="VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率的提高大有裨益。但是剑一天不用，锈的也是很快的。前几天在终端中偶然发现了命令vimtutor，该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总于下，方便记忆。 浏览命令 光标在屏幕文本中的移动既可以用箭头键，也可以使用 hjkl 字母键。 h (左移)       j (下行)"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://chewenkai.github.io/img/og_image.png"><meta property="article:published_time" content="2018-03-30T04:13:20.000Z"><meta property="article:author" content="calvinche"><meta property="article:tag" content="VIM"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"},"headline":"VIM常用命令","image":["https://chewenkai.github.io/img/og_image.png"],"datePublished":"2018-03-30T04:13:20.000Z","author":{"@type":"Person","name":"calvinche"},"publisher":{"@type":"Organization","name":"Calvin","logo":{"@type":"ImageObject","url":"https://chewenkai.github.io/img/logo.svg"}},"description":"VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率\b的提高大有裨益。但是剑\b一天不用，锈的也是很快的。\b前几天在终端中偶然发现了命令vimtutor，\b该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总\b于下，方便记忆。 浏览命令 光标在屏幕文本中的移动既可以用箭头键，也可以使用 hjkl 字母键。 h (左移)       j (下行)"}</script><link rel="canonical" href="https://chewenkai.github.io/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-72437521-5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-72437521-5');</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.0.0">
+<style>.not-gallery-item { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .not-gallery-item > span { position: relative; z-index: 10; }  .not-gallery-item img, .not-gallery-item .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .not-gallery-item img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .not-gallery-item-fallback { color: inherit; } .not-gallery-item-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Calvin" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-03-30T04:13:20.000Z" title="2018/3/30 下午12:13:20">2018-03-30</time></span><span class="level-item"><a class="link-muted" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/">日常总结</a></span><span class="level-item">12 minutes read (About 1767 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">VIM常用命令</h1><div class="content"><p>VIM在命令行环境中（比如操作VPS）非常实用，习惯之后对工作效率的提高大有裨益。但是剑一天不用，锈的也是很快的。前几天在终端中偶然发现了命令<code>vimtutor</code>，该教程非常巧妙简洁，整个教程操作一遍只需要半个小时左右，基本的操作就很熟悉了。现在将其小节汇总于下，方便记忆。</p>
+<h3 id="浏览命令"><a href="#浏览命令" class="headerlink" title="浏览命令"></a>浏览命令</h3><ol>
+<li><p>光标在屏幕文本中的移动既可以用箭头键，也可以使用 <code>hjkl</code> 字母键。
+<code>h (左移)       j (下行)       k (上行)     l (右移)</code></p>
+</li>
+<li><p>欲进入 Vim 编辑器(从命令行提示符)，请输入：vim 文件名 <code>&lt;回车&gt;</code></p>
+</li>
+<li><p>欲退出 Vim 编辑器，请输入 <code>&lt;ESC&gt;</code>   <code>:q!</code>   <code>&lt;回车&gt;</code> 放弃所有改动。
+或者输入 <code>&lt;ESC&gt;</code>   <code>:wq</code>   <code>&lt;回车&gt;</code> 保存改动。</p>
+</li>
+<li><p>在正常模式下删除光标所在位置的字符，请按： <code>x</code></p>
+</li>
+<li><p>欲插入或添加文本，请输入：
+<code>i   输入欲插入文本   &lt;ESC&gt;             在光标前插入文本</code>
+<code>A   输入欲添加文本   &lt;ESC&gt;             在一行后添加文本</code></p>
+</li>
+</ol>
+<p>特别提示：按下 <esc> 键会带您回到正常模式或者撤消一个不想输入或部分完整
+的命令。</esc></p>
+<span id="more"></span>
+
+<h3 id="删除和撤销"><a href="#删除和撤销" class="headerlink" title="删除和撤销"></a>删除和撤销</h3><ol>
+<li><p>欲从当前光标删除至下一个单词，请输入：<code>dw</code></p>
+</li>
+<li><p>欲从当前光标删除至当前行末尾，请输入：<code>d$</code></p>
+</li>
+<li><p>欲删除整行，请输入：<code>dd</code></p>
+</li>
+<li><p>欲重复一个动作，请在它前面加上一个数字：<code>2w</code></p>
+</li>
+<li><p>在正常模式下修改命令的格式是：
+<code>operator</code>   <code>[number]</code>   <code>motion</code>
+其中：
+<code>operator</code> - 操作符，代表要做的事情，比如 d 代表删除
+<code>[number]</code> - 可以附加的数字，代表动作重复的次数
+<code>motion</code>   - 动作，代表在所操作的文本上的移动，例如 w 代表单词(word)，
+$ 代表行末等等。</p>
+</li>
+<li><p>欲移动光标到行首，请按数字0键：0</p>
+</li>
+<li><p>欲撤消以前的操作，请输入：<code>u</code> (小写的u)
+欲撤消在一行中所做的改动，请输入：<code>U</code> (大写的U)
+欲撤消以前的撤消命令，恢复以前的操作结果，请输入：<code>CTRL-R</code></p>
+</li>
+</ol>
+<h3 id="更改类命令"><a href="#更改类命令" class="headerlink" title="更改类命令"></a>更改类命令</h3><ol>
+<li><p>要重新置入已经删除的文本内容，请按小写字母 <code>p</code> 键。该操作可以将已删除的文本内容置于光标之后。如果最后一次删除的是一个整行，那么该行将置于当前光标所在行的下一行。</p>
+</li>
+<li><p>要替换光标所在位置的字符，请输入小写的 <code>r</code> 和要替换掉原位置字符的新字符即可。</p>
+</li>
+<li><p>更改类命令允许您改变从当前光标所在位置直到动作指示的位置中间的文本。比如输入 <code>ce</code> 可以替换当前光标到单词的末尾的内容；输入 <code>c$</code> 可以替换当前光标到行末的内容。</p>
+</li>
+<li><p>更改类命令的格式是：<code>c   [number]   motion</code></p>
+</li>
+</ol>
+<h3 id="搜索、替换和跳转"><a href="#搜索、替换和跳转" class="headerlink" title="搜索、替换和跳转"></a>搜索、替换和跳转</h3><ol>
+<li><p><code>CTRL-G</code> 用于显示当前光标所在位置和文件状态信息。
+<code>G</code> 用于将光标跳转至文件最后一行。
+先敲入一个行号然后输入大写 <code>G</code> 则是将光标移动至该行号代表的行。
+<code>gg</code> 用于将光标跳转至文件第一行。</p>
+</li>
+<li><p>输入 <code>/</code> 然后紧随一个字符串是在当前所编辑的文档中<strong>正向查找</strong>该字符串。
+输入 <code>?</code> 然后紧随一个字符串则是在当前所编辑的文档中<strong>反向查找</strong>该字符串。
+完成一次查找之后按 <code>n</code> 键是重复上一次的命令，可在<strong>同一方向</strong>上查
+找下一个匹配字符串所在；或者按大写 <code>N</code> 向<strong>相反方向</strong>查找下一匹配字符串所在。
+<code>CTRL-O</code> 带您跳转回较旧的位置，<code>CTRL-I</code> 则带您到较新的位置。</p>
+</li>
+<li><p>如果光标当前位置是括号(、)、[、]、{、}，按 <code>%</code> 会将光标移动到配对的括号上。</p>
+</li>
+<li><p>在一行内替换头一个字符串 old 为新的字符串 new，请输入  <code>:s/old/new</code>
+在一行内替换所有的字符串 old 为新的字符串 new，请输入  <code>:s/old/new/g</code>
+在两行内替换所有的字符串 old 为新的字符串 new，请输入  <code>:#,#s/old/new/g</code>
+在文件内替换所有的字符串 old 为新的字符串 new，请输入  <code>:%s/old/new/g</code>
+进行全文替换时询问用户确认每个替换需添加 c 标志        <code>:%s/old/new/gc</code></p>
+</li>
+</ol>
+<h3 id="与外部的交互"><a href="#与外部的交互" class="headerlink" title="与外部的交互"></a>与外部的交互</h3><ol>
+<li><code>:!command</code> 用于执行一个外部命令 command。
+请看一些实际例子：
+(MS-DOS)        |     (Unix)        | comment</li>
+</ol>
+<p>—————-|—————— |————-
+:!dir          |     :!ls          |  -  用于显示当前目录的内容。
+:!del FILENAME |     :!rm FILENAME |  -  用于删除名为 FILENAME 的文件。</p>
+<ol>
+<li><p><code>:w FILENAME</code>  可将当前 VIM 中正在编辑的文件保存到名为 FILENAME 的文件中。</p>
+</li>
+<li><p><code>v motion :w FILENAME</code> 可将当前编辑文件中可视模式下选中的内容保存到文件FILENAME 中。</p>
+</li>
+<li><p><code>:r FILENAME</code> 可提取磁盘文件 FILENAME 并将其插入到当前文件的光标位置后面。</p>
+</li>
+<li><p><code>:r !dir</code> 可以读取 dir 命令的输出并将其放置到当前文件的光标位置后面。</p>
+</li>
+</ol>
+<h3 id="复制粘贴和插入"><a href="#复制粘贴和插入" class="headerlink" title="复制粘贴和插入"></a>复制粘贴和插入</h3><ol>
+<li><p>输入小写的 <code>o</code> 可以在光标下方打开新的一行并进入插入模式。
+输入大写的 <code>O</code> 可以在光标上方打开新的一行。</p>
+</li>
+<li><p>输入小写的 <code>a</code> 可以在光标所在位置之后插入文本。
+输入大写的 <code>A</code> 可以在光标所在行的行末之后插入文本。</p>
+</li>
+<li><p><code>e</code> 命令可以使光标移动到单词末尾。</p>
+</li>
+<li><p>操作符 <code>y</code> 复制文本，<code>p</code> 粘贴先前复制的文本。</p>
+</li>
+<li><p>输入大写的 <code>R</code> 将进入替换模式(相当于按下<code>Insert</code>键)，直至按 <code>&lt;ESC&gt;</code> 键回到正常模式。</p>
+</li>
+<li><p>输入 <code>:set xxx</code> 可以设置 xxx 选项。一些有用的选项如下：
+‘ic’ ‘ignorecase’       查找时忽略字母大小写
+‘is’ ‘incsearch’        查找短语时显示部分匹配
+‘hls’ ‘hlsearch’        高亮显示所有的匹配短语
+选项名可以用完整版本，也可以用缩略版本。</p>
+</li>
+<li><p>在选项前加上 no 可以关闭选项：  :set noic</p>
+</li>
+</ol>
+<h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><ol>
+<li><p>输入 <code>:help</code> 或者按 <code>&lt;F1&gt;</code> 键或 <code>&lt;Help&gt;</code> 键可以打开帮助窗口。</p>
+</li>
+<li><p>输入 <code>:help cmd</code> 可以找到关于 cmd 命令的帮助。</p>
+</li>
+<li><p>输入 <code>CTRL-W</code> <code>CTRL-W</code>  可以使您在窗口之间跳转。</p>
+</li>
+<li><p>输入 <code>:q</code> 以关闭帮助窗口</p>
+</li>
+<li><p>您可以创建一个 vimrc 启动脚本文件用来保存您偏好的设置。</p>
+</li>
+<li><p>当输入 : 命令时，按 <code>CTRL-D</code> 可以查看可能的补全结果。按 <code>&lt;TAB&gt;</code> 可以使用一个补全。</p>
+</li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>VIM常用命令</p><p><a href="https://chewenkai.github.io/日常总结/vim常用命令/">https://chewenkai.github.io/日常总结/vim常用命令/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-03-30</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/VIM/">VIM</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/%E5%B7%A5%E5%85%B7/%E5%9F%BA%E4%BA%8Emainframer%E8%BF%9B%E8%A1%8C%E8%BF%9C%E7%A8%8B%E7%BC%96%E8%AF%91%EF%BC%88%E4%BB%A5android%E5%BC%80%E5%8F%91%E4%B8%BA%E4%BE%8B%EF%BC%89/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">基于MainFramer进行远程编译（以Android开发为例）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/mac%E4%B8%8A%E5%8F%8C%E7%A1%AC%E7%9B%98%E5%AF%BC%E8%87%B4%E7%9A%84%E7%9B%98%E7%AC%A6%E5%8F%98%E5%8C%96%E5%92%8C%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98%E5%BC%95%E8%B5%B7%E7%9A%84vbox%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5/"><span class="level-item">Mac上双硬盘导致的盘符变化和权限问题引起的Vbox虚拟机启动失败</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="calvinche"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">calvinche</p><p class="is-size-6 is-block">Android Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Center of the universe.</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">39</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">19</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/chewenkai" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/chewenkai"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="level-start"><span class="level-item">工具</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="level-start"><span class="level-item">日常总结</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%B1%87%E6%8A%A5/"><span class="level-start"><span class="level-item">日常汇报</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="level-start"><span class="level-item">日常记录</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/"><span class="level-start"><span class="level-item">面试</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Andoird/"><span class="tag">Andoird</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Demo/"><span class="tag">Demo</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/English/"><span class="tag">English</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StarDict/"><span class="tag">StarDict</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Study/"><span class="tag">Study</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VIM/"><span class="tag">VIM</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VirtualBox/"><span class="tag">VirtualBox</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%A5%E5%91%8A/"><span class="tag">报告</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E6%A0%B7%E7%9B%91%E7%9D%A3%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"><span class="tag">抽样监督管理系统</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8E%92%E5%BA%8F/"><span class="tag">排序</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="tag">日常总结</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="tag">日常记录</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%89%9B%E5%AE%A2/"><span class="tag">牛客</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Calvin" height="28"></a><p class="is-size-7"><span>&copy; 2022 calvinche</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script><!-- hexo injector body_end start -->
+    <script>
+    (() => {
+        function switchTab() {
+            if (!location.hash) {
+              return;
+            }
+            Array
+                .from(document.querySelectorAll('.tab-content'))
+                .forEach($tab => {
+                    $tab.classList.add('is-hidden');
+                });
+            Array
+                .from(document.querySelectorAll('.tabs li'))
+                .forEach($tab => {
+                    $tab.classList.remove('is-active');
+                });
+            const $activeTab = document.querySelector(location.hash);
+            if ($activeTab) {
+                $activeTab.classList.remove('is-hidden');
+            }
+            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            if ($tabMenu) {
+                $tabMenu.parentElement.classList.add('is-active');
+            }
+        }
+        switchTab();
+        window.addEventListener('hashchange', switchTab, false);
+    })();
+    </script>
+    <!-- hexo injector body_end end --></body></html>
