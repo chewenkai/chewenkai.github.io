@@ -37,9 +37,7 @@
 <li>密度无关像素(density-independent pixel, dp or dip):与终端上的实际物理像素点无关,可以保证在不同屏幕像素密度的设备上显示相同的效果。Android开发时用dp而不是px单位设置图片大小，是Android特有的单位。</li>
 <li>独立比例像素(scale-independent pixel, sp or sip):Android开发时用此单位设置文字大小，可根据字体大小首选项进行缩放。<h3 id="屏幕适配要解决的问题："><a href="#屏幕适配要解决的问题：" class="headerlink" title="屏幕适配要解决的问题："></a><em>屏幕适配要解决的问题：</em></h3></li>
 <li>使得“布局”、“控件”匹配不同的屏幕尺寸</li>
-<li>使得“图片资源”匹配不同的屏幕密度
-一个图片归纳解决办法,转自<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ec5a1a30694b">这里</a>：
-<img src="http://upload-images.jianshu.io/upload_images/944365-ced9745859537daf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="归纳解决办法"></li>
+<li>使得“图片资源”匹配不同的屏幕密度<br>一个图片归纳解决办法,转自<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ec5a1a30694b">这里</a>：<br><img src="http://upload-images.jianshu.io/upload_images/944365-ced9745859537daf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="归纳解决办法"></li>
 </ul>
 <h2 id="事件传递流程"><a href="#事件传递流程" class="headerlink" title="事件传递流程"></a>事件传递流程</h2><p>TODO</p>
 <h2 id="自定义View"><a href="#自定义View" class="headerlink" title="自定义View"></a>自定义View</h2><ul>
@@ -80,23 +78,11 @@
 <li>UI线程做耗时任务</li>
 <li>UI OverDraw</li>
 </ul>
-<h2 id="进程-线程间通信：参考1-参考2"><a href="#进程-线程间通信：参考1-参考2" class="headerlink" title="进程/线程间通信：参考1  参考2"></a>进程/线程间通信：<a target="_blank" rel="noopener" href="https://my.oschina.net/u/248570/blog/53226">参考1</a> <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ac16f9702d68"> 参考2</a></h2><p>Linux上进程间通信: 套接口（Socket）, 管道（Pipe）,命名管道（named pipe）, 信号（Signal）, 信号量（semaphore）, 消息（Message）队列, 共享内存, 内存映射（mapped memory）
-Android的进程间通信大多基于Bindler，参见下面Binder机制。
-Android中线程间通信：共享变量（Sharepreferrence），使用管道流（Pipes），handle机制，runOnUiThread(Runnable)，View.postDelay(Runnable)
-，广播</p>
+<h2 id="进程-线程间通信：参考1-参考2"><a href="#进程-线程间通信：参考1-参考2" class="headerlink" title="进程/线程间通信：参考1  参考2"></a>进程/线程间通信：<a target="_blank" rel="noopener" href="https://my.oschina.net/u/248570/blog/53226">参考1</a> <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/ac16f9702d68"> 参考2</a></h2><p>Linux上进程间通信: 套接口（Socket）, 管道（Pipe）,命名管道（named pipe）, 信号（Signal）, 信号量（semaphore）, 消息（Message）队列, 共享内存, 内存映射（mapped memory）<br>Android的进程间通信大多基于Bindler，参见下面Binder机制。<br>Android中线程间通信：共享变量（Sharepreferrence），使用管道流（Pipes），handle机制，runOnUiThread(Runnable)，View.postDelay(Runnable)<br>，广播</p>
 <h2 id="Handler机制"><a href="#Handler机制" class="headerlink" title="Handler机制"></a>Handler机制</h2><p>Handler，Looper，MessageQueue，Message，Messenger</p>
 <h2 id="Binder机制"><a href="#Binder机制" class="headerlink" title="Binder机制"></a>Binder机制</h2><p>TODO</p>
-<h2 id="Volley机制（参考这里）"><a href="#Volley机制（参考这里）" class="headerlink" title="Volley机制（参考这里）"></a>Volley机制（<a target="_blank" rel="noopener" href="http://huachao1001.github.io/article.html?MfvbNAAH">参考这里</a>）</h2><p>通过一个RequestQueue维护所有网络请求。具体是：
-1, RequestQueue的add函数接收到请求，判断其是否允许被缓存，如果不允许，则加入网络请求列队。
-2, 如果允许缓存，则判断等待列队中是否有相同地址的请求，如果有，就加入等待列队，等待列队在每完成一次请求后访问，移除等待列队中相同的请求，并讲剩余的请求加入缓存列队。
-3 如果没有相同的请求，则直接加入到缓存列队。缓存列队执行请求时先检查是否超时，如果超时则通过网络请求，如果未超时直接读取缓存。
-<img src="http://bmob-cdn-3365.b0.upaiyun.com/2016/07/23/7cd35e7d40a290e48068bf7cc187e203.png"></p>
-<h2 id="GreenDao机制"><a href="#GreenDao机制" class="headerlink" title="GreenDao机制"></a>GreenDao机制</h2><h2 id="Picasso机制"><a href="#Picasso机制" class="headerlink" title="Picasso机制"></a>Picasso机制</h2><p>into会检查当前是否是在主线程上执行。
-如果我们没有提供一个图片资源并且有设置placeholder，那么就会把我们设置的placeholder显示出来，并中断执行。
-接下来就是创建了一个Request对象，我们在前面做得一些设置都会被封装到这个Request对象里面。
-检查我们要显示的图片是否可以直接在缓存中获取，如果有就直接显示出来好了。
-缓存没命中，那就只能费点事把源图片down下来了。这个过程是异步的，并且通过一个Action来完成请求前后的衔接工作。
-<img src="http://www.trinea.cn/wp-content/uploads/2015/10/overall-design-picasso.jpg?x24892"></p>
+<h2 id="Volley机制（参考这里）"><a href="#Volley机制（参考这里）" class="headerlink" title="Volley机制（参考这里）"></a>Volley机制（<a target="_blank" rel="noopener" href="http://huachao1001.github.io/article.html?MfvbNAAH">参考这里</a>）</h2><p>通过一个RequestQueue维护所有网络请求。具体是：<br>1, RequestQueue的add函数接收到请求，判断其是否允许被缓存，如果不允许，则加入网络请求列队。<br>2, 如果允许缓存，则判断等待列队中是否有相同地址的请求，如果有，就加入等待列队，等待列队在每完成一次请求后访问，移除等待列队中相同的请求，并讲剩余的请求加入缓存列队。<br>3 如果没有相同的请求，则直接加入到缓存列队。缓存列队执行请求时先检查是否超时，如果超时则通过网络请求，如果未超时直接读取缓存。<br><img src="http://bmob-cdn-3365.b0.upaiyun.com/2016/07/23/7cd35e7d40a290e48068bf7cc187e203.png"></p>
+<h2 id="GreenDao机制"><a href="#GreenDao机制" class="headerlink" title="GreenDao机制"></a>GreenDao机制</h2><h2 id="Picasso机制"><a href="#Picasso机制" class="headerlink" title="Picasso机制"></a>Picasso机制</h2><p>into会检查当前是否是在主线程上执行。<br>如果我们没有提供一个图片资源并且有设置placeholder，那么就会把我们设置的placeholder显示出来，并中断执行。<br>接下来就是创建了一个Request对象，我们在前面做得一些设置都会被封装到这个Request对象里面。<br>检查我们要显示的图片是否可以直接在缓存中获取，如果有就直接显示出来好了。<br>缓存没命中，那就只能费点事把源图片down下来了。这个过程是异步的，并且通过一个Action来完成请求前后的衔接工作。<br><img src="http://www.trinea.cn/wp-content/uploads/2015/10/overall-design-picasso.jpg?x24892"></p>
 <h2 id="进程保活-参考这里"><a href="#进程保活-参考这里" class="headerlink" title="进程保活 (参考这里)"></a>进程保活 (<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006251859">参考这里</a>)</h2><p>进程等级：</p>
 <ul>
 <li>前台进程 (Foreground process)</li>
@@ -121,8 +107,7 @@ Android中线程间通信：共享变量（Sharepreferrence），使用管道流
 </ul>
 </li>
 </ul>
-<h2 id="四种启动模式"><a href="#四种启动模式" class="headerlink" title="四种启动模式"></a>四种启动模式</h2><p><strong>android:launchMode=:</strong>
-standard(默认)、singleTop、singleTask、singleInstance</p>
+<h2 id="四种启动模式"><a href="#四种启动模式" class="headerlink" title="四种启动模式"></a>四种启动模式</h2><p><strong>android:launchMode=:</strong><br>standard(默认)、singleTop、singleTask、singleInstance</p>
 <p><strong>FLAG:</strong></p>
 <ul>
 <li><strong>FLAG_ACTIVITY_NEW_TASK：</strong> 与singleTask相同。</li>
@@ -171,27 +156,15 @@ standard(默认)、singleTop、singleTask、singleInstance</p>
 <ol>
 <li>重用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销。</li>
 <li>有效控制线程池的最大并发数，避免大量的线程之间因互相抢占系统资源而导致的阻塞线程。</li>
-<li>能对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。
-Android中线程池源自Java的Executor接口。真正的线程池实现为ThreadPoolExecutor。
-ThreadPoolExecutor它的构造方法提供了一系列参数来配置线程池。
-corePoolSize：线程池核心线程数量
-maximumPoolSize：线程池所能容纳的最大线程。
-keepAliveTime：非核心线程的闲置超长时间，超过这个时间，非核心线程就会被回收。
-unit：用于指定keepAliveTime参数的时间单位。
-workQueue：线程池中的任务队列
-threadFactory：线程工厂，为线程池提供创建新线程的功能。</li>
+<li>能对线程进行简单的管理，并提供定时执行以及指定间隔循环执行等功能。<br>Android中线程池源自Java的Executor接口。真正的线程池实现为ThreadPoolExecutor。<br>ThreadPoolExecutor它的构造方法提供了一系列参数来配置线程池。<br>corePoolSize：线程池核心线程数量<br>maximumPoolSize：线程池所能容纳的最大线程。<br>keepAliveTime：非核心线程的闲置超长时间，超过这个时间，非核心线程就会被回收。<br>unit：用于指定keepAliveTime参数的时间单位。<br>workQueue：线程池中的任务队列<br>threadFactory：线程工厂，为线程池提供创建新线程的功能。</li>
 </ol>
 </li>
 <li><p>线程池的分类</p>
 <ol>
-<li><strong>FixedThreadPool</strong>
-Executors.newFixedThreadPool方法创建。他是一种固定线程数量的线程池，只有核心线程。这些线程不会被回收。除非线程池被关闭。</li>
-<li><strong>CachedThreadPool</strong>
-Executors.newCachedThreadPool方法创建,它一种线程数量不固定的线程池。它只有非核心线程。并且它的线程都有超时机制，超过60秒闲置线程就会被回收。</li>
-<li><strong>ScheduledThreadPool</strong>
-Executors.newScheduledThreadPool方法创建，它的核心数量是固定的，而非核心数量没有限制。当非核心线程闲置是会立刻回收。</li>
-<li><strong>SingleThreadExecutor</strong>
-Executors.newSingleThreadExecutor方法创建，它只要一个核心线程，能确保所有任务都在一个线程中按顺序执行。它的意义在于统一所有的外界任务到一个线程中。是这些线程任务之间不需要处理线程同步的问题。</li>
+<li><strong>FixedThreadPool</strong><br>Executors.newFixedThreadPool方法创建。他是一种固定线程数量的线程池，只有核心线程。这些线程不会被回收。除非线程池被关闭。</li>
+<li><strong>CachedThreadPool</strong><br>Executors.newCachedThreadPool方法创建,它一种线程数量不固定的线程池。它只有非核心线程。并且它的线程都有超时机制，超过60秒闲置线程就会被回收。</li>
+<li><strong>ScheduledThreadPool</strong><br>Executors.newScheduledThreadPool方法创建，它的核心数量是固定的，而非核心数量没有限制。当非核心线程闲置是会立刻回收。</li>
+<li><strong>SingleThreadExecutor</strong><br>Executors.newSingleThreadExecutor方法创建，它只要一个核心线程，能确保所有任务都在一个线程中按顺序执行。它的意义在于统一所有的外界任务到一个线程中。是这些线程任务之间不需要处理线程同步的问题。</li>
 </ol>
 </li>
 </ul>
@@ -208,8 +181,7 @@ Executors.newSingleThreadExecutor方法创建，它只要一个核心线程，�
 <li><strong>堆(Heap):</strong> java堆是被所有线程共享的一块内存区域，在虚拟机启动时创建。此内存区域的唯一目的是存放对象实例，几乎所有的对象实例都在这里分配内存。</li>
 <li><strong>方法区(Method Area):</strong> 是各个线程共享的内存区域，它用于存放已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</li>
 </ul>
-<h2 id="3-GC算法（参考这里）"><a href="#3-GC算法（参考这里）" class="headerlink" title="3. GC算法（参考这里）"></a>3. GC算法（<a target="_blank" rel="noopener" href="http://www.cnblogs.com/smyhvae/p/4744233.html">参考这里</a>）</h2><p>内存回收针对的是内存空间分区中的 <strong>堆</strong> 和 <strong>方法区</strong> 。
-内存区域中的 <strong>程序计数器、虚拟机栈、本地方法栈</strong> 这3个区域随着线程而生，线程而灭，方法结束或者线程结束时，内存自然就跟着回收了，因此在这几个区域不需要过多考虑回收的问题。</p>
+<h2 id="3-GC算法（参考这里）"><a href="#3-GC算法（参考这里）" class="headerlink" title="3. GC算法（参考这里）"></a>3. GC算法（<a target="_blank" rel="noopener" href="http://www.cnblogs.com/smyhvae/p/4744233.html">参考这里</a>）</h2><p>内存回收针对的是内存空间分区中的 <strong>堆</strong> 和 <strong>方法区</strong> 。<br>内存区域中的 <strong>程序计数器、虚拟机栈、本地方法栈</strong> 这3个区域随着线程而生，线程而灭，方法结束或者线程结束时，内存自然就跟着回收了，因此在这几个区域不需要过多考虑回收的问题。</p>
 <ul>
 <li><strong>引用计数算法：</strong> 老牌垃圾回收算法。无法处理循环引用，没有被Java采纳.</li>
 <li><strong>根搜索算法:</strong>  在根搜索算法的基础上，现代虚拟机的实现当中，垃圾搜集的算法主要有三种，分别是标记-清除算法、复制算法、标记-整理算法。这三种算法都扩充了根搜索算法.</li>
@@ -249,17 +221,9 @@ Executors.newSingleThreadExecutor方法创建，它只要一个核心线程，�
 <li>非静态内部类能够访问外部类的静态和非静态成员，静态类不能访问外部类的非静态成员，它只能访问外部类的静态成员</li>
 <li>一个非静态内部类不能脱离外部类实体被创建,而静态内部类不需要外部类的对象就可创建。</li>
 </ul>
-<h2 id="7-Java中的修饰符"><a href="#7-Java中的修饰符" class="headerlink" title="7.Java中的修饰符"></a>7.Java中的修饰符</h2><h3 id="访问修饰符（参考）"><a href="#访问修饰符（参考）" class="headerlink" title="访问修饰符（参考）"></a>访问修饰符（<a target="_blank" rel="noopener" href="http://henry-cong.iteye.com/blog/1140277">参考</a>）</h3><p><strong>public：</strong> Java语言中访问限制最宽的修饰符，一般称之为“公共的”。被其修饰的类、属性以及方法不
-　　　　　仅可以跨类访问，而且允许跨包（package）访问。
-<strong>private:</strong> Java语言中对访问权限限制的最窄的修饰符，一般称之为“私有的”。被其修饰的类、属性以
-　　　　　及方法只能被该类的对象访问，其子类不能访问，更不能允许跨包访问。
-<strong>protect:</strong> 介于public 和 private 之间的一种访问修饰符，一般称之为“保护形”。被其修饰的类、
-　　　　　属性以及方法只能被类本身的方法及子类访问，即使子类在不同的包中也可以访问。
-<strong>default:</strong> 即不加任何访问修饰符，通常称为“默认访问模式“。该模式下，只允许在同一个包中进行访
-　　　　　问。</p>
+<h2 id="7-Java中的修饰符"><a href="#7-Java中的修饰符" class="headerlink" title="7.Java中的修饰符"></a>7.Java中的修饰符</h2><h3 id="访问修饰符（参考）"><a href="#访问修饰符（参考）" class="headerlink" title="访问修饰符（参考）"></a>访问修饰符（<a target="_blank" rel="noopener" href="http://henry-cong.iteye.com/blog/1140277">参考</a>）</h3><p><strong>public：</strong> Java语言中访问限制最宽的修饰符，一般称之为“公共的”。被其修饰的类、属性以及方法不<br>　　　　　仅可以跨类访问，而且允许跨包（package）访问。<br><strong>private:</strong> Java语言中对访问权限限制的最窄的修饰符，一般称之为“私有的”。被其修饰的类、属性以<br>　　　　　及方法只能被该类的对象访问，其子类不能访问，更不能允许跨包访问。<br><strong>protect:</strong> 介于public 和 private 之间的一种访问修饰符，一般称之为“保护形”。被其修饰的类、<br>　　　　　属性以及方法只能被类本身的方法及子类访问，即使子类在不同的包中也可以访问。<br><strong>default:</strong> 即不加任何访问修饰符，通常称为“默认访问模式“。该模式下，只允许在同一个包中进行访<br>　　　　　问。</p>
 <h2 id="8-类的加载机制-参考"><a href="#8-类的加载机制-参考" class="headerlink" title="8.类的加载机制 (参考)"></a>8.类的加载机制 (<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/061274672c44">参考</a>)</h2><p><strong>双亲委派模型：</strong> 如果一个类加载器收到类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器完成。每个类加载器都是如此，只有当父加载器在自己的搜索范围内找不到指定的类时（即ClassNotFoundException），子加载器才会尝试自己去加载。</p>
-<p><strong>自上而下的加载器顺序：</strong> Bootstrap ClassLoader(启动类加载器)，Extension ClassLoader(扩展类加载器)，Applicaiton ClassLoader(应用程序类加载器)，User ClassLoader（用户自己实现的加载器）
-<img src="http://upload-images.jianshu.io/upload_images/689802-bc4898e54c6ee6fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p><strong>自上而下的加载器顺序：</strong> Bootstrap ClassLoader(启动类加载器)，Extension ClassLoader(扩展类加载器)，Applicaiton ClassLoader(应用程序类加载器)，User ClassLoader（用户自己实现的加载器）<br><img src="http://upload-images.jianshu.io/upload_images/689802-bc4898e54c6ee6fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
 <h1 id="9-Java的注解原理"><a href="#9-Java的注解原理" class="headerlink" title="9. Java的注解原理"></a>9. Java的注解原理</h1><p>// TODO</p>
 <h1 id="10-Java集合框架图"><a href="#10-Java集合框架图" class="headerlink" title="10. Java集合框架图"></a>10. Java集合框架图</h1><p><img src="https://uploadfiles.nowcoder.com/images/20160801/740942_1470042423855_86F5A9F9F791DD7EA7C96F158F0FEA87"></p>
 <hr>
@@ -342,14 +306,11 @@ Executors.newSingleThreadExecutor方法创建，它只要一个核心线程，�
 </ul>
 <p><strong>4.Http get,post,soap协议都是在http上运行的</strong></p>
 <ul>
-<li><p>get：请求参数是作为一个key/value对的序列（查询字符串）附加到URL上的
-查询字符串的长度受到web浏览器和web服务器的限制（如IE最多支持2048个字符），不适合传输大型数据集同时，它很不安全</p>
+<li><p>get：请求参数是作为一个key/value对的序列（查询字符串）附加到URL上的<br>查询字符串的长度受到web浏览器和web服务器的限制（如IE最多支持2048个字符），不适合传输大型数据集同时，它很不安全</p>
 </li>
-<li><p>post：请求参数是在http标题的一个不同部分（名为entity body）传输的，这一部分用来传输表单信息，因此必须将Content-type设置为:application/x-www-form- urlencoded。post设计用来支持web窗体上的用户字段，其参数也是作为key/value对传输。
-但是：它不支持复杂数据类型，因为post没有定义传输数据结构的语义和规则。</p>
+<li><p>post：请求参数是在http标题的一个不同部分（名为entity body）传输的，这一部分用来传输表单信息，因此必须将Content-type设置为:application/x-www-form- urlencoded。post设计用来支持web窗体上的用户字段，其参数也是作为key/value对传输。<br>但是：它不支持复杂数据类型，因为post没有定义传输数据结构的语义和规则。</p>
 </li>
-<li><p>soap：是http post的一个专用版本，遵循一种特殊的xml消息格式
-Content-type设置为: text/xml 任何数据都可以xml化。</p>
+<li><p>soap：是http post的一个专用版本，遵循一种特殊的xml消息格式<br>Content-type设置为: text/xml 任何数据都可以xml化。</p>
 </li>
 </ul>
 <p>###http协议与https协议区别</p>
@@ -388,9 +349,7 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
 <ol>
 <li>建立连接时，客户端发送SYN包（SYN=i）到服务器，并进入到SYN-SEND状态，等待服务器确认</li>
 <li>服务器收到SYN包，必须确认客户的SYN（ack=i+1）,同时自己也发送一个SYN包（SYN=k）,即SYN+ACK包，此时服务器进入SYN-RECV状态</li>
-<li>客户端收到服务器的SYN+ACK包，向服务器发送确认报ACK（ack=k+1）,此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手，客户端与服务器开始传送数据。
-###TCP四次挥手断开连接
-<img src="http://upload-images.jianshu.io/upload_images/2964446-2b9562b3a8b72fb2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></li>
+<li>客户端收到服务器的SYN+ACK包，向服务器发送确认报ACK（ack=k+1）,此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手，客户端与服务器开始传送数据。<br>###TCP四次挥手断开连接<br><img src="http://upload-images.jianshu.io/upload_images/2964446-2b9562b3a8b72fb2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></li>
 </ol>
 <p>　　由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭，上图描述的即是如此。</p>
 <ul>
@@ -431,8 +390,7 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
 </ul>
 </li>
 <li>支持客户/服务器模式。</li>
-<li>简单快速：客户向服务器请求服务时，只需传送请求方法(GET、HEAD、POST)和路径。
-由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
+<li>简单快速：客户向服务器请求服务时，只需传送请求方法(GET、HEAD、POST)和路径。<br>由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li>
 <li>灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。</li>
 <li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
 <li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。<h2 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h2></li>
@@ -456,10 +414,8 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
 </ul>
 <h2 id="数据库基本语法"><a href="#数据库基本语法" class="headerlink" title="数据库基本语法"></a><em>数据库基本语法</em></h2><h3 id="HAVING和WHERE对于分组查询的区别"><a href="#HAVING和WHERE对于分组查询的区别" class="headerlink" title="HAVING和WHERE对于分组查询的区别"></a>HAVING和WHERE对于分组查询的区别</h3><p>HAVING子句对GROUP BY子句设置条件的方式与WHERE子句和SELECT语句交互的方式类似。WHERE子句搜索条件在进行分组操作之前应用；而HAVING搜索条件在进行分组操作之后应用。HAVING语法与WHERE语法类似，但HAVING可以包含聚合函数。HAVING子句可以引用选择列表中出现的任意项。</p>
 <h3 id="Full-outer-join，left-join-right-join，inner-join区别-参考这里"><a href="#Full-outer-join，left-join-right-join，inner-join区别-参考这里" class="headerlink" title="Full outer join，left join, right join，inner join区别(参考这里)"></a>Full outer join，left join, right join，inner join区别(<a target="_blank" rel="noopener" href="http://www.cnblogs.com/logon/p/3748020.html">参考这里</a>)</h3><h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><p>1.概念：包括左向外联接、右向外联接或完整外部联接</p>
-<p>2.左连接：left join 或 left outer join，
-左向外联接的结果集包括 LEFT OUTER 子句中指定的左表的所有行，而不仅仅是联接列所匹配的行。如果左表的某行在右表中没有匹配行，则在相关联的结果集行中右表的所有选择列表列均为空值(null)。</p>
-<p>3.右连接：right join 或 right outer join。
-右向外联接是左向外联接的反向联接。将返回右表的所有行。如果右表的某行在左表中没有匹配行，则将为左表返回空值。</p>
+<p>2.左连接：left join 或 left outer join，<br>左向外联接的结果集包括 LEFT OUTER 子句中指定的左表的所有行，而不仅仅是联接列所匹配的行。如果左表的某行在右表中没有匹配行，则在相关联的结果集行中右表的所有选择列表列均为空值(null)。</p>
+<p>3.右连接：right join 或 right outer join。<br>右向外联接是左向外联接的反向联接。将返回右表的所有行。如果右表的某行在左表中没有匹配行，则将为左表返回空值。</p>
 <p>4.完整外部联接:full join 或 full outer join，完整外部联接返回左表和右表中的所有行。当某行在另一个表中没有匹配行时，则另一个表的选择列表列包含空值。如果表之间有匹配行，则整个结果集行包含基表的数据值。</p>
 <h4 id="内连接"><a href="#内连接" class="headerlink" title="内连接"></a>内连接</h4><p>1.概念：内联接是用比较运算符比较要联接列的值的联接</p>
 <p>2.内连接：join 或 inner join，只返回符合条件的列。</p>
@@ -484,8 +440,7 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
 <p>6.　非叶子结点的关键字：K[1], K[2], …, K[M-1]；且K[i] &lt; K[i+1]；</p>
 <p>7.　非叶子结点的指针：P[1], P[2], …, P[M]；其中P[1]指向关键字小于K[1]的子树，P[M]指向关键字大于K[M-1]的子树，其它P[i]指向关键字属于(K[i-1], K[i])的子树；</p>
 <p>8.　所有叶子结点位于同一层；</p>
-<p>如：（M=3）
-<img src="http://img.blog.csdn.net/20160612115550177" alt="这里写图片描述"></p>
+<p>如：（M=3）<br><img src="http://img.blog.csdn.net/20160612115550177" alt="这里写图片描述"></p>
 <p>　　B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点。</p>
 <h4 id="1-２-B树的运用场景"><a href="#1-２-B树的运用场景" class="headerlink" title="1.２　B树的运用场景"></a>1.２　B树的运用场景</h4><ul>
 <li><p>保持<strong>键值有序</strong>，以顺序遍历</p>
@@ -525,15 +480,12 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
 </blockquote>
 <p>所以，B*树分配新结点的概率比B+树要低，<strong>空间使用率更高</strong>；</p>
 <h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h3><ul>
-<li><p>B-树：
-　　
-　　多路搜索树，每个结点存储M/2到M个关键字，非叶子结点存储指向关键字范围的子结点；所有关键字在整颗树中出现，且只出现一次，非叶子结点可以命中；</p>
+<li><p>B-树：<br>　　<br>　　多路搜索树，每个结点存储M/2到M个关键字，非叶子结点存储指向关键字范围的子结点；所有关键字在整颗树中出现，且只出现一次，非叶子结点可以命中；</p>
 </li>
 <li><p>B+树：</p>
 </li>
 </ul>
-<p>　　在B-树基础上，为叶子结点增加链表指针，所有关键字都在叶子结点
-中出现，非叶子结点作为叶子结点的索引；B+树总是到叶子结点才命中；</p>
+<p>　　在B-树基础上，为叶子结点增加链表指针，所有关键字都在叶子结点<br>中出现，非叶子结点作为叶子结点的索引；B+树总是到叶子结点才命中；</p>
 <ul>
 <li>B*树：</li>
 </ul>
@@ -598,26 +550,26 @@ Content-type设置为: text/xml 任何数据都可以xml化。</p>
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script><!-- hexo injector body_end start -->
     <script>
-    (() => {
+    (function () {
         function switchTab() {
             if (!location.hash) {
               return;
             }
             Array
                 .from(document.querySelectorAll('.tab-content'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.add('is-hidden');
                 });
             Array
                 .from(document.querySelectorAll('.tabs li'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.remove('is-active');
                 });
-            const $activeTab = document.querySelector(location.hash);
+            var $activeTab = document.querySelector(location.hash);
             if ($activeTab) {
                 $activeTab.classList.remove('is-hidden');
             }
-            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            var $tabMenu = document.querySelector('a[href="' + location.hash + '"]');
             if ($tabMenu) {
                 $tabMenu.parentElement.classList.add('is-active');
             }

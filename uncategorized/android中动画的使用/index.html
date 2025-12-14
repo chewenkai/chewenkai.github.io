@@ -32,16 +32,55 @@
 <p>第一个target是要赋予动画的对象，第二个propertyName是赋予什么动画或者对这个对象的什么属性进行变化，第三个是一个可变长度的参数，那三个点表示这个参数可以有多个，例如上面示例代码中有两个，分别是0f和1f，表示从透明变到不透明。也可以添加任何多个，例如0f, 1f, 0.5f，指的就是从透明到不透明又到半透明。</p>
 <p>上面简单的例子就实现了透明度动画。除了透明度属性，常用的属性还有：</p>
 <p><strong>常用的propertyName有以下：</strong></p>
-<p>| 属性         | 作用                              | 数值类型 |
-| ———— | ——————————— | ——– |
-| Alpha        | 控制View的透明度                  | float    |
-| TranslationX | 控制X方向的位移（相对于当前位置） | float    |
-| TranslationY | 控制Y方向的位移（相对于当前位置） | float    |
-| ScaleX       | 控制X方向的缩放倍数               | float    |
-| ScaleY       | 控制Y方向的缩放倍数               | float    |
-| Rotation     | 控制以屏幕方向为轴的旋转度数      | float    |
-| RotationX    | 控制以X轴为轴的旋转度数           | float    |
-| RotationY    | 控制以Y轴为轴的旋转度数           | float    |</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+<th>数值类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Alpha</td>
+<td>控制View的透明度</td>
+<td>float</td>
+</tr>
+<tr>
+<td>TranslationX</td>
+<td>控制X方向的位移（相对于当前位置）</td>
+<td>float</td>
+</tr>
+<tr>
+<td>TranslationY</td>
+<td>控制Y方向的位移（相对于当前位置）</td>
+<td>float</td>
+</tr>
+<tr>
+<td>ScaleX</td>
+<td>控制X方向的缩放倍数</td>
+<td>float</td>
+</tr>
+<tr>
+<td>ScaleY</td>
+<td>控制Y方向的缩放倍数</td>
+<td>float</td>
+</tr>
+<tr>
+<td>Rotation</td>
+<td>控制以屏幕方向为轴的旋转度数</td>
+<td>float</td>
+</tr>
+<tr>
+<td>RotationX</td>
+<td>控制以X轴为轴的旋转度数</td>
+<td>float</td>
+</tr>
+<tr>
+<td>RotationY</td>
+<td>控制以Y轴为轴的旋转度数</td>
+<td>float</td>
+</tr>
+</tbody></table>
 <p>除了上面的属性，ObjectAnimator可以对一个对象的任意属性进行动画渐变，例如：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ObjectAnimator.ofFloat(mTextView,<span class="string">"textSize"</span>,  <span class="number">0</span>, <span class="number">100</span>, <span class="number">50</span>)</span><br><span class="line">                .setDuration(<span class="number">5000</span>)</span><br><span class="line">                .start();</span><br></pre></td></tr></tbody></table></figure>
 
@@ -75,11 +114,26 @@
 
 <h5 id="Interpolation"><a href="#Interpolation" class="headerlink" title="Interpolation"></a>Interpolation</h5><p>放大，缩小，平移等这样的动画方式非常普通，因为这些动画是线性的，也就是说在动画时间内，属性值的变化是线性变化的。大家有时会看到一些非常炫酷的动画例如，回弹，果冻效果等等，这些效果多是非线性变化的结果，如果想实现这样的效果，就用到了Interpolation（插值器）。</p>
 <p>Android已经实现了常用的Interpolation，如：</p>
-<p>| Name                   | Description |
-| ———————- | ———– |
-| AccelerateInterpolator | 加速        |
-| BounceInterpolator     | 弹跳        |
-| DecelerateInterpolator | 减速        |</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AccelerateInterpolator</td>
+<td>加速</td>
+</tr>
+<tr>
+<td>BounceInterpolator</td>
+<td>弹跳</td>
+</tr>
+<tr>
+<td>DecelerateInterpolator</td>
+<td>减速</td>
+</tr>
+</tbody></table>
 <p>还有AccelerateDecelerateInterpolator、AnticipateInterpolator、PathInterpolator、OvershootInterpolator、AnticipateOvershootInterpolator 、DecelerateInterpolator 、CycleInterpolator等，这些基本上涵盖了我们使用的范围。</p>
 <p>当然，如果上面插值器不满足需求，也可以定制插值器，只需要继承BaseInterpolator并实现TimeInterpolator接口就可以了，例如OvershootInterpolator的实现：</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OvershootInterpolator</span> <span class="keyword">extends</span> <span class="title class_">BaseInterpolator</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">float</span> mTension;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">OvershootInterpolator</span><span class="params">()</span> {</span><br><span class="line">        mTension = <span class="number">2.0f</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">OvershootInterpolator</span><span class="params">(<span class="type">float</span> tension)</span> {</span><br><span class="line">        mTension = tension;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">float</span> <span class="title function_">getInterpolation</span><span class="params">(<span class="type">float</span> t)</span> {</span><br><span class="line">        <span class="comment">// _o(t) = t * t * ((tension + 1) * t + tension)</span></span><br><span class="line">        <span class="comment">// o(t) = _o(t - 1) + 1</span></span><br><span class="line">        t -= <span class="number">1.0f</span>;</span><br><span class="line">        <span class="keyword">return</span> t * t * ((mTension + <span class="number">1</span>) * t + mTension) + <span class="number">1.0f</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
@@ -87,13 +141,13 @@
 <p>这里的getInterpolation方法里是一个插值器函数，如果输入的t直接返回，那这就是一个线性插值器。<a target="_blank" rel="noopener" href="http://inloop.github.io/interpolator/">这个网站</a>看一查看插值器函数生成的曲线，安利给大家。</p>
 <h2 id="Android-Transition-Framework"><a href="#Android-Transition-Framework" class="headerlink" title="Android Transition Framework"></a>Android Transition Framework</h2><p>上面介绍的动画针对的是某一个对象进行动画操作，但是实际应用中，我更多的使用Android的Transition动画来移动某个View。Transition动画与Property动画最大的区别就是：View动的过程中会对其周边的View产生影响。也就是说，如果我想让一个View逐渐变大，那它在变大的过程中不会覆盖在其周边的View上面，而是挤推着周围的View移动，也就是整个Layout都在变化，而这一切都是Transition框架自动实现的，开发者不需要关心实现细节。</p>
 <p>后续补充：</p>
-<p>https://developer.android.com/training/transitions/</p>
-<p>https://developer.android.com/training/transitions/start-activity</p>
-<p>https://cloud.tencent.com/info/8fb508a6e6115e59e4f151fbaadd432e.html</p>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>ObjectAnimator 基本使用  http://wiki.jikexueyuan.com/project/android-animation/7.html</p>
-<p>Android 属性动画：这是一篇很详细的 属性动画 总结&amp;攻略 https://blog.csdn.net/carson_ho/article/details/72909894</p>
-<p>为什么要废弃掉Android之前的动画？https://android-developers.googleblog.com/2011/02/animation-in-honeycomb.html</p>
-<p>查看Interpolation曲线：http://inloop.github.io/interpolator/</p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.com/training/transitions/">https://developer.android.com/training/transitions/</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.android.com/training/transitions/start-activity">https://developer.android.com/training/transitions/start-activity</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/info/8fb508a6e6115e59e4f151fbaadd432e.html">https://cloud.tencent.com/info/8fb508a6e6115e59e4f151fbaadd432e.html</a></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>ObjectAnimator 基本使用  <a target="_blank" rel="noopener" href="http://wiki.jikexueyuan.com/project/android-animation/7.html">http://wiki.jikexueyuan.com/project/android-animation/7.html</a></p>
+<p>Android 属性动画：这是一篇很详细的 属性动画 总结&amp;攻略 <a target="_blank" rel="noopener" href="https://blog.csdn.net/carson_ho/article/details/72909894">https://blog.csdn.net/carson_ho/article/details/72909894</a></p>
+<p>为什么要废弃掉Android之前的动画？<a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2011/02/animation-in-honeycomb.html">https://android-developers.googleblog.com/2011/02/animation-in-honeycomb.html</a></p>
+<p>查看Interpolation曲线：<a target="_blank" rel="noopener" href="http://inloop.github.io/interpolator/">http://inloop.github.io/interpolator/</a></p>
 </div><div class="article-licensing box"><div class="licensing-title"><p>Android中动画的使用</p><p><a href="https://chewenkai.github.io/uncategorized/android中动画的使用/">https://chewenkai.github.io/uncategorized/android中动画的使用/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-12-02</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/uncategorized/%E5%AF%B9lamda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">对Lamda表达式的简单理解</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/%E5%8E%9F%E6%9D%A5%E6%88%91%E6%A0%B9%E6%9C%AC%E4%B8%8D%E4%BC%9A%E7%94%A8android-studio/"><span class="level-item">原来我根本不会用Android Studio</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="calvinche"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">calvinche</p><p class="is-size-6 is-block">Application &amp; AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Center of the universe.</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">43</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">21</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/chewenkai" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/chewenkai"><i class="fab fa-github"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Android/"><span class="level-start"><span class="level-item">Android</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">学习</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%B7%A5%E5%85%B7/"><span class="level-start"><span class="level-item">工具</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="level-start"><span class="level-item">日常总结</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E6%B1%87%E6%8A%A5/"><span class="level-start"><span class="level-item">日常汇报</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="level-start"><span class="level-item">日常记录</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/"><span class="level-start"><span class="level-item">面试</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E9%9D%A2%E8%AF%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Andoird/"><span class="tag">Andoird</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Demo/"><span class="tag">Demo</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/English/"><span class="tag">English</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StarDict/"><span class="tag">StarDict</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Study/"><span class="tag">Study</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VIM/"><span class="tag">VIM</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/VirtualBox/"><span class="tag">VirtualBox</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flutter/"><span class="tag">flutter</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B7%A5%E5%85%B7/"><span class="tag">工具</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%A5%E5%91%8A/"><span class="tag">报告</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8A%BD%E6%A0%B7%E7%9B%91%E7%9D%A3%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/"><span class="tag">抽样监督管理系统</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%8E%92%E5%BA%8F/"><span class="tag">排序</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"><span class="tag">日常总结</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%A5%E5%B8%B8%E8%AE%B0%E5%BD%95/"><span class="tag">日常记录</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%89%9B%E5%AE%A2/"><span class="tag">牛客</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tag">算法</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9D%A2%E8%AF%95/"><span class="tag">面试</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Calvin&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 calvinche</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
@@ -146,26 +200,26 @@
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script><!-- hexo injector body_end start -->
     <script>
-    (() => {
+    (function () {
         function switchTab() {
             if (!location.hash) {
               return;
             }
             Array
                 .from(document.querySelectorAll('.tab-content'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.add('is-hidden');
                 });
             Array
                 .from(document.querySelectorAll('.tabs li'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.remove('is-active');
                 });
-            const $activeTab = document.querySelector(location.hash);
+            var $activeTab = document.querySelector(location.hash);
             if ($activeTab) {
                 $activeTab.classList.remove('is-hidden');
             }
-            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            var $tabMenu = document.querySelector('a[href="' + location.hash + '"]');
             if ($tabMenu) {
                 $tabMenu.parentElement.classList.add('is-active');
             }

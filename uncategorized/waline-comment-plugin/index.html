@@ -13,7 +13,7 @@ Please report your issues with this plugin to
 <a target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-component-inferno">ppoffice/hexo-component-inferno</a>.
 </div>
 </article>
-</div><div class="article-licensing box"><div class="licensing-title"><p>Waline Comment Plugin</p><p><a href="https://chewenkai.github.io/uncategorized/waline-comment-plugin/">https://chewenkai.github.io/uncategorized/waline-comment-plugin/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2015-01-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Demo/">Demo</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/uncategorized/valine-comment-plugin/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Valine Comment Plugin</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/uncategorized/addthis-share-buttons/"><span class="level-item">AddThis Share Buttons</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div class="content" id="waline-thread"></div><script src="https://cdn.jsdelivr.net/npm/@waline/client@1.5.4/dist/Waline.min.js"></script><script>Waline({
+</div><div class="article-licensing box"><div class="licensing-title"><p>Waline Comment Plugin</p><p><a href="https://chewenkai.github.io/uncategorized/waline-comment-plugin/">https://chewenkai.github.io/uncategorized/waline-comment-plugin/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>calvinche</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2015-01-01</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Demo/">Demo</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/uncategorized/facebook-comment-plugin/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Facebook Comment Plugin</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/uncategorized/valine-comment-plugin/"><span class="level-item">Valine Comment Plugin</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div class="content" id="waline-thread"></div><script src="https://cdn.jsdelivr.net/npm/@waline/client@1.5.4/dist/Waline.min.js"></script><script>Waline({
             el: '#waline-thread',
             serverURL: "https://icarus-waline-comment.vercel.app",
             path: window.location.pathname,
@@ -83,26 +83,26 @@ Please report your issues with this plugin to
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script><!-- hexo injector body_end start -->
     <script>
-    (() => {
+    (function () {
         function switchTab() {
             if (!location.hash) {
               return;
             }
             Array
                 .from(document.querySelectorAll('.tab-content'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.add('is-hidden');
                 });
             Array
                 .from(document.querySelectorAll('.tabs li'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.remove('is-active');
                 });
-            const $activeTab = document.querySelector(location.hash);
+            var $activeTab = document.querySelector(location.hash);
             if ($activeTab) {
                 $activeTab.classList.remove('is-hidden');
             }
-            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            var $tabMenu = document.querySelector('a[href="' + location.hash + '"]');
             if ($tabMenu) {
                 $tabMenu.parentElement.classList.add('is-active');
             }

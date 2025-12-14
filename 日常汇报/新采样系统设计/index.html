@@ -100,26 +100,26 @@
             loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
         });</script><!-- hexo injector body_end start -->
     <script>
-    (() => {
+    (function () {
         function switchTab() {
             if (!location.hash) {
               return;
             }
             Array
                 .from(document.querySelectorAll('.tab-content'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.add('is-hidden');
                 });
             Array
                 .from(document.querySelectorAll('.tabs li'))
-                .forEach($tab => {
+                .forEach(function ($tab) {
                     $tab.classList.remove('is-active');
                 });
-            const $activeTab = document.querySelector(location.hash);
+            var $activeTab = document.querySelector(location.hash);
             if ($activeTab) {
                 $activeTab.classList.remove('is-hidden');
             }
-            const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+            var $tabMenu = document.querySelector('a[href="' + location.hash + '"]');
             if ($tabMenu) {
                 $tabMenu.parentElement.classList.add('is-active');
             }
